@@ -54,7 +54,34 @@ struct GLViewWrapper: NSViewRepresentable {
 }
 
 class GLView: NSOpenGLView {
+    private var renderer: Renderer?
     var config: Config = Config() { didSet {
         debugPrint(config)
     } }
+
+    init() {
+        super.init(frame: .zero, pixelFormat: Renderer.pixelFormat)!
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareOpenGL() {
+        super.prepareOpenGL()
+        renderer = Renderer()
+    }
+
+    override func reshape() {
+        renderer?.resize(width: Float(frame.width), height: Float(frame.height))
+    }
+
+    override func update() {
+        guard let context = openGLContext else { return }
+        context.makeCurrentContext()
+
+        renderer?.draw()
+
+        CGLFlushDrawable(context.cglContextObj!)
+    }
 }
