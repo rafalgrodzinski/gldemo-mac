@@ -77,13 +77,9 @@
 				B5B08F752D15501100E1F6E7 /* App.swift */,
 				B5B08F772D15501100E1F6E7 /* ContentView.swift */,
 				B5B08F872D1551C600E1F6E7 /* GLView.swift */,
-				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
-				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
-				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
-				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
-				B5B08F972D190BB400E1F6E7 /* Model.swift */,
-				B5B08F8D2D19015800E1F6E7 /* shader.vsh */,
-				B5B08F8F2D19016300E1F6E7 /* shader.fsh */,
+				B5B08FA22D1931E500E1F6E7 /* Components */,
+				B5B08FA12D1931D600E1F6E7 /* Renderer */,
+				B5B08FA02D1931BA00E1F6E7 /* Shaders */,
 				B5B08F9B2D191CED00E1F6E7 /* Utils */,
 			);
 			path = Sources;
@@ -105,6 +101,34 @@
 				B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B5B08FA02D1931BA00E1F6E7 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B5B08F8D2D19015800E1F6E7 /* shader.vsh */,
+				B5B08F8F2D19016300E1F6E7 /* shader.fsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		B5B08FA12D1931D600E1F6E7 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
+				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		B5B08FA22D1931E500E1F6E7 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
+				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
+				B5B08F972D190BB400E1F6E7 /* Model.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +274,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -307,7 +331,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

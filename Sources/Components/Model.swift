@@ -51,20 +51,43 @@ final class Model {
          -1, -1, 1, 1, -1, 1, 1, -1, -1
     ]
 
+    private static let pyramidVertices: [GLfloat] = [
+        // Front
+        1, -1, -1, 0, 1, 0, -1, -1, -1,
+        // Back
+        -1, -1, 1, 0, 1, 0,  1, -1, 1,
+        // Left
+        -1, -1, -1, 0, 1, 0, -1, -1, 1,
+        // Right
+        1, -1, 1, 0, 1, 0, 1, -1, -1,
+        // Bottom
+        -1, -1, 1, 1, -1, -1, -1, -1, -1,
+        -1, -1, 1, 1, -1, 1, 1, -1, -1
+    ]
+
     enum Kind {
         case cube
+        case pyramid
     }
 
-    private var vertexBufferId: GLuint = 0
+    private var vertexArrayId: GLuint = 0
     private var verticesCount: GLsizei = 0
 
     init(kind: Kind) throws {
         let vertices = switch (kind) {
         case .cube: Self.cubeVertices
+        case .pyramid: Self.pyramidVertices
         }
-        glGenBuffers(1, &vertexBufferId)
-        glBindBuffer(GL_ARRAY_BUFFER.glEnum, vertexBufferId)
+
+        glGenVertexArrays(1, &vertexArrayId)
+        glBindVertexArray(vertexArrayId)
+
+        var bufferId: GLuint = 0
+        glGenBuffers(1, &bufferId)
+        glBindBuffer(GL_ARRAY_BUFFER.glEnum, bufferId)
         glBufferData(GL_ARRAY_BUFFER.glEnum, MemoryLayout<GLfloat>.size * vertices.count, vertices, GL_STATIC_DRAW.glEnum)
+        glVertexAttribPointer(0, 3, GL_FLOAT.glEnum, GL_FALSE.glBool, 0, nil)
+        glEnableVertexAttribArray(0)
         verticesCount = GLsizei(vertices.count / 3)
     }
 
@@ -74,10 +97,7 @@ final class Model {
             glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE.glBool, $0)
         }
 
-        glBindBuffer(GL_ARRAY_BUFFER.glEnum, vertexBufferId)
-        glVertexAttribPointer(0, 3, GL_FLOAT.glEnum, GL_FALSE.glBool, 0, nil)
-        glEnableVertexAttribArray(0)
-
+        glBindVertexArray(vertexArrayId)
         glDrawArrays(GL_TRIANGLES.glEnum, 0, verticesCount)
     }
 }

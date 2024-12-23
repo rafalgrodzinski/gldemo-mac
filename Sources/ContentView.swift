@@ -8,21 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var config = GLView.Config()
+    @State private var configs = [GLView.Config](repeating: GLView.Config(), count: 2)
 
     var body: some View {
         HStack(spacing: 0) {
-            GLViewWrapper(config: config)
+            GLViewWrapper(configs: configs)
                 .background(Color.blue)
-            ControlsView(config: $config)
+            TabView {
+                Tab("1", systemImage: "01.circle") {
+                    ControlsView(config: $configs[0])
+                }
+                Tab("2", systemImage: "02.circle") {
+                    ControlsView(config: $configs[1])
+                }
+            }
         }
     }
 }
 
 private struct ControlsView: View {
     @Binding var config: GLView.Config
-
-    @State private var tx: Float = 0
 
     var body: some View {
         VStack(spacing: 8) {

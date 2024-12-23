@@ -17,9 +17,6 @@ final class PhongRenderPass {
             vertexShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "vsh")!,
             fragmentShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "fsh")!
         )
-        var vao: [GLuint] = [0]
-        glGenVertexArrays(1, &vao)
-        glBindVertexArray(vao[0])
     }
 
     func initFrame(withCamera camera: Camera) {
@@ -36,13 +33,13 @@ final class PhongRenderPass {
         }
     }
 
-    func draw(models: [Model], config: GLView.Config) {
-        var modelMatrix = GLKMatrix4MakeTranslation(config.tx, config.ty, config.tz)
-        modelMatrix = GLKMatrix4RotateX(modelMatrix, (config.rx / 180.0) * Float.pi)
-        modelMatrix = GLKMatrix4RotateY(modelMatrix, (config.ry / 180.0) * Float.pi)
-        modelMatrix = GLKMatrix4RotateZ(modelMatrix, (config.rz / 180.0) * Float.pi)
+    func draw(models: [Model], configs: [GLView.Config]) {
+        for (i, model) in models.enumerated() {
+            var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
+            modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)
+            modelMatrix = GLKMatrix4RotateY(modelMatrix, (configs[i].ry / 180.0) * Float.pi)
+            modelMatrix = GLKMatrix4RotateZ(modelMatrix, (configs[i].rz / 180.0) * Float.pi)
 
-        for model in models {
             model.draw(program: program, modelMatrix: modelMatrix)
         }
     }

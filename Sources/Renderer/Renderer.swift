@@ -28,7 +28,8 @@ final class Renderer {
     init() throws {
         renderPass = try PhongRenderPass()
         models = [
-            try Model(kind: .cube)
+            try Model(kind: .cube),
+            try Model(kind: .pyramid)
         ]
         camera = Camera()
     }
@@ -41,11 +42,11 @@ final class Renderer {
     func update(deltaTime: TimeInterval) {
     }
 
-    func draw(config: GLView.Config) {
+    func draw(configs: [GLView.Config]) {
         glClearColor(0, 0, 0, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
         renderPass.initFrame(withCamera: camera)
-        renderPass.draw(models: models, config: config)
+        renderPass.draw(models: models, configs: configs)
     }
 }

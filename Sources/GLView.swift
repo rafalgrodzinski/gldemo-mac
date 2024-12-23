@@ -42,14 +42,14 @@ extension GLView {
 }
 
 struct GLViewWrapper: NSViewRepresentable {
-    let config: GLView.Config
+    let configs: [GLView.Config]
 
     func makeNSView(context: Context) -> GLView {
         GLView()
     }
     
     func updateNSView(_ nsView: GLView, context: Context) {
-        nsView.config = config
+        nsView.configs = configs
     }
 }
 
@@ -57,7 +57,7 @@ class GLView: NSOpenGLView {
     private var renderer: Renderer?
     private var displayLink: CVDisplayLink?
     private var previousTime: Double?
-    var config: Config = Config()
+    var configs = [Config]()
 
     init() {
         super.init(frame: .zero, pixelFormat: Renderer.pixelFormat)!
@@ -105,7 +105,7 @@ class GLView: NSOpenGLView {
         context.makeCurrentContext()
         CGLLockContext(context.cglContextObj!)
 
-        renderer?.draw(config: config)
+        renderer?.draw(configs: configs)
 
         CGLFlushDrawable(context.cglContextObj!)
         CGLUnlockContext(context.cglContextObj!)
