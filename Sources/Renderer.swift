@@ -21,28 +21,31 @@ final class Renderer {
         return format
     }
 
-    private let renderPasses: [RenderPass]
-    private var program: GLuint = 0
+    private let renderPass: PhongRenderPass
+    private let models: [Model]
+    private let camera: Camera
 
     init() throws {
-        renderPasses = [
-            try PhongRenderPass()
+        renderPass = try PhongRenderPass()
+        models = [
+            try Model(kind: .cube)
         ]
+        camera = Camera()
     }
 
     func resize(width: Float, height: Float) {
-        glViewport(0, 0, GLsizei(width), GLsizei(height))
+        //glViewport(0, 0, GLsizei(width * 2), GLsizei(height * 2))
+        camera.resize(width: width, height: height)
     }
 
     func update(deltaTime: TimeInterval) {
     }
 
-    func draw() {
+    func draw(config: GLView.Config) {
         glClearColor(0, 0, 0, 1)
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
-        for renderPass in renderPasses {
-            renderPass.initFrame()
-        }
+        renderPass.initFrame(withCamera: camera)
+        renderPass.draw(models: models, config: config)
     }
 }

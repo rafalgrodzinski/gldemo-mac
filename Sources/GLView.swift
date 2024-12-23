@@ -11,7 +11,7 @@ import OpenGL.GL
 
 extension GLView {
     struct Config {
-        static let tRange: ClosedRange<Float> = -1...1
+        static let tRange: ClosedRange<Float> = -10...10
         static let rRange: ClosedRange<Float> = -180...180
 
         let tx: Float
@@ -57,9 +57,7 @@ class GLView: NSOpenGLView {
     private var renderer: Renderer?
     private var displayLink: CVDisplayLink?
     private var previousTime: Double?
-    var config: Config = Config() { didSet {
-        debugPrint(config)
-    } }
+    var config: Config = Config()
 
     init() {
         super.init(frame: .zero, pixelFormat: Renderer.pixelFormat)!
@@ -105,9 +103,11 @@ class GLView: NSOpenGLView {
     override func update() {
         guard let context = openGLContext else { return }
         context.makeCurrentContext()
+        CGLLockContext(context.cglContextObj!)
 
-        renderer?.draw()
+        renderer?.draw(config: config)
 
         CGLFlushDrawable(context.cglContextObj!)
+        CGLUnlockContext(context.cglContextObj!)
     }
 }

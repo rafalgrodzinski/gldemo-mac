@@ -9,16 +9,16 @@ import Foundation
 import OpenGL.GL
 
 final class ShaderProgram {
-    private(set) var program: GLuint = 0
+    private(set) var programId: GLuint = 0
 
     init(vertexShaderFilePathUrl: URL, fragmentShaderFilePathUrl: URL) throws {
         let vertexShader = try shader(forType: GL_VERTEX_SHADER, filePathUrl: vertexShaderFilePathUrl)
         let fragmentShader = try shader(forType: GL_FRAGMENT_SHADER, filePathUrl: fragmentShaderFilePathUrl)
-        self.program = try program(forVertexShader: vertexShader, fragmentShader: fragmentShader)
+        self.programId = try program(forVertexShader: vertexShader, fragmentShader: fragmentShader)
     }
 
     deinit {
-        glDeleteProgram(program)
+        glDeleteProgram(programId)
     }
 
     private func shader(forType type: Int32, filePathUrl: URL) throws -> GLuint {

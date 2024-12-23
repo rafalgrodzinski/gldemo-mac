@@ -15,9 +15,12 @@
 		B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F8B2D18FFC300E1F6E7 /* AppError.swift */; };
 		B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F8D2D19015800E1F6E7 /* shader.vsh */; };
 		B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F8F2D19016300E1F6E7 /* shader.fsh */; };
-		B5B08F922D1906D600E1F6E7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F912D1906D600E1F6E7 /* RenderPass.swift */; };
 		B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */; };
 		B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */; };
+		B5B08F982D190BB400E1F6E7 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F972D190BB400E1F6E7 /* Model.swift */; };
+		B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F992D191AF300E1F6E7 /* Camera.swift */; };
+		B5B08F9D2D191D2300E1F6E7 /* CastExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */; };
+		B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +34,12 @@
 		B5B08F8B2D18FFC300E1F6E7 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		B5B08F8D2D19015800E1F6E7 /* shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
 		B5B08F8F2D19016300E1F6E7 /* shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
-		B5B08F912D1906D600E1F6E7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhongRenderPass.swift; sourceTree = "<group>"; };
 		B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
+		B5B08F972D190BB400E1F6E7 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		B5B08F992D191AF300E1F6E7 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastExtensions.swift; sourceTree = "<group>"; };
+		B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +79,12 @@
 				B5B08F872D1551C600E1F6E7 /* GLView.swift */,
 				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
-				B5B08F912D1906D600E1F6E7 /* RenderPass.swift */,
 				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
+				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
+				B5B08F972D190BB400E1F6E7 /* Model.swift */,
 				B5B08F8D2D19015800E1F6E7 /* shader.vsh */,
 				B5B08F8F2D19016300E1F6E7 /* shader.fsh */,
+				B5B08F9B2D191CED00E1F6E7 /* Utils */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -88,6 +96,15 @@
 				B5B08F7E2D15501300E1F6E7 /* glDemo.entitlements */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5B08F9B2D191CED00E1F6E7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */,
+				B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,13 +180,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5B08F922D1906D600E1F6E7 /* RenderPass.swift in Sources */,
+				B5B08F982D190BB400E1F6E7 /* Model.swift in Sources */,
 				B5B08F8A2D15607B00E1F6E7 /* Renderer.swift in Sources */,
 				B5B08F882D1551C600E1F6E7 /* GLView.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
+				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,
+				B5B08F9D2D191D2300E1F6E7 /* CastExtensions.swift in Sources */,
+				B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */,
 				B5B08F762D15501100E1F6E7 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
