@@ -71,10 +71,14 @@ class GLView: NSOpenGLView {
 
     override func prepareOpenGL() {
         super.prepareOpenGL()
-        renderer = Renderer()
+        do {
+            renderer = try Renderer()
+        } catch {
+            fatalError(error.description)
+        }
         var oldTime: Double?
 
-        let displayLinkCallback: CVDisplayLinkOutputCallback = { (_, inNow, inOutputTime, _, _, displayLinkContext) -> CVReturn in
+        let displayLinkCallback: CVDisplayLinkOutputCallback = { (_, inNow, _, _, _, displayLinkContext) -> CVReturn in
             let view = unsafeBitCast(displayLinkContext, to: GLView.self)
 
             let time = Double(inNow.pointee.videoTime) / Double(inNow.pointee.videoTimeScale)
