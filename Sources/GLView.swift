@@ -55,6 +55,8 @@ struct GLViewWrapper: NSViewRepresentable {
 
 class GLView: NSOpenGLView {
     private var renderer: Renderer?
+    private var displayLink: CVDisplayLink?
+    private var previousTime: Double?
     var config: Config = Config() { didSet {
         debugPrint(config)
     } }
@@ -70,6 +72,26 @@ class GLView: NSOpenGLView {
     override func prepareOpenGL() {
         super.prepareOpenGL()
         renderer = Renderer()
+        var oldTime: Double?
+
+        let displayLinkCallback: CVDisplayLinkOutputCallback = { (_, inNow, inOutputTime, _, _, displayLinkContext) -> CVReturn in
+            let view = unsafeBitCast(displayLinkContext, to: GLView.self)
+
+            let time = Double(inNow.pointee.videoTime) / Double(inNow.pointee.videoTimeScale)
+            if let previousTime = view.previousTime {
+                let deltaTime = time - previousTime
+                view.renderer?.update(deltaTime: deltaTime)
+            }
+            view.previousTime = time
+            view.update()
+            
+            return kCVReturnSuccess
+        }
+
+        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &displayLink)
+        guard let displayLink = self.displayLink else { fatalError() }
+        CVDisplayLinkSetOutputCallback(displayLink, displayLinkCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+        CVDisplayLinkStart(displayLink)
     }
 
     override func reshape() {

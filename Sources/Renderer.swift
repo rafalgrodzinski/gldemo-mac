@@ -22,6 +22,10 @@ final class Renderer {
     }
 
     func resize(width: Float, height: Float) {
+        glViewport(0, 0, GLsizei(width), GLsizei(height))
+    }
+
+    func update(deltaTime: TimeInterval) {
     }
 
     func draw() {
