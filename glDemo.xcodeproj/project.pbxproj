@@ -15,6 +15,9 @@
 		B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F8B2D18FFC300E1F6E7 /* AppError.swift */; };
 		B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F8D2D19015800E1F6E7 /* shader.vsh */; };
 		B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F8F2D19016300E1F6E7 /* shader.fsh */; };
+		B5B08F922D1906D600E1F6E7 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F912D1906D600E1F6E7 /* RenderPass.swift */; };
+		B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */; };
+		B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		B5B08F8B2D18FFC300E1F6E7 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		B5B08F8D2D19015800E1F6E7 /* shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
 		B5B08F8F2D19016300E1F6E7 /* shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
+		B5B08F912D1906D600E1F6E7 /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhongRenderPass.swift; sourceTree = "<group>"; };
+		B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +71,10 @@
 				B5B08F752D15501100E1F6E7 /* App.swift */,
 				B5B08F772D15501100E1F6E7 /* ContentView.swift */,
 				B5B08F872D1551C600E1F6E7 /* GLView.swift */,
+				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
+				B5B08F912D1906D600E1F6E7 /* RenderPass.swift */,
+				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
 				B5B08F8D2D19015800E1F6E7 /* shader.vsh */,
 				B5B08F8F2D19016300E1F6E7 /* shader.fsh */,
 			);
@@ -154,10 +163,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B08F922D1906D600E1F6E7 /* RenderPass.swift in Sources */,
 				B5B08F8A2D15607B00E1F6E7 /* Renderer.swift in Sources */,
 				B5B08F882D1551C600E1F6E7 /* GLView.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
+				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
+				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,
 				B5B08F762D15501100E1F6E7 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
