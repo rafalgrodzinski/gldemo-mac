@@ -10,59 +10,44 @@ import OpenGL.GL
 import GLKit
 
 final class Model {
-    /*struct Vertex {
-        let x: Float
-        let y: Float
-        let z: Float
-    }*/
+    struct Vertex {
+        let position: (x: GLfloat, y: GLfloat, z: GLfloat)
+        let color: (r: GLfloat, g: GLfloat, b: GLfloat)
+    }
 
-    private static let cubeVertices: [GLfloat] = [
-        /*
+    private static let cubeVertices = [
         // Front
-        Vertex(x: -1, y: -1, z: 1), Vertex(x: -1, y: 1, z: 1), Vertex(x: 1, y: -1, z: 1),
-        Vertex(x: 1, y: -1, z: 1), Vertex(x: -1, y: 1, z: 1), Vertex(x: 1, y: 1, z: 1),
+        Vertex(position: (-1, -1, 1), color: (1, 0, 0)), Vertex(position: (-1, 1, 1), color: (1, 0, 0)), Vertex(position: (1, -1, 1), color: (1, 0, 0)),
+        Vertex(position: (1, -1, 1), color: (1, 0, 0)), Vertex(position: (-1, 1, 1), color: (1, 0, 0)), Vertex(position: (1, 1, 1), color: (1, 0, 0)),
         // Back
-        Vertex(x: 1, y: -1, z: -1), Vertex(x: 1, y: 1, z: -1), Vertex(x: -1, y: 1, z: -1),
-        Vertex(x: 1, y: -1, z: -1), Vertex(x: -1, y: 1, z: -1), Vertex(x: -1, y: -1, z: -1),
+        Vertex(position: (1, -1, -1), color: (0, 1, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 0)),
+        Vertex(position: (1, -1, -1), color: (0, 1, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 0)), Vertex(position: (-1, -1, -1), color: (0, 1, 0)),
         // Left
-        Vertex(x: -1, y: -1, z: -1), Vertex(x: -1, y: 1, z: -1), Vertex(x: -1, y: 1, z: 1),
-        Vertex(x: -1, y: -1, z: -1), Vertex(x: -1, y: 1, z: 1), Vertex(x: -1, y: -1, z: 1),
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1)), Vertex(position: (-1, 1, -1), color: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (0, 0, 1)),
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (0, 0, 1)), Vertex(position: (-1, -1, 1), color: (0, 0, 1)),
         // Right
-        Vertex(x: 1, y: -1, z: 1), Vertex(x: 1, y: 1, z: 1), Vertex(x: 1, y: 1, z: -1),
-        Vertex(x: 1, y: -1, z: 1), Vertex(x: 1, y: 1, z: -1), Vertex(x: 1, y: -1, z: -1),
-         */
-        // Front
-        -1, -1, 1, -1, 1, 1, 1, -1, 1,
-         1, -1, 1, -1, 1, 1, 1, 1, 1,
-         // Back
-         1, -1, -1, 1, 1, -1, -1, 1, -1,
-         1, -1, -1, -1, 1, -1, -1, -1, -1,
-         // Left
-         -1, -1, -1, -1, 1, -1, -1, 1, 1,
-         -1, -1, -1, -1, 1, 1, -1, -1, 1,
-         // Right
-         1, -1, 1, 1, 1, 1, 1, 1, -1,
-         1, -1, 1, 1, 1, -1, 1, -1, -1,
-         // Top
-         -1, 1, 1, -1, 1, -1, 1, 1, -1,
-         -1, 1, 1, 1, 1, -1, 1, 1, 1,
-         // Bottom
-         -1, -1, 1, 1, -1, -1, -1, -1, -1,
-         -1, -1, 1, 1, -1, 1, 1, -1, -1
+        Vertex(position: (1, -1, 1), color: (1, 1, 0)), Vertex(position: (1, 1, 1), color: (1, 1, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0)),
+        Vertex(position: (1, -1, 1), color: (1, 1, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0)),
+        // Top
+        Vertex(position: (-1, 1, 1), color: (0, 1, 1)), Vertex(position: (-1, 1, -1), color: (0, 1, 1)), Vertex(position: (1, 1, -1), color: (0, 1, 1)),
+        Vertex(position: (-1, 1, 1), color: (0, 1, 1)), Vertex(position: (1, 1, -1), color: (0, 1, 1)), Vertex(position: (1, 1, 1), color: (0, 1, 1)),
+        // Bottom
+        Vertex(position: (-1, -1, 1), color: (1, 0, 1)), Vertex(position: (1, -1, -1), color: (1, 0, 1)), Vertex(position: (-1, -1, -1), color: (1, 0, 1)),
+        Vertex(position: (-1, -1, 1), color: (1, 0, 1)), Vertex(position: (1, -1, 1), color: (1, 0, 1)), Vertex(position: (1, -1, -1), color: (1, 0, 1))
     ]
 
-    private static let pyramidVertices: [GLfloat] = [
+    private static let pyramidVertices = [
         // Front
-        1, -1, -1, 0, 1, 0, -1, -1, -1,
+        Vertex(position: (1, -1, -1), color: (1, 0, 0)), Vertex(position: (0, 1, 0), color: (1, 0, 0)), Vertex(position: (-1, -1, -1), color: (1, 0, 0)),
         // Back
-        -1, -1, 1, 0, 1, 0,  1, -1, 1,
+        Vertex(position: (-1, -1, 1), color: (0, 1, 0)), Vertex(position: (0, 1, 0), color: (0, 1, 0)), Vertex(position: (1, -1, 1), color: (0, 1, 0)),
         // Left
-        -1, -1, -1, 0, 1, 0, -1, -1, 1,
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1)), Vertex(position: (0, 1, 0), color: (0, 0, 1)), Vertex(position: (-1, -1, 1), color: (0, 0, 1)),
         // Right
-        1, -1, 1, 0, 1, 0, 1, -1, -1,
+        Vertex(position: (1, -1, 1), color: (1, 1, 0)), Vertex(position: (0, 1, 0), color: (1, 1, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0)),
         // Bottom
-        -1, -1, 1, 1, -1, -1, -1, -1, -1,
-        -1, -1, 1, 1, -1, 1, 1, -1, -1
+        Vertex(position: (-1, -1, 1), color: (0, 1, 1)), Vertex(position: (1, -1, -1), color: (0, 1, 1)), Vertex(position: (-1, -1, -1), color: (0, 1, 1)),
+        Vertex(position: (-1, -1, 1), color: (0, 1, 1)), Vertex(position: (1, -1, 1), color: (0, 1, 1)), Vertex(position: (1, -1, -1), color: (0, 1, 1))
     ]
 
     enum Kind {
@@ -70,11 +55,11 @@ final class Model {
         case pyramid
     }
 
+    private let vertices: [Vertex]
     private var vertexArrayId: GLuint = 0
-    private var verticesCount: GLsizei = 0
 
     init(kind: Kind) throws {
-        let vertices = switch (kind) {
+        vertices = switch (kind) {
         case .cube: Self.cubeVertices
         case .pyramid: Self.pyramidVertices
         }
@@ -84,20 +69,37 @@ final class Model {
 
         var bufferId: GLuint = 0
         glGenBuffers(1, &bufferId)
-        glBindBuffer(GL_ARRAY_BUFFER.glEnum, bufferId)
-        glBufferData(GL_ARRAY_BUFFER.glEnum, MemoryLayout<GLfloat>.size * vertices.count, vertices, GL_STATIC_DRAW.glEnum)
-        glVertexAttribPointer(0, 3, GL_FLOAT.glEnum, GL_FALSE.glBool, 0, nil)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), bufferId)
+        glBufferData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<Vertex>.size * vertices.count, vertices, GLenum(GL_STATIC_DRAW))
+
         glEnableVertexAttribArray(0)
-        verticesCount = GLsizei(vertices.count / 3)
+        glVertexAttribPointer(
+            0,
+            3,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.position)!)
+        )
+
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(
+            1,
+            3,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.color)!)
+        )
     }
 
     func draw(program: ShaderProgram, modelMatrix: GLKMatrix4) {
         let modelMatrixId = glGetUniformLocation(program.programId, "u_modelMatrix")
         modelMatrix.pointer {
-            glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE.glBool, $0)
+            glUniformMatrix4fv(modelMatrixId, 1, GLboolean(GL_FALSE), $0)
         }
 
         glBindVertexArray(vertexArrayId)
-        glDrawArrays(GL_TRIANGLES.glEnum, 0, verticesCount)
+        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(vertices.count))
     }
 }

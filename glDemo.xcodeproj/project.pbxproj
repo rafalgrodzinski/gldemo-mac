@@ -19,7 +19,6 @@
 		B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */; };
 		B5B08F982D190BB400E1F6E7 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F972D190BB400E1F6E7 /* Model.swift */; };
 		B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F992D191AF300E1F6E7 /* Camera.swift */; };
-		B5B08F9D2D191D2300E1F6E7 /* CastExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */; };
 		B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +37,6 @@
 		B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		B5B08F972D190BB400E1F6E7 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		B5B08F992D191AF300E1F6E7 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastExtensions.swift; sourceTree = "<group>"; };
 		B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +95,6 @@
 		B5B08F9B2D191CED00E1F6E7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B5B08F9C2D191D2300E1F6E7 /* CastExtensions.swift */,
 				B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */,
 			);
 			path = Utils;
@@ -212,7 +209,6 @@
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,
-				B5B08F9D2D191D2300E1F6E7 /* CastExtensions.swift in Sources */,
 				B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */,
 				B5B08F762D15501100E1F6E7 /* App.swift in Sources */,
 			);

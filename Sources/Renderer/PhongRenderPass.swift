@@ -29,7 +29,7 @@ final class PhongRenderPass {
 
         let projectionMatrixId = glGetUniformLocation(program.programId, "u_projectionMatrix")
         camera.projectionMatrix.pointer {
-            glUniformMatrix4fv(projectionMatrixId, 1, GL_FALSE.glBool, $0)
+            glUniformMatrix4fv(projectionMatrixId, 1, GLboolean(GL_FALSE), $0)
         }
     }
 
