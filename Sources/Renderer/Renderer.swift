@@ -28,8 +28,8 @@ final class Renderer {
     init() throws {
         renderPass = try PhongRenderPass()
         models = [
-            try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood_1")),
-            try Model(program: renderPass.program, kind: .pyramid, textureBitmap: nil)
+            try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
+            try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
         ]
         camera = Camera()
     }

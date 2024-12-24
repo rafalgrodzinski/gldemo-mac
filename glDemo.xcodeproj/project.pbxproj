@@ -21,7 +21,7 @@
 		B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F992D191AF300E1F6E7 /* Camera.swift */; };
 		B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */; };
 		B5B08FA42D1A533C00E1F6E7 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FA32D1A533C00E1F6E7 /* ImageExtensions.swift */; };
-		B5B08FA62D1A552400E1F6E7 /* wood_2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B5B08FA52D1A552400E1F6E7 /* wood_2.jpeg */; };
+		B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FA72D1A5B0200E1F6E7 /* Light.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,7 @@
 		B5B08F992D191AF300E1F6E7 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerExtensions.swift; sourceTree = "<group>"; };
 		B5B08FA32D1A533C00E1F6E7 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
-		B5B08FA52D1A552400E1F6E7 /* wood_2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wood_2.jpeg; sourceTree = "<group>"; };
+		B5B08FA72D1A5B0200E1F6E7 /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,6 @@
 		B5B08F862D1550B800E1F6E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B5B08FA52D1A552400E1F6E7 /* wood_2.jpeg */,
 				B5B08F792D15501300E1F6E7 /* Assets.xcassets */,
 				B5B08F7E2D15501300E1F6E7 /* glDemo.entitlements */,
 			);
@@ -130,6 +129,7 @@
 				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
 				B5B08F972D190BB400E1F6E7 /* Model.swift */,
+				B5B08FA72D1A5B0200E1F6E7 /* Light.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -194,7 +194,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5B08FA62D1A552400E1F6E7 /* wood_2.jpeg in Resources */,
 				B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
 				B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */,
@@ -214,6 +213,7 @@
 				B5B08F882D1551C600E1F6E7 /* GLView.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
+				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,

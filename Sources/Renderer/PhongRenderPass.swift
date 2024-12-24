@@ -11,12 +11,15 @@ import GLKit
 
 final class PhongRenderPass {
     let program: ShaderProgram
+    let light: Light
 
     init() throws {
         program = try ShaderProgram(
             vertexShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "vsh")!,
             fragmentShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "fsh")!
         )
+
+        light = Light(direction: (1, 1, -1), color: (1, 1, 1), ambientIntensity: 0.5, diffuseIntensity: 0.5)
     }
 
     func initFrame(withCamera camera: Camera) {
@@ -34,6 +37,8 @@ final class PhongRenderPass {
     }
 
     func draw(models: [Model], configs: [GLView.Config]) {
+        light.update(program: program)
+
         for (i, model) in models.enumerated() {
             var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
             modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)

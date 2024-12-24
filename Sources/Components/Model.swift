@@ -14,41 +14,42 @@ final class Model {
         let position: (x: GLfloat, y: GLfloat, z: GLfloat)
         let color: (r: GLfloat, g: GLfloat, b: GLfloat)
         let coords: (u: GLfloat, v: GLfloat)
+        let normal: (x: GLfloat, y: GLfloat, z: GLfloat)
     }
 
     private static let cubeVertices = [
         // Front
-        Vertex(position: (-1, -1, 1), color: (1, 0, 0), coords: (0, 1)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 0)), Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0)),
-        Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 1)), Vertex(position: (1, 1, 1), color: (1, 0, 0), coords: (1, 0)),
+        Vertex(position: (-1, -1, 1), color: (1, 0, 0), coords: (0, 1), normal: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 0), normal: (0, 0, 1)), Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0), normal: (0, 0, 1)),
+        Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0), normal: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 1), normal: (0, 0, 1)), Vertex(position: (1, 1, 1), color: (1, 0, 0), coords: (1, 0), normal: (0, 0, 1)),
         // Back
-        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 0), coords: (0, 1)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1)),
-        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1)), Vertex(position: (-1, -1, -1), color: (0, 1, 0), coords: (1, 0)),
+        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0), normal: (0, 0, -1)), Vertex(position: (1, 1, -1), color: (0, 1, 0), coords: (0, 1), normal: (0, 0, -1)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1), normal: (0, 0, -1)),
+        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0), normal: (0, 0, -1)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1), normal: (0, 0, -1)), Vertex(position: (-1, -1, -1), color: (0, 1, 0), coords: (1, 0), normal: (0, 0, -1)),
         // Left
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0)), Vertex(position: (-1, 1, -1), color: (0, 0, 1), coords: (0, 1)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1)),
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0)),
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 0, 0)), Vertex(position: (-1, 1, -1), color: (0, 0, 1), coords: (0, 1), normal: (-1, 0, 0)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1), normal: (-1, 0, 0)),
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 0, 0)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1), normal: (-1, 0, 0)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0), normal: (-1, 0, 0)),
         // Right
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0)), Vertex(position: (1, 1, 1), color: (1, 1, 0), coords: (0, 1)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1)),
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0)),
+        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 0, 0)), Vertex(position: (1, 1, 1), color: (1, 1, 0), coords: (0, 1), normal: (1, 0, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1), normal: (1, 0, 0)),
+        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 0, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1), normal: (1, 0, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0), normal: (1, 0, 0)),
         // Top
-        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 1), coords: (0, 1)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1)),
-        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1)), Vertex(position: (1, 1, 1), color: (0, 1, 1), coords: (1, 0)),
+        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, 1, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 1), coords: (0, 1), normal: (0, 1, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1), normal: (0, 1, 0)),
+        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, 1, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1), normal: (0, 1, 0)), Vertex(position: (1, 1, 1), color: (0, 1, 1), coords: (1, 0), normal: (0, 1, 0)),
         // Bottom
-        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 1)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0)), Vertex(position: (-1, -1, -1), color: (1, 0, 1), coords: (0, 0)),
-        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 0)), Vertex(position: (1, -1, 1), color: (1, 0, 1), coords: (1, 1)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0))
+        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0), normal: (0, -1, 0)), Vertex(position: (-1, -1, -1), color: (1, 0, 1), coords: (0, 0), normal: (0, -1, 0)),
+        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 0), normal: (0, -1, 0)), Vertex(position: (1, -1, 1), color: (1, 0, 1), coords: (1, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0), normal: (0, -1, 0))
     ]
 
     private static let pyramidVertices = [
         // Front
-        Vertex(position: (1, -1, -1), color: (1, 0, 0), coords: (0, 0)), Vertex(position: (0, 1, 0), color: (1, 0, 0), coords: (0.5, 1)), Vertex(position: (-1, -1, -1), color: (1, 0, 0), coords: (1, 0)),
+        Vertex(position: (-1, -1, 1), color: (0, 1, 0), coords: (0, 0), normal: (0, 1, 1)), Vertex(position: (0, 1, 0), color: (0, 1, 0), coords: (0.5, 1), normal: (0, 1, 1)), Vertex(position: (1, -1, 1), color: (0, 1, 0), coords: (1, 0), normal: (0, 1, 1)),
         // Back
-        Vertex(position: (-1, -1, 1), color: (0, 1, 0), coords: (0, 0)), Vertex(position: (0, 1, 0), color: (0, 1, 0), coords: (0.5, 1)), Vertex(position: (1, -1, 1), color: (0, 1, 0), coords: (1, 0)),
+        Vertex(position: (1, -1, -1), color: (1, 0, 0), coords: (0, 0), normal: (0, 1, -1)), Vertex(position: (0, 1, 0), color: (1, 0, 0), coords: (0.5, 1), normal: (0, 1, -1)), Vertex(position: (-1, -1, -1), color: (1, 0, 0), coords: (1, 0), normal: (0, 1, -1)),
         // Left
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0)), Vertex(position: (0, 1, 0), color: (0, 0, 1), coords: (0.5, 1)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0)),
+        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 1, 0)), Vertex(position: (0, 1, 0), color: (0, 0, 1), coords: (0.5, 1), normal: (-1, 1, 0)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0), normal: (-1, 1, 0)),
         // Right
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0)), Vertex(position: (0, 1, 0), color: (1, 1, 0), coords: (0.5, 1)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0)),
+        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 1, 0)), Vertex(position: (0, 1, 0), color: (1, 1, 0), coords: (0.5, 1), normal: (1, 1, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0), normal: (1, 1, 0)),
         // Bottom
-        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 1)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0)), Vertex(position: (-1, -1, -1), color: (0, 1, 1), coords: (0, 0)),
-        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 0)), Vertex(position: (1, -1, 1), color: (0, 1, 1), coords: (1, 1)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0))
+        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0), normal: (0, -1, 0)), Vertex(position: (-1, -1, -1), color: (0, 1, 1), coords: (0, 0), normal: (0, -1, 0)),
+        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, -1, 0)), Vertex(position: (1, -1, 1), color: (0, 1, 1), coords: (1, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0), normal: (0, -1, 0))
     ]
 
     enum Kind {
@@ -58,6 +59,7 @@ final class Model {
 
     private let vertices: [Vertex]
     private var vertexArrayId: GLuint = 0
+    private var textureId: GLuint = 0
 
     init(program: ShaderProgram, kind: Kind, textureBitmap: NSBitmapImageRep?) throws {
         vertices = switch (kind) {
@@ -107,7 +109,6 @@ final class Model {
                 UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.coords)!)
             )
 
-            var textureId: GLuint = 0
             glGenTextures(1, &textureId)
             glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
             glTexImage2D(
@@ -125,10 +126,22 @@ final class Model {
             glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
             glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
 
-            glActiveTexture(GLenum(GL_TEXTURE0))
             let samplerId = glGetUniformLocation(program.programId, "u_sampler")
             glUniform1i(samplerId, 0)
         }
+
+        let normalId = glGetAttribLocation(program.programId, "a_normal")
+        glEnableVertexAttribArray(GLuint(normalId))
+        glVertexAttribPointer(
+            GLuint(normalId),
+            3,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.normal)!)
+        )
+
+        glBindVertexArray(0)
     }
 
     func draw(program: ShaderProgram, modelMatrix: GLKMatrix4) {
@@ -138,6 +151,7 @@ final class Model {
         }
 
         glBindVertexArray(vertexArrayId)
+        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(vertices.count))
     }
 }
