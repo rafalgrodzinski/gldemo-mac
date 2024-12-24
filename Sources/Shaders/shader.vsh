@@ -18,10 +18,12 @@ uniform mat4 u_modelMatrix;
 out vec3 v_color;
 out vec2 v_coords;
 out vec3 v_normal;
+out vec3 v_position;
 
 void main(void) {
     gl_Position = u_projectionMatrix * u_modelMatrix * vec4(a_position, 1.0);
     v_color = a_color;
     v_coords = a_coords;
     v_normal = mat3(u_modelMatrix) * a_normal;
+    v_position = vec3(u_modelMatrix * vec4(a_position, 1.0));
 }

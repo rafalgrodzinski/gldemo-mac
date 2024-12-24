@@ -13,12 +13,14 @@ final class Light {
     let color: (r: GLfloat, g: GLfloat, b: GLfloat)
     let ambientIntensity: GLfloat
     let diffuseIntensity: GLfloat
+    let specularIntensity: GLfloat
 
-    init(direction: (x: GLfloat, y: GLfloat, z: GLfloat), color:(r: GLfloat, g: GLfloat, b: GLfloat), ambientIntensity: GLfloat, diffuseIntensity: GLfloat) {
+    init(direction: (x: GLfloat, y: GLfloat, z: GLfloat), color:(r: GLfloat, g: GLfloat, b: GLfloat), ambientIntensity: GLfloat, diffuseIntensity: GLfloat, specularIntensity: GLfloat) {
         self.direction = direction
         self.color = color
         self.ambientIntensity = ambientIntensity
         self.diffuseIntensity = diffuseIntensity
+        self.specularIntensity = specularIntensity
     }
 
     func update(program: ShaderProgram) {
@@ -28,10 +30,13 @@ final class Light {
         let colorId = glGetUniformLocation(program.programId, "u_light.color")
         glUniform3f(colorId, color.r, color.g, color.b)
 
-        let ambientIntensityId = glGetUniformLocation(program.programId, "u_light.ambientIntensity");
+        let ambientIntensityId = glGetUniformLocation(program.programId, "u_light.ambientIntensity")
         glUniform1f(ambientIntensityId, ambientIntensity)
 
-        let diffuseIntensityId = glGetUniformLocation(program.programId, "u_light.diffuseIntensity");
+        let diffuseIntensityId = glGetUniformLocation(program.programId, "u_light.diffuseIntensity")
         glUniform1f(diffuseIntensityId, diffuseIntensity)
+
+        let specularIntensityId = glGetUniformLocation(program.programId, "u_light.specularIntensity")
+        glUniform1f(specularIntensityId, specularIntensity)
     }
 }
