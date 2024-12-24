@@ -7,14 +7,13 @@
 
 #version 410 core
 
-//in vec2 v_textureCoords;
-//uniform sampler2D sampler;
-
 in vec3 v_color;
+in vec2 v_coords;
+
+uniform sampler2D u_sampler;
 
 out vec4 color;
 
 void main(void) {
-    //color = texture(sampler, v_textureCoords);
-    color = vec4(v_color, 1.0) * 0.5 + 0.6;
+    color = texture(u_sampler, v_coords) + vec4(v_color, 1.0) * 0.1;
 }

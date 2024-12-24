@@ -10,7 +10,7 @@ import OpenGL.GL
 import GLKit
 
 final class PhongRenderPass {
-    private let program: ShaderProgram
+    let program: ShaderProgram
 
     init() throws {
         program = try ShaderProgram(
