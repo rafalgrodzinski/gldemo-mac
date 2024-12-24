@@ -52,7 +52,54 @@ final class Model {
         Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, -1, 0)), Vertex(position: (1, -1, 1), color: (0, 1, 1), coords: (1, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0), normal: (0, -1, 0))
     ]
 
+    private static func vertices(forFilePathUrl url: URL) throws -> [Vertex] {
+        var vertices = [Vertex]()
+        var positions = [(x: GLfloat, y: GLfloat, z: GLfloat)]()
+        var normals = [(x: GLfloat, y: GLfloat, z: GLfloat)]()
+
+        let wholeFile = try String(contentsOf: url, encoding: .utf8)
+        let lines = wholeFile.split(whereSeparator: \.isNewline).map { String($0) }
+
+        for line in lines {
+            let components = line.replacingOccurrences(of: "//", with: "/0/").split(whereSeparator: \.isWhitespace).map { String($0) }
+            switch components[0] {
+            case "v":
+                if let x = components[safe: 1]?.float, let y = components[safe: 2]?.float, let z = components[safe: 3]?.float {
+                    positions.append((x, y, z))
+                }
+            case "vn":
+                if let x = components[safe: 1]?.float, let y = components[safe: 2]?.float, let z = components[safe: 3]?.float {
+                    normals.append((x, y, z))
+                }
+            case "f":
+                let a = components[safe: 1]?.split(separator: "/").map { String($0) }
+                if let vertexComponents0 = components[safe: 1]?.split(separator: "/").map { String($0) },
+                    let positionIndex0 = vertexComponents0[safe: 0]?.int,
+                    let normalIndex0 = vertexComponents0[safe: 2]?.int,
+
+                    let vertexComponents1 = components[safe: 2]?.split(separator: "/").map { String($0) },
+                    let positionIndex1 = vertexComponents1[safe: 0]?.int,
+                    let normalIndex1 = vertexComponents1[safe: 2]?.int,
+
+                    let vertexComponents2 = components[safe: 3]?.split(separator: "/").map { String($0) },
+                    let positionIndex2 = vertexComponents2[safe: 0]?.int,
+                    let normalIndex2 = vertexComponents2[safe: 2]?.int {
+                        let vertex0 = Vertex(position: positions[positionIndex0-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex0-1])
+                        let vertex1 = Vertex(position: positions[positionIndex1-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex1-1])
+                        let vertex2 = Vertex(position: positions[positionIndex2-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex2-1])
+                        vertices.append(vertex0)
+                        vertices.append(vertex1)
+                        vertices.append(vertex2)
+                    }
+            default:
+                break
+            }
+        }
+        return vertices
+    }
+
     enum Kind {
+        case obj(URL)
         case cube
         case pyramid
     }
@@ -63,8 +110,12 @@ final class Model {
 
     init(program: ShaderProgram, kind: Kind, textureBitmap: NSBitmapImageRep?) throws {
         vertices = switch (kind) {
-        case .cube: Self.cubeVertices
-        case .pyramid: Self.pyramidVertices
+        case .obj(let url):
+            try Self.vertices(forFilePathUrl: url)
+        case .cube:
+            Self.cubeVertices
+        case .pyramid:
+            Self.pyramidVertices
         }
 
         glGenVertexArrays(1, &vertexArrayId)

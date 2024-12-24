@@ -27,8 +27,8 @@ final class PhongRenderPass {
 
         glEnable(GLenum(GL_DEPTH_TEST))
         glDepthFunc(GLenum(GL_LEQUAL))
-        glEnable(GLenum(GL_CULL_FACE))
-        glFrontFace(GLenum(GL_CW))
+        //glEnable(GLenum(GL_CULL_FACE))
+        //glFrontFace(GLenum(GL_CW))
 
         let projectionMatrixId = glGetUniformLocation(program.programId, "u_projectionMatrix")
         camera.projectionMatrix.pointer {

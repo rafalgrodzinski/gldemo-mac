@@ -22,6 +22,9 @@
 		B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */; };
 		B5B08FA42D1A533C00E1F6E7 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FA32D1A533C00E1F6E7 /* ImageExtensions.swift */; };
 		B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FA72D1A5B0200E1F6E7 /* Light.swift */; };
+		B5B08FAC2D1A97B300E1F6E7 /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = B5B08FAB2D1A97B300E1F6E7 /* monkey.obj */; };
+		B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FAD2D1A9DAA00E1F6E7 /* CollectionExtensions.swift */; };
+		B5B08FB02D1A9DEE00E1F6E7 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerExtensions.swift; sourceTree = "<group>"; };
 		B5B08FA32D1A533C00E1F6E7 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		B5B08FA72D1A5B0200E1F6E7 /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		B5B08FAB2D1A97B300E1F6E7 /* monkey.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
+		B5B08FAD2D1A9DAA00E1F6E7 /* CollectionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtensions.swift; sourceTree = "<group>"; };
+		B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,7 @@
 		B5B08F862D1550B800E1F6E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B5B08FAB2D1A97B300E1F6E7 /* monkey.obj */,
 				B5B08F792D15501300E1F6E7 /* Assets.xcassets */,
 				B5B08F7E2D15501300E1F6E7 /* glDemo.entitlements */,
 			);
@@ -101,6 +108,8 @@
 			children = (
 				B5B08F9E2D191DE700E1F6E7 /* PointerExtensions.swift */,
 				B5B08FA32D1A533C00E1F6E7 /* ImageExtensions.swift */,
+				B5B08FAD2D1A9DAA00E1F6E7 /* CollectionExtensions.swift */,
+				B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -196,6 +205,7 @@
 			files = (
 				B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
+				B5B08FAC2D1A97B300E1F6E7 /* monkey.obj in Resources */,
 				B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,12 +217,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B08FB02D1A9DEE00E1F6E7 /* StringExtensions.swift in Sources */,
 				B5B08F982D190BB400E1F6E7 /* Model.swift in Sources */,
 				B5B08F8A2D15607B00E1F6E7 /* Renderer.swift in Sources */,
 				B5B08FA42D1A533C00E1F6E7 /* ImageExtensions.swift in Sources */,
 				B5B08F882D1551C600E1F6E7 /* GLView.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
+				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
 				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
