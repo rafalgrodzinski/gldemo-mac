@@ -19,7 +19,7 @@ final class PhongRenderPass {
             fragmentShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "fsh")!
         )
 
-        light = Light(direction: (1, 1, -1), color: (1, 1, 1), ambientIntensity: 0.5, diffuseIntensity: 0.5, specularIntensity: 1)
+        light = Light(kind: .directional(direction: (1, 1, -1)), color: (1, 1, 1), intensity: 0.5)
     }
 
     func initFrame(withCamera camera: Camera) {

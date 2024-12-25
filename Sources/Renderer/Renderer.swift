@@ -30,7 +30,7 @@ final class Renderer {
         models = [
             try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
             //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
-            try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
+            //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
         ]
         camera = Camera()
     }

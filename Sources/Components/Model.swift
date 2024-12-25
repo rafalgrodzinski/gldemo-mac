@@ -10,46 +10,89 @@ import OpenGL.GL
 import GLKit
 
 final class Model {
-    struct Vertex {
-        let position: (x: GLfloat, y: GLfloat, z: GLfloat)
+    struct Material {
         let color: (r: GLfloat, g: GLfloat, b: GLfloat)
         let coords: (u: GLfloat, v: GLfloat)
+        let ambient: GLfloat
+        let diffuse: GLfloat
+        let specular: GLfloat
+    }
+
+    struct Vertex {
+        let position: (x: GLfloat, y: GLfloat, z: GLfloat)
         let normal: (x: GLfloat, y: GLfloat, z: GLfloat)
+        let material: Material
     }
 
     private static let cubeVertices = [
         // Front
-        Vertex(position: (-1, -1, 1), color: (1, 0, 0), coords: (0, 1), normal: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 0), normal: (0, 0, 1)), Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0), normal: (0, 0, 1)),
-        Vertex(position: (1, -1, 1), color: (1, 0, 0), coords: (0, 0), normal: (0, 0, 1)), Vertex(position: (-1, 1, 1), color: (1, 0, 0), coords: (1, 1), normal: (0, 0, 1)), Vertex(position: (1, 1, 1), color: (1, 0, 0), coords: (1, 0), normal: (0, 0, 1)),
+        Vertex(position: (-1, -1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (1, 10), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, 1), normal: (0, 0, 1), material: Material(color: (1, 0, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Back
-        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0), normal: (0, 0, -1)), Vertex(position: (1, 1, -1), color: (0, 1, 0), coords: (0, 1), normal: (0, 0, -1)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1), normal: (0, 0, -1)),
-        Vertex(position: (1, -1, -1), color: (0, 1, 0), coords: (0, 0), normal: (0, 0, -1)), Vertex(position: (-1, 1, -1), color: (0, 1, 0), coords: (1, 1), normal: (0, 0, -1)), Vertex(position: (-1, -1, -1), color: (0, 1, 0), coords: (1, 0), normal: (0, 0, -1)),
+        Vertex(position: (1, -1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, -1), normal: (0, 0, -1), material: Material(color: (0, 1, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Left
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 0, 0)), Vertex(position: (-1, 1, -1), color: (0, 0, 1), coords: (0, 1), normal: (-1, 0, 0)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1), normal: (-1, 0, 0)),
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 0, 0)), Vertex(position: (-1, 1, 1), color: (0, 0, 1), coords: (1, 1), normal: (-1, 0, 0)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0), normal: (-1, 0, 0)),
+        Vertex(position: (-1, -1, -1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, -1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, 1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, -1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, 1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, 1), normal: (-1, 0, 0), material: Material(color: (0, 0, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Right
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 0, 0)), Vertex(position: (1, 1, 1), color: (1, 1, 0), coords: (0, 1), normal: (1, 0, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1), normal: (1, 0, 0)),
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 0, 0)), Vertex(position: (1, 1, -1), color: (1, 1, 0), coords: (1, 1), normal: (1, 0, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0), normal: (1, 0, 0)),
+        Vertex(position: (1, -1, 1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, 1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, -1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, -1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (1, 0, 0), material: Material(color: (1, 1, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Top
-        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, 1, 0)), Vertex(position: (-1, 1, -1), color: (0, 1, 1), coords: (0, 1), normal: (0, 1, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1), normal: (0, 1, 0)),
-        Vertex(position: (-1, 1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, 1, 0)), Vertex(position: (1, 1, -1), color: (0, 1, 1), coords: (1, 1), normal: (0, 1, 0)), Vertex(position: (1, 1, 1), color: (0, 1, 1), coords: (1, 0), normal: (0, 1, 0)),
+        Vertex(position: (-1, 1, 1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, -1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, -1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, 1, 1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, -1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, 1, 1), normal: (0, 1, 0), material: Material(color: (0, 1, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Bottom
-        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0), normal: (0, -1, 0)), Vertex(position: (-1, -1, -1), color: (1, 0, 1), coords: (0, 0), normal: (0, -1, 0)),
-        Vertex(position: (-1, -1, 1), color: (1, 0, 1), coords: (0, 0), normal: (0, -1, 0)), Vertex(position: (1, -1, 1), color: (1, 0, 1), coords: (1, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (1, 0, 1), coords: (1, 0), normal: (0, -1, 0))
+        Vertex(position: (-1, -1, 1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, -1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, 1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (0, -1, 0), material: Material(color: (1, 0, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1))
     ]
 
     private static let pyramidVertices = [
         // Front
-        Vertex(position: (-1, -1, 1), color: (0, 1, 0), coords: (0, 0), normal: (0, 1, 1)), Vertex(position: (0, 1, 0), color: (0, 1, 0), coords: (0.5, 1), normal: (0, 1, 1)), Vertex(position: (1, -1, 1), color: (0, 1, 0), coords: (1, 0), normal: (0, 1, 1)),
+        Vertex(position: (-1, -1, 1), normal: (0, 1, 1), material: Material(color: (0, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (0, 1, 0), normal: (0, 1, 1), material: Material(color: (0, 1, 0), coords: (0.5, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (0, 1, 1), material: Material(color: (0, 1, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Back
-        Vertex(position: (1, -1, -1), color: (1, 0, 0), coords: (0, 0), normal: (0, 1, -1)), Vertex(position: (0, 1, 0), color: (1, 0, 0), coords: (0.5, 1), normal: (0, 1, -1)), Vertex(position: (-1, -1, -1), color: (1, 0, 0), coords: (1, 0), normal: (0, 1, -1)),
+        Vertex(position: (1, -1, -1), normal: (0, 1, -1), material: Material(color: (1, 0, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (0, 1, 0), normal: (0, 1, -1), material: Material(color: (1, 0, 0), coords: (0.5, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, -1), normal: (0, 1, -1), material: Material(color: (1, 0, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Left
-        Vertex(position: (-1, -1, -1), color: (0, 0, 1), coords: (0, 0), normal: (-1, 1, 0)), Vertex(position: (0, 1, 0), color: (0, 0, 1), coords: (0.5, 1), normal: (-1, 1, 0)), Vertex(position: (-1, -1, 1), color: (0, 0, 1), coords: (1, 0), normal: (-1, 1, 0)),
+        Vertex(position: (-1, -1, -1), normal: (-1, 1, 0), material: Material(color: (0, 0, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (0, 1, 0), normal: (-1, 1, 0), material: Material(color: (0, 0, 1), coords: (0.5, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, 1), normal: (-1, 1, 0), material: Material(color: (0, 0, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Right
-        Vertex(position: (1, -1, 1), color: (1, 1, 0), coords: (0, 0), normal: (1, 1, 0)), Vertex(position: (0, 1, 0), color: (1, 1, 0), coords: (0.5, 1), normal: (1, 1, 0)), Vertex(position: (1, -1, -1), color: (1, 1, 0), coords: (1, 0), normal: (1, 1, 0)),
+        Vertex(position: (1, -1, 1), normal: (1, 1, 0), material: Material(color: (1, 1, 0), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (0, 1, 0), normal: (1, 1, 0), material: Material(color: (1, 1, 0), coords: (0.5, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (1, 1, 0), material: Material(color: (1, 1, 0), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
         // Bottom
-        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0), normal: (0, -1, 0)), Vertex(position: (-1, -1, -1), color: (0, 1, 1), coords: (0, 0), normal: (0, -1, 0)),
-        Vertex(position: (-1, -1, 1), color: (0, 1, 1), coords: (0, 0), normal: (0, -1, 0)), Vertex(position: (1, -1, 1), color: (0, 1, 1), coords: (1, 1), normal: (0, -1, 0)), Vertex(position: (1, -1, -1), color: (0, 1, 1), coords: (1, 0), normal: (0, -1, 0))
+        Vertex(position: (-1, -1, 1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (0, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, -1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (-1, -1, 1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, 1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (1, 1), ambient: 1, diffuse: 1, specular: 1)),
+        Vertex(position: (1, -1, -1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1))
     ]
 
     private static func vertices(forFilePathUrl url: URL) throws -> [Vertex] {
@@ -84,9 +127,9 @@ final class Model {
                     let vertexComponents2 = components[safe: 3]?.split(separator: "/").map { String($0) },
                     let positionIndex2 = vertexComponents2[safe: 0]?.int,
                     let normalIndex2 = vertexComponents2[safe: 2]?.int {
-                        let vertex0 = Vertex(position: positions[positionIndex0-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex0-1])
-                        let vertex1 = Vertex(position: positions[positionIndex1-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex1-1])
-                        let vertex2 = Vertex(position: positions[positionIndex2-1], color: (0.5, 0.5, 0.5), coords: (0, 0), normal: normals[normalIndex2-1])
+                        let vertex0 = Vertex(position: positions[positionIndex0-1], normal: normals[normalIndex0-1], material: Material(color: (0.5, 0.5, 0.5), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1))
+                        let vertex1 = Vertex(position: positions[positionIndex1-1], normal: normals[normalIndex1-1], material: Material(color: (0.5, 0.5, 0.5), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1))
+                        let vertex2 = Vertex(position: positions[positionIndex2-1], normal: normals[normalIndex2-1], material: Material(color: (0.5, 0.5, 0.5), coords: (0, 0), ambient: 1, diffuse: 1, specular: 1))
                         vertices.append(vertex0)
                         vertices.append(vertex1)
                         vertices.append(vertex2)
@@ -137,6 +180,17 @@ final class Model {
             UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.position)!)
         )
 
+        let normalId = glGetAttribLocation(program.programId, "a_normal")
+        glEnableVertexAttribArray(GLuint(normalId))
+        glVertexAttribPointer(
+            GLuint(normalId),
+            3,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.normal)!)
+        )
+
         let colorId = glGetAttribLocation(program.programId, "a_color")
         glEnableVertexAttribArray(GLuint(colorId))
         glVertexAttribPointer(
@@ -145,21 +199,65 @@ final class Model {
             GLenum(GL_FLOAT),
             GLboolean(GL_FALSE),
             GLsizei(MemoryLayout<Vertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.color)!)
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.color)!)
         )
 
-        if let textureBitmap {
-            let coordsId = glGetAttribLocation(program.programId, "a_coords")
-            glEnableVertexAttribArray(GLuint(coordsId))
-            glVertexAttribPointer(
-                GLuint(coordsId),
-                2,
-                GLenum(GL_FLOAT),
-                GLboolean(GL_FALSE),
-                GLsizei(MemoryLayout<Vertex>.stride),
-                UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.coords)!)
-            )
+        let coordsId = glGetAttribLocation(program.programId, "a_coords")
+        glEnableVertexAttribArray(GLuint(coordsId))
+        glVertexAttribPointer(
+            GLuint(coordsId),
+            2,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.coords)!)
+        )
 
+        let ambientDiffuseSpecularId = glGetAttribLocation(program.programId, "a_ambientDiffuseSpecular")
+        glEnableVertexAttribArray(GLuint(ambientDiffuseSpecularId))
+        glVertexAttribPointer(
+            GLuint(ambientDiffuseSpecularId),
+            3,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
+        )
+
+        /*let ambientId = glGetAttribLocation(program.programId, "a_ambient")
+        glEnableVertexAttribArray(GLuint(ambientId))
+        glVertexAttribPointer(
+            GLuint(ambientId),
+            1,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
+        )
+
+        let diffuseId = glGetAttribLocation(program.programId, "a_diffuse")
+        glEnableVertexAttribArray(GLuint(diffuseId))
+        glVertexAttribPointer(
+            GLuint(diffuseId),
+            1,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.diffuse)!)
+        )*/
+
+        /*let specularId = glGetAttribLocation(program.programId, "a_specular")
+        glEnableVertexAttribArray(GLuint(specularId))
+        glVertexAttribPointer(
+            GLuint(specularId),
+            1,
+            GLenum(GL_FLOAT),
+            GLboolean(GL_FALSE),
+            GLsizei(MemoryLayout<Vertex>.stride),
+            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.specular)!)
+        )*/
+
+        if let textureBitmap {
             glGenTextures(1, &textureId)
             glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
             glTexImage2D(
@@ -180,17 +278,6 @@ final class Model {
             let samplerId = glGetUniformLocation(program.programId, "u_sampler")
             glUniform1i(samplerId, 0)
         }
-
-        let normalId = glGetAttribLocation(program.programId, "a_normal")
-        glEnableVertexAttribArray(GLuint(normalId))
-        glVertexAttribPointer(
-            GLuint(normalId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<Vertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.normal)!)
-        )
 
         glBindVertexArray(0)
     }
