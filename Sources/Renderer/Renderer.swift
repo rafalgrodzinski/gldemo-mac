@@ -43,6 +43,7 @@ final class Renderer {
     }
 
     func update(deltaTime: TimeInterval) {
+        camera.update(deltaTime: deltaTime)
     }
 
     func draw(configs: [GLView.Config]) {

@@ -23,11 +23,11 @@ in float v_specular;
 
 uniform sampler2D u_sampler;
 uniform Light u_light;
-//uniform vec3 u_eyePosition;
+uniform vec3 u_cameraPosition;
 
 out vec4 o_color;
 
-vec3 directionalLightColor(vec3 position, vec3 normal, vec3 baseColor, Light light, float ambient, float diffuse, float specular) {
+vec3 directionalLightColor(vec3 position, vec3 normal, vec3 baseColor, Light light, vec3 cameraPosition, float ambient, float diffuse, float specular) {
     vec3 color = vec3(0);
 
     // Ambient
@@ -41,7 +41,7 @@ vec3 directionalLightColor(vec3 position, vec3 normal, vec3 baseColor, Light lig
     color += baseColor * light.color * diffuseIntensity;
 
     // Specular
-    vec3 cameraDirection = normalize(vec3(0,0,0) - position);
+    vec3 cameraDirection = normalize(cameraPosition - position);
     vec3 lightDirectionReflected = normalize(reflect(light.direction, normal));
     float specularIntensity = dot(cameraDirection, lightDirectionReflected) * light.intensity;
     specularIntensity = clamp(specularIntensity, 0.0, 1.0);
@@ -52,5 +52,5 @@ vec3 directionalLightColor(vec3 position, vec3 normal, vec3 baseColor, Light lig
 
 void main(void) {
     vec3 baseColor = vec3(texture(u_sampler, v_coords)) + v_color;
-    o_color = vec4(directionalLightColor(v_position, v_normal, baseColor, u_light, v_ambient, v_diffuse, v_specular), 1.0);
+    o_color = vec4(directionalLightColor(v_position, v_normal, baseColor, u_light, u_cameraPosition, v_ambient, v_diffuse, v_specular), 1.0);
 }
