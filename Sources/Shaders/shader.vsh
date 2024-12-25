@@ -16,22 +16,22 @@ layout (location=4) in vec3 a_ambientDiffuseSpecular;
 uniform mat4 u_projectionMatrix;
 uniform mat4 u_modelMatrix;
 
-//out vec3 v_position;
+out vec3 v_position;
 out vec3 v_normal;
 out vec3 v_color;
 out vec2 v_coords;
 out float v_ambient;
 out float v_diffuse;
-//out float v_specular;
+out float v_specular;
 
 void main(void) {
     gl_Position = u_projectionMatrix * u_modelMatrix * vec4(a_position, 1.0);
 
-    //v_position = vec3(u_modelMatrix * vec4(a_position, 1.0));
+    v_position = vec3(u_modelMatrix * vec4(a_position, 1.0));
     v_normal = mat3(u_modelMatrix) * a_normal;
     v_color = a_color;
     v_coords = a_coords;
     v_ambient = a_ambientDiffuseSpecular.x;
     v_diffuse = a_ambientDiffuseSpecular.y;
-    //v_specular = a_specular;
+    v_specular = a_ambientDiffuseSpecular.z;
 }
