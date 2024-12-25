@@ -137,8 +137,8 @@
 			children = (
 				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
-				B5B08F972D190BB400E1F6E7 /* Model.swift */,
 				B5B08FA72D1A5B0200E1F6E7 /* Light.swift */,
+				B5B08F972D190BB400E1F6E7 /* Model.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

@@ -224,39 +224,6 @@ final class Model {
             UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
         )
 
-        /*let ambientId = glGetAttribLocation(program.programId, "a_ambient")
-        glEnableVertexAttribArray(GLuint(ambientId))
-        glVertexAttribPointer(
-            GLuint(ambientId),
-            1,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<Vertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
-        )
-
-        let diffuseId = glGetAttribLocation(program.programId, "a_diffuse")
-        glEnableVertexAttribArray(GLuint(diffuseId))
-        glVertexAttribPointer(
-            GLuint(diffuseId),
-            1,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<Vertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.diffuse)!)
-        )*/
-
-        /*let specularId = glGetAttribLocation(program.programId, "a_specular")
-        glEnableVertexAttribArray(GLuint(specularId))
-        glVertexAttribPointer(
-            GLuint(specularId),
-            1,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<Vertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.specular)!)
-        )*/
-
         if let textureBitmap {
             glGenTextures(1, &textureId)
             glBindTexture(GLenum(GL_TEXTURE_2D), textureId)

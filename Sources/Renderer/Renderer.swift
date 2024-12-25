@@ -22,17 +22,19 @@ final class Renderer {
     }
 
     private let renderPass: PhongRenderPass
-    private let models: [Model]
     private let camera: Camera
+    private let light: Light
+    private let models: [Model]
 
     init() throws {
         renderPass = try PhongRenderPass()
+        camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 100))
+        light = Light(kind: .directional(direction: (1, 1, -1)), color: (1, 1, 1), intensity: 0.5)
         models = [
             try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
             //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
             //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
         ]
-        camera = Camera()
     }
 
     func resize(width: Float, height: Float) {
@@ -44,10 +46,10 @@ final class Renderer {
     }
 
     func draw(configs: [GLView.Config]) {
-        glClearColor(0, 0, 0, 1)
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
+        renderPass.initFrame()
+        camera.initFrame(program: renderPass.program)
+        light.initFrame(program: renderPass.program)
 
-        renderPass.initFrame(withCamera: camera)
         renderPass.draw(models: models, configs: configs)
     }
 }

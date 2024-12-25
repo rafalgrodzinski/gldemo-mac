@@ -11,34 +11,27 @@ import GLKit
 
 final class PhongRenderPass {
     let program: ShaderProgram
-    let light: Light
 
     init() throws {
         program = try ShaderProgram(
             vertexShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "vsh")!,
             fragmentShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "fsh")!
         )
-
-        light = Light(kind: .directional(direction: (1, 1, -1)), color: (1, 1, 1), intensity: 0.5)
     }
 
-    func initFrame(withCamera camera: Camera) {
-        glUseProgram(program.programId)
+    func initFrame() {
+        glClearColor(0, 0, 0, 1)
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
         glEnable(GLenum(GL_DEPTH_TEST))
         glDepthFunc(GLenum(GL_LEQUAL))
         //glEnable(GLenum(GL_CULL_FACE))
         //glFrontFace(GLenum(GL_CW))
 
-        let projectionMatrixId = glGetUniformLocation(program.programId, "u_projectionMatrix")
-        camera.projectionMatrix.pointer {
-            glUniformMatrix4fv(projectionMatrixId, 1, GLboolean(GL_FALSE), $0)
-        }
+        glUseProgram(program.programId)
     }
 
     func draw(models: [Model], configs: [GLView.Config]) {
-        light.update(program: program)
-
         for (i, model) in models.enumerated() {
             var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
             modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)
