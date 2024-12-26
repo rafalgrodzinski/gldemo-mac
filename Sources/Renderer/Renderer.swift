@@ -25,6 +25,7 @@ final class Renderer {
     private let camera: Camera
     private let light: Light
     private let models: [Model]
+    private let input: Input
 
     init() throws {
         renderPass = try PhongRenderPass()
@@ -32,9 +33,10 @@ final class Renderer {
         light = Light(kind: .directional(direction: (1, 1, -1)), color: (1, 1, 1), intensity: 0.5)
         models = [
             try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
-            //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
-            //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
+            try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
+            try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
         ]
+        input = Input()
     }
 
     func resize(width: Float, height: Float) {
@@ -43,7 +45,8 @@ final class Renderer {
     }
 
     func update(deltaTime: TimeInterval) {
-        camera.update(deltaTime: deltaTime)
+        camera.update(deltaTime: deltaTime, inputState: input.state)
+        input.update()
     }
 
     func draw(configs: [GLView.Config]) {

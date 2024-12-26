@@ -8,9 +8,11 @@
 import Foundation
 import OpenGL.GL
 import GLKit
-import GameController
 
 final class Camera {
+    private static let movementSpeed: GLfloat = 0.25
+    private static let fullTurnDelta: GLfloat = 400
+
     enum Kind {
         case perspective(angle: Float, width: Float, height: Float, near: Float, far: Float)
     }
@@ -18,14 +20,8 @@ final class Camera {
     private var projectionMatrix: GLKMatrix4
     private var viewMatrix: GLKMatrix4 = GLKMatrix4Identity
     private let kind: Kind
-
     private var position: (x: GLfloat, y: GLfloat, z: GLfloat) = (0, 0, 0)
-    private var isForward = false
-    private var isBackward = false
-    private var isLeft = false
-    private var isRight = false
-    private var isUp = false
-    private var isDown = false
+    private var rotation: (rx: GLfloat, ry: GLfloat, rz: GLfloat) = (0, 0, 0)
 
     init(kind: Kind) {
         self.kind = kind
@@ -37,18 +33,6 @@ final class Camera {
                 projectionMatrix = GLKMatrix4MakePerspective(angle * Float.pi / 180.0, width / height, near, far)
             }
         }
-
-        NotificationCenter.default.addObserver(forName: .GCKeyboardDidConnect, object: nil, queue: nil) { notification in
-            let keyboard = notification.object as? GCKeyboard
-            keyboard?.keyboardInput?.keyChangedHandler = { [weak self] _, _, keyCode, isPressed in
-                if keyCode == .keyW { self?.isForward = isPressed }
-                if keyCode == .keyS { self?.isBackward = isPressed }
-                if keyCode == .keyA { self?.isLeft = isPressed }
-                if keyCode == .keyD { self?.isRight = isPressed }
-                if keyCode == .keyQ { self?.isDown = isPressed }
-                if keyCode == .keyE { self?.isUp = isPressed }
-            }
-        }
     }
 
     func resize(width: Float, height: Float) {
@@ -58,18 +42,26 @@ final class Camera {
         }
     }
 
-    func update(deltaTime: TimeInterval) {
-        let speed: GLfloat = 0.25
-        var positionDelta: (x: GLfloat, y: GLfloat, z: GLfloat) = (0, 0, 0)
-        if isForward { positionDelta.z -= 1.0 }
-        if isBackward { positionDelta.z += 1.0 }
-        if isLeft { positionDelta.x -= 1.0 }
-        if isRight { positionDelta.x += 1.0 }
-        if isUp { positionDelta.y += 1.0 }
-        if isDown { positionDelta.y -= 1.0 }
+    func update(deltaTime: TimeInterval, inputState: Input.State) {
+        if inputState.isMouseLeft {
+            rotation = (
+                (rotation.rx - inputState.mouseDeltaY / Self.fullTurnDelta).clamp((-Float.pi/2 + 0.01)...(Float.pi/2 - 0.01)),
+                rotation.ry - inputState.mouseDeltaX / Self.fullTurnDelta,
+                rotation.rz
+            )
+        }
 
-        self.position = (position.x + positionDelta.x * speed, position.y + positionDelta.y * speed, position.z + positionDelta.z * speed)
-        viewMatrix = GLKMatrix4Invert(GLKMatrix4MakeTranslation(position.x, position.y, position.z), nil)
+        self.position = (
+            position.x + inputState.movement.x * Self.movementSpeed * cos(rotation.ry) + inputState.movement.z * Self.movementSpeed * sin(rotation.ry),
+            position.y + inputState.movement.y * Self.movementSpeed + inputState.movement.z * Self.movementSpeed * sin(rotation.rx),
+            position.z + inputState.movement.z * Self.movementSpeed * cos(rotation.ry) * cos(rotation.rx) - inputState.movement.x * Self.movementSpeed * sin(rotation.ry) * cos(rotation.rx)
+        )
+
+        let eyeX = position.x + sin(rotation.ry) * abs(cos(rotation.rx))
+        let eyeY = position.y + sin(rotation.rx)
+        let eyeZ = position.z + cos(rotation.ry) * abs(cos(rotation.rx))
+
+        viewMatrix = GLKMatrix4MakeLookAt(eyeX, eyeY, eyeZ, position.x, position.y, position.z, 0, 1, 0)
     }
 
     func initFrame(program: ShaderProgram) {
@@ -85,8 +77,5 @@ final class Camera {
 
         let cameraPositionId = glGetUniformLocation(program.programId, "u_cameraPosition")
         glUniform3f(cameraPositionId, position.x, position.y, position.z)
-        /*viewMatrix.pointer {
-            glUniformMatrix4fv(viewMatrixId, 1, GLboolean(GL_FALSE), $0)
-        }*/
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var configs = [GLView.Config](repeating: GLView.Config(), count: 2)
+    @State private var configs = [GLView.Config](repeating: GLView.Config(), count: 3)
 
     var body: some View {
         HStack(spacing: 0) {
@@ -20,6 +20,9 @@ struct ContentView: View {
                 }
                 Tab("2", systemImage: "02.circle") {
                     ControlsView(config: $configs[1])
+                }
+                Tab("3", systemImage: "03.circle") {
+                    ControlsView(config: $configs[2])
                 }
             }
         }
