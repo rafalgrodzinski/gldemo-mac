@@ -43,9 +43,9 @@ final class Camera {
     }
 
     func update(deltaTime: TimeInterval, inputState: Input.State) {
-        if inputState.isMouseRight && (inputState.mouseDeltaX != 0 || inputState.mouseDeltaY != 0) {
+        if inputState.isMouseRight && inputState.isMouseInView && (inputState.mouseDeltaX != 0 || inputState.mouseDeltaY != 0) {
             arcballUpdate(inputState: inputState)
-        } else if inputState.isMouseLeft {
+        } else if inputState.isMouseLeft && inputState.isMouseInView {
             flybyUpdate(deltaTime: deltaTime, inputState: inputState)
             //arcballUpdate(inputState: inputState)
         }

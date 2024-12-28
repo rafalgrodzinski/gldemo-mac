@@ -27,7 +27,8 @@ final class Renderer {
     private let models: [Model]
     private let input: Input
 
-    init() throws {
+    init(input: Input) throws {
+        self.input = input
         renderPass = try PhongRenderPass()
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 100))
         light = Light(kind: .directional(direction: (1, 1, -1)), color: (1, 1, 1), intensity: 0.5)
@@ -36,7 +37,6 @@ final class Renderer {
             try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
             try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
         ]
-        input = Input()
     }
 
     func resize(width: Float, height: Float) {
