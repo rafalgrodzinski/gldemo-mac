@@ -58,6 +58,7 @@ class GLView: NSOpenGLView {
     private var displayLink: CVDisplayLink?
     private var previousTime: Double?
     var configs = [Config]()
+    private let input = Input()
 
     init() {
         super.init(frame: .zero, pixelFormat: Renderer.pixelFormat)!
@@ -70,7 +71,7 @@ class GLView: NSOpenGLView {
     override func prepareOpenGL() {
         super.prepareOpenGL()
         do {
-            renderer = try Renderer()
+            renderer = try Renderer(input: input)
         } catch {
             fatalError(error.description)
         }
@@ -97,6 +98,7 @@ class GLView: NSOpenGLView {
     }
 
     override func reshape() {
+        addTrackingArea(NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeAlways], owner: self))
         renderer?.resize(width: Float(frame.width), height: Float(frame.height))
     }
 
@@ -109,5 +111,13 @@ class GLView: NSOpenGLView {
 
         CGLFlushDrawable(context.cglContextObj!)
         CGLUnlockContext(context.cglContextObj!)
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        input.update(isMouseInView: true)
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        input.update(isMouseInView: false)
     }
 }

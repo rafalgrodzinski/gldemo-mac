@@ -16,6 +16,7 @@ final class Input {
         let isRight: Bool
         let isUp: Bool
         let isDown: Bool
+        let isMouseInView: Bool
         let mouseDeltaX: GLfloat
         let mouseDeltaY: GLfloat
         let isMouseLeft: Bool
@@ -44,6 +45,7 @@ final class Input {
             isRight: Bool? = nil,
             isUp: Bool? = nil,
             isDown: Bool? = nil,
+            isMouseInView: Bool? = nil,
             mouseDeltaX: GLfloat? = nil,
             mouseDeltaY: GLfloat? = nil,
             isMouseLeft: Bool? = nil,
@@ -55,6 +57,7 @@ final class Input {
             self.isRight = isRight ?? false
             self.isUp = isUp ?? false
             self.isDown = isDown ?? false
+            self.isMouseInView = isMouseInView ?? false
             self.mouseDeltaX = mouseDeltaX ?? 0
             self.mouseDeltaY = mouseDeltaY ?? 0
             self.isMouseLeft = isMouseLeft ?? false
@@ -68,6 +71,7 @@ final class Input {
             isRight: Bool? = nil,
             isUp: Bool? = nil,
             isDown: Bool? = nil,
+            isMouseInView: Bool? = nil,
             mouseDeltaX: GLfloat? = nil,
             mouseDeltaY: GLfloat? = nil,
             isMouseLeft: Bool? = nil,
@@ -80,6 +84,7 @@ final class Input {
                 isRight: isRight ?? self.isRight,
                 isUp: isUp ?? self.isUp,
                 isDown: isDown ?? self.isDown,
+                isMouseInView: isMouseInView ?? self.isMouseInView,
                 mouseDeltaX: mouseDeltaX ?? self.mouseDeltaX,
                 mouseDeltaY: mouseDeltaY ?? self.mouseDeltaY,
                 isMouseLeft: isMouseLeft ?? self.isMouseLeft,
@@ -131,9 +136,11 @@ final class Input {
                 self?.state = state.update(mouseDeltaX: state.mouseDeltaX + deltaX, mouseDeltaY: state.mouseDeltaY + deltaY)
             }
         }
+        
+        NSEvent.addLocalMonitorForEvents(matching: [.keyUp, .keyDown]) { _ in nil }
     }
 
-    func update() {
-        state = state.update(mouseDeltaX: 0, mouseDeltaY: 0)
+    func update(isMouseInView: Bool? = nil) {
+        state = state.update(isMouseInView: isMouseInView ?? state.isMouseInView, mouseDeltaX: 0, mouseDeltaY: 0)
     }
 }

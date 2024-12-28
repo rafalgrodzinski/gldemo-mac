@@ -9,22 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var configs = [GLView.Config](repeating: GLView.Config(), count: 3)
-
+    
     var body: some View {
         HStack(spacing: 0) {
             GLViewWrapper(configs: configs)
                 .background(Color.blue)
             TabView {
-                Tab("1", systemImage: "01.circle") {
-                    ControlsView(config: $configs[0])
-                }
-                Tab("2", systemImage: "02.circle") {
-                    ControlsView(config: $configs[1])
-                }
-                Tab("3", systemImage: "03.circle") {
-                    ControlsView(config: $configs[2])
-                }
-            }
+                ControlsView(config: $configs[0])
+                    .tabItem { Label("1", systemImage: "01.circle") }
+                ControlsView(config: $configs[1])
+                    .tabItem { Label("2", systemImage: "02.circle") }
+                ControlsView(config: $configs[2])
+                    .tabItem { Label("3", systemImage: "03.circle") }
+            }.frame(width: 200)
         }
     }
 }

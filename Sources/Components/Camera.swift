@@ -43,7 +43,7 @@ final class Camera {
     }
 
     func update(deltaTime: TimeInterval, inputState: Input.State) {
-        if inputState.isMouseLeft {
+        if inputState.isMouseLeft && inputState.isMouseInView {
             rotation = (
                 (rotation.rx - inputState.mouseDeltaY / Self.fullTurnDelta).clamp((-Float.pi/2 + 0.01)...(Float.pi/2 - 0.01)),
                 rotation.ry - inputState.mouseDeltaX / Self.fullTurnDelta,
