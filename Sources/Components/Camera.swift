@@ -11,7 +11,7 @@ import GLKit
 
 final class Camera {
     private static let movementSpeed: GLfloat = 0.25
-    private static let fullTurnDelta: GLfloat = 400
+    private static let fullTurnDelta: GLfloat = 200
 
     enum Kind {
         case perspective(angle: Float, width: Float, height: Float, near: Float, far: Float)
@@ -47,8 +47,11 @@ final class Camera {
             arcballUpdate(inputState: inputState)
         } else if inputState.isMouseLeft && inputState.isMouseInView {
             flybyUpdate(deltaTime: deltaTime, inputState: inputState)
-            //arcballUpdate(inputState: inputState)
         }
+
+        viewMatrix = GLKMatrix4MakeXRotation(rotation.rx)
+        viewMatrix = GLKMatrix4RotateY(viewMatrix, -rotation.ry)
+        viewMatrix = GLKMatrix4Translate(viewMatrix, -position.x, -position.y, -position.z)
     }
 
     private func flybyUpdate(deltaTime: TimeInterval, inputState: Input.State) {
@@ -65,104 +68,47 @@ final class Camera {
             position.y + inputState.movement.y * Self.movementSpeed + inputState.movement.z * Self.movementSpeed * sin(rotation.rx),
             position.z + inputState.movement.z * Self.movementSpeed * cos(rotation.ry) * cos(rotation.rx) - inputState.movement.x * Self.movementSpeed * sin(rotation.ry) * cos(rotation.rx)
         )
-
-        /*let eyeX = position.x - sin(rotation.ry) * abs(cos(rotation.rx))
-        let eyeY = position.y - sin(rotation.rx)
-        let eyeZ = position.z - cos(rotation.ry) * abs(cos(rotation.rx))*/
-
-        //viewMatrix = GLKMatrix4MakeLookAt(position.x, position.y, position.z, eyeX, eyeY, eyeZ, 0, 1, 0)
-
-        viewMatrix = GLKMatrix4MakeXRotation(rotation.rx)
-        viewMatrix = GLKMatrix4RotateY(viewMatrix, -rotation.ry)
-        viewMatrix = GLKMatrix4Translate(viewMatrix, -position.x, -position.y, -position.z)
     }
 
     private func arcballUpdate(inputState: Input.State) {
-        //let positionVector = GLKVector3(v: position)
-        let originVector = GLKVector3(v: (0, 0, 1))
-        let yZeroVector = GLKVector3Normalize(GLKVector3(v: (position.x, 0, position.z)))
-        let xZeroVector = GLKVector3Normalize(GLKVector3(v: (0, position.y, position.z)))
+        // X Angle
+        var xAngle = acos(
+            GLKVector3DotProduct(
+                GLKVector3Normalize(GLKVector3(v: (position.x, 0, position.z))),
+                GLKVector3Normalize(GLKVector3(v: position))
+            )
+        )
+        if position.y > 0 {
+            xAngle = -xAngle
+        }
 
-        let xDot = GLKVector3DotProduct(originVector, yZeroVector)
-        let yDot = GLKVector3DotProduct(originVector, xZeroVector)
+        xAngle += inputState.mouseDeltaY / Self.fullTurnDelta
+        if xAngle < -Float.pi/2 {
+            xAngle = -Float.pi/2
+        } else if xAngle > Float.pi/2 {
+            xAngle = Float.pi/2
+        }
 
-        var yRad = acos(xDot)
-       // let yRad: Float = -(xDot - 1)
-        //let xRad = 1.0 - yDot
-        /*if position.x < 0 {
-            yRad *= -1
-        }*/
+        // Y Angle
+        var yAngle = acos(
+            GLKVector3DotProduct(
+                GLKVector3(v: (0, 0, 1)),
+                GLKVector3Normalize(GLKVector3(v: (position.x, 0, position.z)))
+            )
+        )
+        if position.x < 0 {
+            yAngle =  Float.pi * 2 - yAngle
+        }
+        yAngle -= inputState.mouseDeltaX /  Self.fullTurnDelta
 
-        var xRad = acos(yDot)
-        /*if position.y > 0 {
-            xRad *= -1
-        }*/
+        // Rotation
+        rotation = (-xAngle, yAngle, rotation.rz)
 
-        //debugPrint("yRad: \(yRad), xRad: \(xRad)")
-
-        //let newXRad = xRad + inputState.movement.y * Self.movementSpeed
-        let newYRad = yRad + inputState.mouseDeltaX / Self.fullTurnDelta
-        let newXRad = xRad + inputState.mouseDeltaY / Self.fullTurnDelta
-
-        //debugPrint("xDot: \(xDot), yRad: \(yRad), newYRad: \(newYRad)")
-        //debugPrint("yDot: \(xDot), xRad: \(xRad), newXRad: \(newXRad)")
-
-        let yRot = Float.pi * inputState.mouseDeltaX / Self.fullTurnDelta
-        var xRot = Float.pi * inputState.mouseDeltaY / Self.fullTurnDelta
-
-        /*let testRot = GLKMatrix3MakeXRotation(xRot)
-        let testV = GLKMatrix3MultiplyVector3(testRot, GLKVector3(v: position))
-        let testD = GLKVector3DotProduct(GLKVector3(v: (0, 1, 0)), GLKVector3Normalize(testV))
-        debugPrint("testD: \(testD)")
-        if abs(testD) > 0.9 {
-            xRot = 0
-        }*/
-
-        let len = GLKVector2Length(GLKVector2(v: (xRot, yRot)))
-
-        let mat = GLKMatrix3MakeRotation(len, xRot / len, yRot / len, 0)
-        position = GLKMatrix3MultiplyVector3(mat, GLKVector3(v: position)).v
-
-        /*var q = GLKQuaternionIdentity
-        //q = GLKQuaternionMultiply(GLKQuaternionMakeWithAngleAndAxis(yRot, 0, 1, 0), q)
-        //q = GLKQuaternionMultiply(GLKQuaternionMakeWithAngleAndAxis(xRot, 1, 0, 0), q)
-        q = GLKQuaternionMultiply(q, GLKQuaternionMakeWithAngleAndAxis(len, xRot/len, yRot/len, 0))
-        let qm = GLKMatrix3MakeWithQuaternion(q)
-        //let qm = GLKMatrix4MakeWithQuaternion(q)
-        position = GLKMatrix3MultiplyVector3(qm, GLKVector3(v: position)).v*/
-
-        //var mat = GLKMatrix3MakeYRotation(yRot)
-        //mat = GLKMatrix3RotateX(mat, -xRot)
-        /*var mat = GLKMatrix3MakeXRotation(-xRot)
-        mat = GLKMatrix3RotateY(mat, yRot)
-        debugPrint("xRot: \(xRot)")
-        //var mat = GLKMatrix3MakeXRotation(-xRot)
-        let newP = GLKMatrix3MultiplyVector3(mat, GLKVector3(v: position))
-        position = newP.v*/
-
-        /*viewMatrix = GLKMatrix4MakeTranslation(0, 0, -GLKVector3Length(GLKVector3(v: position)))
-        viewMatrix = GLKMatrix4RotateX(viewMatrix, newXRad)
-        viewMatrix = GLKMatrix4RotateY(viewMatrix, newYRad)*/
-
-
-
-        /*var rotationMatrix = GLKMatrix3MakeYRotation(newYRad)// * Float.pi)
-        rotationMatrix = GLKMatrix3RotateX(rotationMatrix, newXRad)
-
-        let newOriginVector = GLKVector3(v: (0, 0, GLKVector3Length(GLKVector3(v: position))))
-
-        let newRotated = GLKMatrix3MultiplyVector3(rotationMatrix, newOriginVector)
-
-
-        //debugPrint("origin: \(newOriginVector.x) \(newOriginVector.y) \(newOriginVector.z), old: \(position.x) \(position.y) \(position.z), angle: \(newXRad), \(newYRad), new: \(newRotated.x) \(newRotated.y) \(newRotated.z)")
-        debugPrint("origin: \(newOriginVector.x) \(newOriginVector.y) \(newOriginVector.z), old: \(position.x) \(position.y) \(position.z), angle: \(newYRad), new: \(newRotated.x) \(newRotated.y) \(newRotated.z)")
-        position = (newRotated.x, newRotated.y, newRotated.z)
-
-        //debugPrint("rx: \(newXRad), ry: \(newYRad), x: \(position.x), y: \(position.y), z: \(position.z)")
-
-*/
-
-        //viewMatrix = GLKMatrix4MakeLookAt(position.x, position.y, position.z, 0, 0, 0, 0, 1, 0)
+        // Position
+        var positionMatrix = GLKMatrix4MakeYRotation(yAngle)
+        positionMatrix = GLKMatrix4RotateX(positionMatrix, xAngle)
+        let originVector = GLKVector3(v: (0, 0, GLKVector3Length(GLKVector3(v: position))))
+        position = GLKMatrix4MultiplyVector3(positionMatrix, originVector).v
     }
 
     func initFrame(program: ShaderProgram) {
