@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B51623012D20F3B000AACE15 /* Bear.obj in Resources */ = {isa = PBXBuildFile; fileRef = B51623002D20F3B000AACE15 /* Bear.obj */; };
+		B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */ = {isa = PBXBuildFile; fileRef = B51623022D20F3BF00AACE15 /* Bear.mtl */; };
+		B51623052D20F3C800AACE15 /* Bear.png in Resources */ = {isa = PBXBuildFile; fileRef = B51623042D20F3C800AACE15 /* Bear.png */; };
 		B5B08F762D15501100E1F6E7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F752D15501100E1F6E7 /* App.swift */; };
 		B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F772D15501100E1F6E7 /* ContentView.swift */; };
 		B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F792D15501300E1F6E7 /* Assets.xcassets */; };
@@ -30,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B51623002D20F3B000AACE15 /* Bear.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Bear.obj; sourceTree = "<group>"; };
+		B51623022D20F3BF00AACE15 /* Bear.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Bear.mtl; sourceTree = "<group>"; };
+		B51623042D20F3C800AACE15 /* Bear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bear.png; sourceTree = "<group>"; };
 		B5B08F722D15501100E1F6E7 /* glDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B08F752D15501100E1F6E7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B5B08F772D15501100E1F6E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +106,9 @@
 		B5B08F862D1550B800E1F6E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B51623002D20F3B000AACE15 /* Bear.obj */,
+				B51623022D20F3BF00AACE15 /* Bear.mtl */,
+				B51623042D20F3C800AACE15 /* Bear.png */,
 				B5B08FAB2D1A97B300E1F6E7 /* monkey.obj */,
 				B5B08F792D15501300E1F6E7 /* Assets.xcassets */,
 				B5B08F7E2D15501300E1F6E7 /* glDemo.entitlements */,
@@ -210,7 +219,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */,
+				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
+				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
+				B51623052D20F3C800AACE15 /* Bear.png in Resources */,
 				B5B08FAC2D1A97B300E1F6E7 /* monkey.obj in Resources */,
 				B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */,
 			);

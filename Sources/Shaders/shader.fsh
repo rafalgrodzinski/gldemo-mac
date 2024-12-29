@@ -37,20 +37,20 @@ vec3 directionalLightColor(vec3 position, vec3 normal, vec3 baseColor, Light lig
 
     // Diffuse
     float diffuseIntensity = dot(normal, -light.direction) * light.intensity * diffuse;
-    diffuseIntensity = clamp(diffuseIntensity, 0.0, 1.0);
+    diffuseIntensity = clamp(diffuseIntensity, 0.0, 1.0 - ambientIntensity);
     color += baseColor * light.color * diffuseIntensity;
 
     // Specular
     vec3 cameraDirection = normalize(cameraPosition - position);
-    vec3 lightDirectionReflected = normalize(reflect(light.direction, normal));
-    float specularIntensity = dot(cameraDirection, lightDirectionReflected) * light.intensity;
+    vec3 halfv = normalize(cameraDirection + light.direction);
+    float specularIntensity = dot(normal, -halfv);
     specularIntensity = clamp(specularIntensity, 0.0, 1.0);
-    color += pow(specularIntensity, specular) * light.color;
+    color += light.color * pow(specularIntensity, specular) * light.intensity;
 
     return color;
 }
 
 void main(void) {
-    vec3 baseColor = vec3(texture(u_sampler, v_coords)) + v_color;
+    vec3 baseColor = vec3(texture(u_sampler, v_coords)) * v_color;
     o_color = vec4(directionalLightColor(v_position, v_normal, baseColor, u_light, u_cameraPosition, v_ambient, v_diffuse, v_specular), 1.0);
 }
