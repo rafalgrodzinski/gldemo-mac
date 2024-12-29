@@ -33,7 +33,7 @@ final class Renderer {
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 100))
         light = Light(kind: .directional(direction: (1, -1, -1)), color: (1, 1, 1), intensity: 0.5)
         models = [
-            //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
+            try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
             //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
             //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
             try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "Bear", withExtension: "obj")!), textureBitmap: NSBitmapImageRep.bitmap(forImageName: "Bear.png"))

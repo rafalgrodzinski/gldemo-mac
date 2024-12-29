@@ -140,7 +140,7 @@ final class Model {
                     }
             case "vt":
                 if let u = components[safe: 1]?.float, let v = components[safe: 2]?.float {
-                    coords.append((u, v))
+                    coords.append((u, 1 - v))
                 }
             default:
                 break
@@ -232,9 +232,9 @@ final class Model {
             UnsafeRawPointer(bitPattern: MemoryLayout<Vertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
         )
 
+        glGenTextures(1, &textureId)
+        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
         if let textureBitmap {
-            glGenTextures(1, &textureId)
-            glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
             glTexImage2D(
                 GLenum(GL_TEXTURE_2D),
                 0,
@@ -246,13 +246,25 @@ final class Model {
                 GLenum(GL_UNSIGNED_BYTE),
                 textureBitmap.bitmapData
             )
-
-            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
-            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
-
-            let samplerId = glGetUniformLocation(program.programId, "u_sampler")
-            glUniform1i(samplerId, 0)
+        } else {
+            var whitePixel: (GLfloat, GLfloat, GLfloat) = (1.0, 1.0, 1.0)
+            glTexImage2D(
+                GLenum(GL_TEXTURE_2D),
+                0,
+                GL_RGBA,
+                1,
+                1,
+                0,
+                GLenum(GL_RGB),
+                GLenum(GL_FLOAT),
+                &whitePixel
+            )
         }
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
+
+        let samplerId = glGetUniformLocation(program.programId, "u_sampler")
+        glUniform1i(samplerId, 0)
 
         glBindVertexArray(0)
     }
