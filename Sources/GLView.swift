@@ -11,7 +11,7 @@ import OpenGL.GL
 
 extension GLView {
     struct Config {
-        static let tRange: ClosedRange<Float> = -10...10
+        static let tRange: ClosedRange<Float> = -100...100
         static let rRange: ClosedRange<Float> = -180...180
 
         let tx: Float
