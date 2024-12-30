@@ -28,7 +28,7 @@ final class Model {
     private var vertexArrayId: GLuint = 0
     private var textureId: GLuint = 0
 
-    init(program: ShaderProgram, vertices: [Vertex], textureBitmap: NSBitmapImageRep?) throws {
+    init(program: ShaderProgram, vertices: [Vertex], texture: Texture?) throws {
         verticesCount = vertices.count
 
         glGenVertexArrays(1, &vertexArrayId)
@@ -96,32 +96,18 @@ final class Model {
 
         glGenTextures(1, &textureId)
         glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
-        if let textureBitmap {
-            glTexImage2D(
-                GLenum(GL_TEXTURE_2D),
-                0,
-                GL_RGBA,
-                GLint(textureBitmap.pixelsWide),
-                GLint(textureBitmap.pixelsHigh),
-                0,
-                GLenum(GL_RGBA),
-                GLenum(GL_UNSIGNED_BYTE),
-                textureBitmap.bitmapData
-            )
-        } else {
-            var whitePixel: (GLfloat, GLfloat, GLfloat) = (1.0, 1.0, 1.0)
-            glTexImage2D(
-                GLenum(GL_TEXTURE_2D),
-                0,
-                GL_RGBA,
-                1,
-                1,
-                0,
-                GLenum(GL_RGB),
-                GLenum(GL_FLOAT),
-                &whitePixel
-            )
-        }
+        let texture = texture ?? Texture.whitePixel
+        glTexImage2D(
+            GLenum(GL_TEXTURE_2D),
+            0,
+            GL_RGBA,
+            GLint(texture.width),
+            GLint(texture.height),
+            0,
+            texture.pixelFormat,
+            GLenum(GL_UNSIGNED_BYTE),
+            texture.dataPointer
+        )
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
 

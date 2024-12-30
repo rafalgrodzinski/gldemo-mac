@@ -30,16 +30,19 @@ final class Renderer {
     init(input: Input) throws {
         self.input = input
         renderPass = try PhongRenderPass()
-        camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 100))
+        camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
         light = Light(kind: .directional(direction: (1, -1, -1)), color: (1, 1, 1), intensity: 0.5)
         models = [
             //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
             //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
             //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
             //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "Bear", withExtension: "obj")!), textureBitmap: NSBitmapImageRep.bitmap(forImageName: "Bear.png"))
-            try Model(program: renderPass.program, kind: .cube),
-            try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "Bear.png")),
-            try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "chainforcer", withExtension: "mdl")!)
+            //try Model(program: renderPass.program, kind: .cube),
+            //try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
+            try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!)
+            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!)
+            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "h_zombie", withExtension: "mdl")!)
+            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "chainforcer", withExtension: "mdl")!)
             //try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "monkey", withExtension: "obj")!, textureBitmap: nil)
         ]
     }

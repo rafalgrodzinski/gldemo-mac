@@ -9,7 +9,7 @@ import Foundation
 import AppKit
 
 extension Model {
-    convenience init(program: ShaderProgram, objFilePathUrl url: URL, textureBitmap: NSBitmapImageRep?) throws {
+    convenience init(program: ShaderProgram, objFilePathUrl url: URL, texture: Texture?) throws {
         var vertices = [Vertex]()
         var positions = [(x: Float, y: Float, z: Float)]()
         var normals = [(x: Float, y: Float, z: Float)]()
@@ -61,6 +61,6 @@ extension Model {
             }
         }
 
-        try self.init(program: program, vertices: vertices, textureBitmap: textureBitmap)
+        try self.init(program: program, vertices: vertices, texture: texture)
     }
 }
