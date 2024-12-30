@@ -12,6 +12,9 @@
 		B51623052D20F3C800AACE15 /* Bear.png in Resources */ = {isa = PBXBuildFile; fileRef = B51623042D20F3C800AACE15 /* Bear.png */; };
 		B51623092D2125D800AACE15 /* Model+Obj.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51623082D2125D800AACE15 /* Model+Obj.swift */; };
 		B516230B2D21620400AACE15 /* Model+Procedural.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516230A2D21620400AACE15 /* Model+Procedural.swift */; };
+		B516230D2D21695700AACE15 /* Model+MDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51623062D21243E00AACE15 /* Model+MDL.swift */; };
+		B516230F2D216AA200AACE15 /* tris.md2 in Resources */ = {isa = PBXBuildFile; fileRef = B516230E2D216AA200AACE15 /* tris.md2 */; };
+		B51623112D216DB600AACE15 /* chainforcer.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B51623102D216DB600AACE15 /* chainforcer.mdl */; };
 		B5B08F762D15501100E1F6E7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F752D15501100E1F6E7 /* App.swift */; };
 		B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F772D15501100E1F6E7 /* ContentView.swift */; };
 		B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F792D15501300E1F6E7 /* Assets.xcassets */; };
@@ -32,6 +35,9 @@
 		B5B08FB02D1A9DEE00E1F6E7 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */; };
 		B5B08FB22D1CD90500E1F6E7 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB12D1CD90500E1F6E7 /* Input.swift */; };
 		B5B08FB42D1CF1ED00E1F6E7 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */; };
+		B5F3E8612D22576A00F2EF45 /* spike.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8602D22576A00F2EF45 /* spike.mdl */; };
+		B5F3E8632D226A5900F2EF45 /* demon.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8622D226A5900F2EF45 /* demon.mdl */; };
+		B5F3E8652D226AAD00F2EF45 /* h_zombie.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +47,8 @@
 		B51623062D21243E00AACE15 /* Model+MDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+MDL.swift"; sourceTree = "<group>"; };
 		B51623082D2125D800AACE15 /* Model+Obj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Obj.swift"; sourceTree = "<group>"; };
 		B516230A2D21620400AACE15 /* Model+Procedural.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Procedural.swift"; sourceTree = "<group>"; };
+		B516230E2D216AA200AACE15 /* tris.md2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tris.md2; sourceTree = "<group>"; };
+		B51623102D216DB600AACE15 /* chainforcer.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = chainforcer.mdl; sourceTree = "<group>"; };
 		B5B08F722D15501100E1F6E7 /* glDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B08F752D15501100E1F6E7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B5B08F772D15501100E1F6E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +71,9 @@
 		B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		B5B08FB12D1CD90500E1F6E7 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
+		B5F3E8602D22576A00F2EF45 /* spike.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = spike.mdl; sourceTree = "<group>"; };
+		B5F3E8622D226A5900F2EF45 /* demon.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = demon.mdl; sourceTree = "<group>"; };
+		B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = h_zombie.mdl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +133,11 @@
 		B5B08F862D1550B800E1F6E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B51623102D216DB600AACE15 /* chainforcer.mdl */,
+				B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */,
+				B5F3E8602D22576A00F2EF45 /* spike.mdl */,
+				B516230E2D216AA200AACE15 /* tris.md2 */,
+				B5F3E8622D226A5900F2EF45 /* demon.mdl */,
 				B51623002D20F3B000AACE15 /* Bear.obj */,
 				B51623022D20F3BF00AACE15 /* Bear.mtl */,
 				B51623042D20F3C800AACE15 /* Bear.png */,
@@ -234,13 +250,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B51623112D216DB600AACE15 /* chainforcer.mdl in Resources */,
 				B5B08F8E2D19015B00E1F6E7 /* shader.vsh in Resources */,
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
+				B5F3E8652D226AAD00F2EF45 /* h_zombie.mdl in Resources */,
+				B516230F2D216AA200AACE15 /* tris.md2 in Resources */,
 				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
+				B5F3E8612D22576A00F2EF45 /* spike.mdl in Resources */,
 				B51623052D20F3C800AACE15 /* Bear.png in Resources */,
 				B5B08FAC2D1A97B300E1F6E7 /* monkey.obj in Resources */,
 				B5B08F902D19016600E1F6E7 /* shader.fsh in Resources */,
+				B5F3E8632D226A5900F2EF45 /* demon.mdl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +279,7 @@
 				B5B08FA42D1A533C00E1F6E7 /* ImageExtensions.swift in Sources */,
 				B5B08F882D1551C600E1F6E7 /* GLView.swift in Sources */,
 				B516230B2D21620400AACE15 /* Model+Procedural.swift in Sources */,
+				B516230D2D21695700AACE15 /* Model+MDL.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
 				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
