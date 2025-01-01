@@ -8,6 +8,7 @@
 import Foundation
 import OpenGL.GL
 import Cocoa
+import GLKit
 
 extension Model {
     private static let ident = 1330660425 // 'I' << 0 + 'D' << 8 + 'P' << 16 + 'O' << 24
@@ -552,12 +553,18 @@ extension Model {
                             coord = MdlCoord(isOnSeam: coord.isOnSeam, coord: (coord.coord.u + header.textureWidth / 2, coord.coord.v))
                         }
 
+                        // Fixing orientation (since X is up and -Y is forward)
+                        var matrix = GLKMatrix4MakeXRotation(-Float.pi/2)
+                        matrix = GLKMatrix4RotateZ(matrix, -Float.pi/2)
+                        var position = GLKVector3(v: (
+                            header.scale.sx * vertex.vertex.x.float + header.translate.x,
+                            header.scale.sy * vertex.vertex.y.float + header.translate.y,
+                            header.scale.sz * vertex.vertex.z.float + header.translate.z
+                        ))
+                        position = GLKMatrix4MultiplyVector3(matrix, position)
+
                         let modelVertex = Vertex(
-                            position: (
-                                header.scale.sx * vertex.vertex.x.float + header.translate.x,
-                                header.scale.sy * vertex.vertex.y.float + header.translate.y,
-                                header.scale.sz * vertex.vertex.z.float + header.translate.z
-                            ),
+                            position: (position.x, position.y, position.z),
                             normal: (
                                 Self.normals[vertex.normalIndex.int].x.float,
                                 Self.normals[vertex.normalIndex.int].y.float,
