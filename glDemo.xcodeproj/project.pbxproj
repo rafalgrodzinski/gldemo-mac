@@ -36,6 +36,7 @@
 		B5B08FB02D1A9DEE00E1F6E7 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */; };
 		B5B08FB22D1CD90500E1F6E7 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB12D1CD90500E1F6E7 /* Input.swift */; };
 		B5B08FB42D1CF1ED00E1F6E7 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */; };
+		B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */; };
 		B5F3E8612D22576A00F2EF45 /* spike.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8602D22576A00F2EF45 /* spike.mdl */; };
 		B5F3E8632D226A5900F2EF45 /* demon.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8622D226A5900F2EF45 /* demon.mdl */; };
 		B5F3E8652D226AAD00F2EF45 /* h_zombie.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */; };
@@ -75,6 +76,7 @@
 		B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		B5B08FB12D1CD90500E1F6E7 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
+		B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeConversionExtensions.swift; sourceTree = "<group>"; };
 		B5F3E8602D22576A00F2EF45 /* spike.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = spike.mdl; sourceTree = "<group>"; };
 		B5F3E8622D226A5900F2EF45 /* demon.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = demon.mdl; sourceTree = "<group>"; };
 		B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = h_zombie.mdl; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				B5B08FAD2D1A9DAA00E1F6E7 /* CollectionExtensions.swift */,
 				B5B08FAF2D1A9DEE00E1F6E7 /* StringExtensions.swift */,
 				B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */,
+				B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
 				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,
 				B5B08FB42D1CF1ED00E1F6E7 /* NumberExtensions.swift in Sources */,
+				B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */,
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,

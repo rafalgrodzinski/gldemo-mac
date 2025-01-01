@@ -10,9 +10,9 @@ import OpenGL.GL
 import Cocoa
 
 extension Model {
+    private static let ident = 1330660425 // 'I' << 0 + 'D' << 8 + 'P' << 16 + 'O' << 24
     private static let version = 6
-
-    private static let normals = [
+    private static let normals: [(x: Float32, y: Float32, z: Float32)] = [
         (-0.525731,  0.000000,  0.850651),
         (-0.442863,  0.238856,  0.864188),
         (-0.295242,  0.000000,  0.955423),
@@ -176,8 +176,7 @@ extension Model {
         (-0.587785, -0.425325, -0.688191),
         (-0.688191, -0.587785, -0.425325)
     ]
-
-    private static let palette = [
+    private static let colorsPalette: [(r: UInt8, g: UInt8, b: UInt8)] = [
         (0x00, 0x00, 0x00),
         (0x0f, 0x0f, 0x0f),
         (0x1f, 0x1f, 0x1f),
@@ -436,190 +435,145 @@ extension Model {
         (0x9f, 0x5b, 0x53),
     ]
 
-    struct Header {
-        let ident: Int32 = 0
-        let version: Int32 = 0
-        let scale: (sx: Float, sy: Float, sz: Float) = (0, 0, 0)
-        let translate: (x: Float, y: Float, z: Float) = (0, 0, 0)
-        let boundingRadius: Float = 0
-        let eyePostion: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    struct MdlHeader {
+        let ident: Int32
+        let version: Int32
+        let scale: (sx: Float32, sy: Float32, sz: Float32)
+        let translate: (x: Float32, y: Float32, z: Float32)
+        let boundingRadius: Float32
+        let eyePostion: (x: Float32, y: Float32, z: Float32)
 
-        let texturesCount: Int32 = 0
-        let textureWidth: Int32 = 0
-        let textureHeight: Int32 = 0
+        let texturesCount: Int32
+        let textureWidth: Int32
+        let textureHeight: Int32
 
-        let verticesCount: Int32 = 0
-        let trianglesCount: Int32 = 0
-        let framesCount: Int32 = 0
+        let verticesCount: Int32
+        let trianglesCount: Int32
+        let framesCount: Int32
 
-        let syncType: Int32 = 0
-        let flags: Int32 = 0
-        let size: Float = 0
-    }
-
-    struct MdlVertex {
-        let vertex: (x: UInt8, y: UInt8, z: UInt8) = (0, 0, 0)
-        let normalIndex: UInt8 = 0
-    }
-
-    struct MdlFrame {
-        var isGroup: Int32 = 0
-        var boundingBoxMin = MdlVertex()
-        var boundingBoxMax = MdlVertex()
-        let name = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
-        let vertices: UnsafeMutablePointer<MdlVertex>
+        let syncType: Int32
+        let flags: Int32
+        let size: Float32
     }
 
     struct MdlCoord {
-        let isOnSeam: Int32 = 0
-        let coord: (u: Int32, v: Int32) = (0, 0)
+        let isOnSeam: Int32
+        let coord: (u: Int32, v: Int32)
     }
 
     struct MdlTriangle {
-        let isFrontFace: Int32 = 0
-        let vertexIndices: (v0: Int32, v1: Int32, v2: Int32) = (0, 0, 0)
+        let isFrontFace: Int32
+        let vertexIndices: (v0: Int32, v1: Int32, v2: Int32)
+    }
+
+    struct MdlVertex {
+        let vertex: (x: UInt8, y: UInt8, z: UInt8)
+        let normalIndex: UInt8
     }
 
     convenience init(program: ShaderProgram, mdlFilePathUrl url: URL) throws {
-        var expectedIdent: UInt32 = 0
-        expectedIdent += ("I".unicodeScalars.first?.value ?? 0)
-        expectedIdent += ("D".unicodeScalars.first?.value ?? 0) << 8
-        expectedIdent += ("P".unicodeScalars.first?.value ?? 0) << 16
-        expectedIdent += ("O".unicodeScalars.first?.value ?? 0) << 24
+        var modelVertices = [Vertex]()
 
-        var vertices = [Vertex]()
-        //var header = UnsafeMutablePointer<Header>.allocate(capacity: 1)
-        var header = Header()
-        guard var data = NSData(contentsOf: url) else { throw AppError(description: "Error reading MDL data") }
-        let range = data.startIndex..<data.index(data.startIndex, offsetBy: MemoryLayout<Header>.size)
-        withUnsafeMutableBytes(of: &header) { pointer in
-            data.copyBytes(to: pointer, from: range)
-        }
+        guard var mdlData = NSData(contentsOf: url) else { throw AppError(description: "Error reading MDL data") }
+        var mdlDataPointer = mdlData.bytes
 
-        guard header.ident == expectedIdent && header.version == Self.version else { throw AppError(description: "Not a valid MDL file") }
-
-        var pointer = data.bytes
+        // Header
+        var header: MdlHeader!
+        header = mdlDataPointer.load(as: MdlHeader.self)
+        guard header.ident == Self.ident && header.version == Self.version else { throw AppError(description: "Not a valid MDL file") }
+        mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlHeader>.size)
 
         // Textures
         var texture: Texture!
-        pointer = pointer.advanced(by: MemoryLayout<Header>.size)
-        for i in 0..<header.texturesCount {
-            let isGroup = pointer.load(as: Int32.self)
-            pointer = pointer.advanced(by: MemoryLayout<Int32>.size)
-            if isGroup != 0 {
-                throw AppError(description: "Not yet implemented")
-            } else {
-                let imageData = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(header.textureWidth * header.textureHeight) * 3)
-                //imageData.initialize(from: pointer.assumingMemoryBound(to: UInt8.self), count: Int(header.textureWidth * header.textureHeight))
-                //let texData = Data(bytes: imageData, count: MemoryLayout<UInt8>.size * 3 * Int(header.textureWidth) * Int(header.textureHeight))
+        guard header.texturesCount == 1 else { throw AppError(description: "Multiple textures not implemented") }
+        let isTexturesGroup = mdlDataPointer.load(as: Int32.self)
+        mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<Int32>.size)
+        if isTexturesGroup != 0 {
+            throw AppError(description: "Texture groups not implemented")
+        } else {
+            let pixelsCount = header.textureWidth.int * header.textureHeight.int
+            let textureDataPointer = UnsafeMutablePointer<UInt8>.allocate(capacity: pixelsCount * 3)
 
-                for j in 0..<(Int(header.textureWidth) * Int(header.textureHeight)) {
-                    let paletteIndex = pointer.advanced(by: MemoryLayout<UInt8>.size * j).assumingMemoryBound(to: UInt8.self).pointee
-                    imageData.advanced(by: MemoryLayout<UInt8>.size * j * 3 + 0).pointee = UInt8(Self.palette[Int(paletteIndex)].0)
-                    imageData.advanced(by: MemoryLayout<UInt8>.size * j * 3 + 1).pointee = UInt8(Self.palette[Int(paletteIndex)].1)
-                    imageData.advanced(by: MemoryLayout<UInt8>.size * j * 3 + 2).pointee = UInt8(Self.palette[Int(paletteIndex)].2)
-                }
-
-                let texData = Data(bytes: imageData, count: MemoryLayout<UInt8>.size * 3 * Int(header.textureWidth) * Int(header.textureHeight))
-                //let im1 = NSBitmapImageRep(data: texData)
-                //let im2 = NSImage(data: texData)
-                //let bitmap = NSBitmapImageRep(data: data)
-                //let im = NSImage(data: data)
-
-                texture = Texture(rgbData: texData, width: Int(header.textureWidth), height: Int(header.textureHeight))
-                pointer = pointer.advanced(by: MemoryLayout<UInt8>.size * Int(header.textureWidth) * Int(header.textureHeight))
+            for i in 0..<pixelsCount {
+                let colorsPaletteIndex = mdlDataPointer.advanced(by: MemoryLayout<UInt8>.size * i).assumingMemoryBound(to: UInt8.self).pointee
+                textureDataPointer.advanced(by: MemoryLayout<UInt8>.size * i * 3 + 0).pointee = Self.colorsPalette[colorsPaletteIndex.int].r
+                textureDataPointer.advanced(by: MemoryLayout<UInt8>.size * i * 3 + 1).pointee = Self.colorsPalette[colorsPaletteIndex.int].g
+                textureDataPointer.advanced(by: MemoryLayout<UInt8>.size * i * 3 + 2).pointee = Self.colorsPalette[colorsPaletteIndex.int].b
             }
+
+            let textureData = Data(bytes: textureDataPointer, count: MemoryLayout<UInt8>.size * pixelsCount * 3)
+            texture = Texture(rgbData: textureData, width: header.textureWidth.int, height: header.textureHeight.int)
+            mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<UInt8>.size * header.textureWidth.int * header.textureHeight.int)
         }
 
         // Coordinates
-        var coordinates = UnsafeMutablePointer<MdlCoord>.allocate(capacity: Int(header.verticesCount))
-        coordinates.initialize(from: pointer.assumingMemoryBound(to: MdlCoord.self), count: Int(header.verticesCount))
-        pointer = pointer.advanced(by: MemoryLayout<MdlCoord>.size * Int(header.verticesCount))
+        var coordinatesPointer = UnsafeMutablePointer<MdlCoord>.allocate(capacity: header.verticesCount.int)
+        coordinatesPointer.initialize(from: mdlDataPointer.assumingMemoryBound(to: MdlCoord.self), count: header.verticesCount.int)
+        mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlCoord>.size * header.verticesCount.int)
 
         // Triangles
-        var triangles = UnsafeMutablePointer<MdlTriangle>.allocate(capacity: Int(header.trianglesCount))
-        triangles.initialize(from: pointer.assumingMemoryBound(to: MdlTriangle.self), count: Int(header.trianglesCount))
-        pointer = pointer.advanced(by: MemoryLayout<MdlTriangle>.size * Int(header.trianglesCount))
+        var trianglesPointer = UnsafeMutablePointer<MdlTriangle>.allocate(capacity: header.trianglesCount.int)
+        trianglesPointer.initialize(from: mdlDataPointer.assumingMemoryBound(to: MdlTriangle.self), count: header.trianglesCount.int)
+        mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlTriangle>.size * header.trianglesCount.int)
 
-        // Model frames
-        for i in 0..<1 {//header.framesCount {
-            let isGroup = pointer.load(as: Int32.self)
-            if isGroup != 0 {
+        // Frames
+        for frameIndex in 0..<1 {//header.framesCount {
+            // Is frames group
+            let isFramesGroup = mdlDataPointer.load(as: Int32.self)
+            mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<Int32>.size)
+
+            if isFramesGroup != 0 {
                 throw AppError(description: "Not yet implemented")
             } else {
-                var frame = MdlFrame(vertices: UnsafeMutablePointer.allocate(capacity: Int(header.verticesCount)))
-                frame.isGroup = pointer.load(as: Int32.self)
-                pointer = pointer.advanced(by: MemoryLayout<Int32>.size)
-                frame.boundingBoxMin = pointer.load(as: MdlVertex.self)
-                pointer = pointer.advanced(by: MemoryLayout<MdlVertex>.size)
-                frame.boundingBoxMax = pointer.load(as: MdlVertex.self)
-                pointer = pointer.advanced(by: MemoryLayout<MdlVertex>.size)
-                frame.name.initialize(from: pointer.assumingMemoryBound(to: UInt8.self), count: 16)
-                pointer = pointer.advanced(by: MemoryLayout<UInt8>.size * 16)
-                frame.vertices.initialize(from: pointer.assumingMemoryBound(to: MdlVertex.self), count: Int(header.verticesCount))
+                // Bounding box min
+                mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlVertex>.size)
 
-                for i in 0..<header.trianglesCount {
-                    let triangle = triangles.advanced(by: Int(i)).pointee
-                    // V0
-                    let mdlVertex0 = frame.vertices.advanced(by: Int(triangle.vertexIndices.v0)).pointee
-                    let mdlCoord0 = coordinates.advanced(by: Int(triangle.vertexIndices.v0)).pointee
-                    let uOff0: Float = (triangle.isFrontFace == 0 && mdlCoord0.isOnSeam != 0) ? Float(header.textureWidth) / 2 : 0
-                    let vertex0 = Vertex(
-                        position: (
-                            header.scale.sx * Float(mdlVertex0.vertex.x) + header.translate.x,
-                            header.scale.sy * Float(mdlVertex0.vertex.y) + header.translate.y,
-                            header.scale.sz * Float(mdlVertex0.vertex.z) + header.translate.z
-                        ),
-                        normal: (
-                            Float(Self.normals[Int(mdlVertex0.normalIndex)].0),
-                            Float(Self.normals[Int(mdlVertex0.normalIndex)].1),
-                            Float(Self.normals[Int(mdlVertex0.normalIndex)].2)
-                        ),
-                        material: Material(color: (1, 1, 1), coords: ((Float(mdlCoord0.coord.u) + uOff0 + 0.5) / Float(header.textureWidth), (Float(mdlCoord0.coord.v) + 0.5) / Float(header.textureHeight)), ambient: 0.5, diffuse: 1, specular: 32)
-                    )
-                    vertices.append(vertex0)
+                // Bounding box max
+                mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlVertex>.size)
 
-                    // V1
-                    let mdlVertex1 = frame.vertices.advanced(by: Int(triangle.vertexIndices.v1)).pointee
-                    let mdlCoord1 = coordinates.advanced(by: Int(triangle.vertexIndices.v1)).pointee
-                    let uOff1: Float = (triangle.isFrontFace == 0 && mdlCoord1.isOnSeam != 0) ? Float(header.textureWidth) / 2 : 0
-                    let vertex1 = Vertex(
-                        position: (
-                            header.scale.sx * Float(mdlVertex1.vertex.x) + header.translate.x,
-                            header.scale.sy * Float(mdlVertex1.vertex.y) + header.translate.y,
-                            header.scale.sz * Float(mdlVertex1.vertex.z) + header.translate.z
-                        ),
-                        normal: (
-                            Float(Self.normals[Int(mdlVertex1.normalIndex)].0),
-                            Float(Self.normals[Int(mdlVertex1.normalIndex)].1),
-                            Float(Self.normals[Int(mdlVertex1.normalIndex)].2)
-                        ),
-                        material: Material(color: (1, 1, 1), coords: ((Float(mdlCoord1.coord.u)  + uOff1 + 0.5) / Float(header.textureWidth), (Float(mdlCoord1.coord.v) + 0.5) / Float(header.textureHeight)), ambient: 0.5, diffuse: 1, specular: 32)
-                    )
-                    vertices.append(vertex1)
+                // Name
+                mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<UInt8>.size * 16)
 
-                    // V2
-                    let mdlVertex2 = frame.vertices.advanced(by: Int(triangle.vertexIndices.v2)).pointee
-                    let mdlCoord2 = coordinates.advanced(by: Int(triangle.vertexIndices.v2)).pointee
-                    let uOff2: Float = (triangle.isFrontFace == 0 && mdlCoord2.isOnSeam != 0) ? Float(header.textureWidth) / 2 : 0
-                    let vertex2 = Vertex(
-                        position: (
-                            header.scale.sx * Float(mdlVertex2.vertex.x) + header.translate.x,
-                            header.scale.sy * Float(mdlVertex2.vertex.y) + header.translate.y,
-                            header.scale.sz * Float(mdlVertex2.vertex.z) + header.translate.z
-                        ),
-                        normal: (
-                            Float(Self.normals[Int(mdlVertex2.normalIndex)].0),
-                            Float(Self.normals[Int(mdlVertex2.normalIndex)].1),
-                            Float(Self.normals[Int(mdlVertex2.normalIndex)].2)
-                        ),
-                        material: Material(color: (1, 1, 1), coords: ((Float(mdlCoord2.coord.u) + uOff2 + 0.5) / Float(header.textureWidth), (Float(mdlCoord2.coord.v) + 0.5) / Float(header.textureHeight)), ambient: 0.5, diffuse: 1, specular: 32)
-                    )
-                    vertices.append(vertex2)
+                // Vertices
+                let verticesPointer = UnsafeMutablePointer<MdlVertex>.allocate(capacity: header.verticesCount.int)
+                verticesPointer.initialize(from: mdlDataPointer.assumingMemoryBound(to: MdlVertex.self), count: header.verticesCount.int)
+
+                for triangleIndex in 0..<header.trianglesCount.int {
+                    let triangle = trianglesPointer.advanced(by: triangleIndex).pointee
+                    let mdlVertexIndices = [triangle.vertexIndices.v0.int, triangle.vertexIndices.v1.int, triangle.vertexIndices.v2.int]
+
+                    for mdlVertexIndex in mdlVertexIndices {
+                        let vertex = verticesPointer.advanced(by: mdlVertexIndex).pointee
+                        var coord = coordinatesPointer.advanced(by: mdlVertexIndex).pointee
+                        if !triangle.isFrontFace.bool && coord.isOnSeam.bool {
+                            coord = MdlCoord(isOnSeam: coord.isOnSeam, coord: (coord.coord.u + header.textureWidth / 2, coord.coord.v))
+                        }
+
+                        let modelVertex = Vertex(
+                            position: (
+                                header.scale.sx * vertex.vertex.x.float + header.translate.x,
+                                header.scale.sy * vertex.vertex.y.float + header.translate.y,
+                                header.scale.sz * vertex.vertex.z.float + header.translate.z
+                            ),
+                            normal: (
+                                Self.normals[vertex.normalIndex.int].x.float,
+                                Self.normals[vertex.normalIndex.int].y.float,
+                                Self.normals[vertex.normalIndex.int].z.float
+                            ),
+                            material: Material(
+                                color: (1, 1, 1),
+                                coords: ((coord.coord.u.float + 0.5) / header.textureWidth.float, (coord.coord.v.float + 0.5) / header.textureHeight.float),
+                                ambient: 0.1,
+                                diffuse: 1,
+                                specular: 16
+                            )
+                        )
+                        modelVertices.append(modelVertex)
+                    }
                 }
             }
         }
 
-        try self.init(program: program, vertices: vertices, texture: texture)
+        try self.init(program: program, vertices: modelVertices, texture: texture)
     }
 }
