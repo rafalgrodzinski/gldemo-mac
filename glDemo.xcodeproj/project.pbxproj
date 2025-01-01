@@ -39,7 +39,6 @@
 		B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */; };
 		B5F3E8612D22576A00F2EF45 /* spike.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8602D22576A00F2EF45 /* spike.mdl */; };
 		B5F3E8632D226A5900F2EF45 /* demon.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8622D226A5900F2EF45 /* demon.mdl */; };
-		B5F3E8652D226AAD00F2EF45 /* h_zombie.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */; };
 		B5F3E8692D226C0400F2EF45 /* ship.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B5F3E8682D226C0400F2EF45 /* ship.mdl */; };
 		B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */; };
 /* End PBXBuildFile section */
@@ -79,7 +78,6 @@
 		B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeConversionExtensions.swift; sourceTree = "<group>"; };
 		B5F3E8602D22576A00F2EF45 /* spike.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = spike.mdl; sourceTree = "<group>"; };
 		B5F3E8622D226A5900F2EF45 /* demon.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = demon.mdl; sourceTree = "<group>"; };
-		B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = h_zombie.mdl; sourceTree = "<group>"; };
 		B5F3E8682D226C0400F2EF45 /* ship.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = ship.mdl; sourceTree = "<group>"; };
 		B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,7 +143,6 @@
 				B51E9E282D22C83700CA7275 /* boss.mdl */,
 				B5F3E8682D226C0400F2EF45 /* ship.mdl */,
 				B51623102D216DB600AACE15 /* chainforcer.mdl */,
-				B5F3E8642D226AAD00F2EF45 /* h_zombie.mdl */,
 				B5F3E8602D22576A00F2EF45 /* spike.mdl */,
 				B516230E2D216AA200AACE15 /* tris.md2 */,
 				B5F3E8622D226A5900F2EF45 /* demon.mdl */,
@@ -267,7 +264,6 @@
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
 				B5F3E8692D226C0400F2EF45 /* ship.mdl in Resources */,
-				B5F3E8652D226AAD00F2EF45 /* h_zombie.mdl in Resources */,
 				B516230F2D216AA200AACE15 /* tris.md2 in Resources */,
 				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
 				B51E9E292D22C83700CA7275 /* boss.mdl in Resources */,

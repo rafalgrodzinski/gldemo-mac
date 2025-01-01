@@ -91,6 +91,6 @@ extension Model {
         case .pyramid: vertices = Self.pyramidVertices
         }
 
-        try self.init(program: program, vertices: vertices, texture: nil)
+        try self.init(program: program, frames: [vertices], frameDuration: 0, texture: nil)
     }
 }

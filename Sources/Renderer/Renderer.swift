@@ -38,11 +38,11 @@ final class Renderer {
             //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
             //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "Bear", withExtension: "obj")!), textureBitmap: NSBitmapImageRep.bitmap(forImageName: "Bear.png"))
             //try Model(program: renderPass.program, kind: .cube),
-            //try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
-            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!)
-            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!)
+            try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
+            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!),
+            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "chainforcer", withExtension: "mdl")!),
+            try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
             //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "h_zombie", withExtension: "mdl")!)
-            try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "chainforcer", withExtension: "mdl")!)
             //try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "monkey", withExtension: "obj")!, textureBitmap: nil)
         ]
     }
@@ -55,6 +55,9 @@ final class Renderer {
     func update(deltaTime: TimeInterval) {
         camera.update(deltaTime: deltaTime, inputState: input.state)
         input.update()
+        models.forEach {
+            $0.update(deltaTime: deltaTime)
+        }
     }
 
     func draw(configs: [GLView.Config]) {

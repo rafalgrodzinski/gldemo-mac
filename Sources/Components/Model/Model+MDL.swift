@@ -12,6 +12,7 @@ import Cocoa
 extension Model {
     private static let ident = 1330660425 // 'I' << 0 + 'D' << 8 + 'P' << 16 + 'O' << 24
     private static let version = 6
+    private static let frameDuration: TimeInterval = 0.1
     private static let normals: [(x: Float32, y: Float32, z: Float32)] = [
         (-0.525731,  0.000000,  0.850651),
         (-0.442863,  0.238856,  0.864188),
@@ -472,7 +473,7 @@ extension Model {
     }
 
     convenience init(program: ShaderProgram, mdlFilePathUrl url: URL) throws {
-        var modelVertices = [Vertex]()
+        var modelFrames = [[Vertex]]()
 
         guard var mdlData = NSData(contentsOf: url) else { throw AppError(description: "Error reading MDL data") }
         var mdlDataPointer = mdlData.bytes
@@ -517,13 +518,15 @@ extension Model {
         mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlTriangle>.size * header.trianglesCount.int)
 
         // Frames
-        for frameIndex in 0..<1 {//header.framesCount {
+        for frameIndex in 0..<header.framesCount.int {
+            var modelVertices = [Vertex]()
+
             // Is frames group
             let isFramesGroup = mdlDataPointer.load(as: Int32.self)
             mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<Int32>.size)
 
             if isFramesGroup != 0 {
-                throw AppError(description: "Not yet implemented")
+                throw AppError(description: "Frames group not yet implemented")
             } else {
                 // Bounding box min
                 mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlVertex>.size)
@@ -563,7 +566,7 @@ extension Model {
                             material: Material(
                                 color: (1, 1, 1),
                                 coords: ((coord.coord.u.float + 0.5) / header.textureWidth.float, (coord.coord.v.float + 0.5) / header.textureHeight.float),
-                                ambient: 0.1,
+                                ambient: 0.5,
                                 diffuse: 1,
                                 specular: 16
                             )
@@ -571,9 +574,12 @@ extension Model {
                         modelVertices.append(modelVertex)
                     }
                 }
+                mdlDataPointer = mdlDataPointer.advanced(by: MemoryLayout<MdlVertex>.size * header.verticesCount.int)
             }
+
+            modelFrames.append(modelVertices)
         }
 
-        try self.init(program: program, vertices: modelVertices, texture: texture)
+        try self.init(program: program, frames: modelFrames, frameDuration: Self.frameDuration, texture: texture)
     }
 }
