@@ -23,7 +23,7 @@ final class Renderer {
 
     private let renderPass: PhongRenderPass
     private let camera: Camera
-    private let light: Light
+    private let lights: [Light]
     private let models: [Model]
     private let input: Input
 
@@ -31,19 +31,14 @@ final class Renderer {
         self.input = input
         renderPass = try PhongRenderPass()
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
-        light = Light(kind: .directional(direction: (1, -1, -1)), color: (1, 1, 1), intensity: 0.5)
+        lights = [
+            try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)),
+            try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0))
+            ]
         models = [
-            //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "monkey", withExtension: "obj")!), textureBitmap: nil),
-            //try Model(program: renderPass.program, kind: .cube, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "wood")),
-            //try Model(program: renderPass.program, kind: .pyramid, textureBitmap: NSBitmapImageRep.bitmap(forImageName: "grass"))
-            //try Model(program: renderPass.program, kind: .obj(Bundle.main.url(forResource: "Bear", withExtension: "obj")!), textureBitmap: NSBitmapImageRep.bitmap(forImageName: "Bear.png"))
-            //try Model(program: renderPass.program, kind: .cube),
+            try Model(program: renderPass.program, kind: .cube),
             try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
-            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "demon", withExtension: "mdl")!),
-            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "chainforcer", withExtension: "mdl")!),
             try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
-            //try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "h_zombie", withExtension: "mdl")!)
-            //try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "monkey", withExtension: "obj")!, textureBitmap: nil)
         ]
     }
 
@@ -63,7 +58,9 @@ final class Renderer {
     func draw(configs: [GLView.Config]) {
         renderPass.initFrame()
         camera.initFrame(program: renderPass.program)
-        light.initFrame(program: renderPass.program)
+        lights.forEach {
+            $0.initFrame(program: renderPass.program)
+        }
 
         renderPass.draw(models: models, configs: configs)
     }

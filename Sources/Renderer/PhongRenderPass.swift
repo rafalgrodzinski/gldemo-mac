@@ -14,8 +14,8 @@ final class PhongRenderPass {
 
     init() throws {
         program = try ShaderProgram(
-            vertexShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "vsh")!,
-            fragmentShaderFilePathUrl: Bundle.main.url(forResource: "shader", withExtension: "fsh")!
+            vertexShaderFilePathUrl: Bundle.main.url(forResource: "PhongShader", withExtension: "vsh")!,
+            fragmentShaderFilePathUrl: Bundle.main.url(forResource: "PhongShader", withExtension: "fsh")!
         )
     }
 

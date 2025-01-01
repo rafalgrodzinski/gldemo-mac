@@ -573,7 +573,7 @@ extension Model {
                             material: Material(
                                 color: (1, 1, 1),
                                 coords: ((coord.coord.u.float + 0.5) / header.textureWidth.float, (coord.coord.v.float + 0.5) / header.textureHeight.float),
-                                ambient: 0.5,
+                                ambient: 0.1,
                                 diffuse: 1,
                                 specular: 16
                             )
