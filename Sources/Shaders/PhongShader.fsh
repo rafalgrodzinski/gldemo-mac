@@ -78,7 +78,7 @@ vec3 pointLightColor(vec3 position, vec3 normal, vec3 baseColor, Light light, ve
     return color;
 }
 
-void main(void) {
+void main() {
     vec3 baseColor = vec3(texture(u_sampler, v_coords)) * v_color;
     vec3 color = vec3(0);
 

@@ -17,6 +17,13 @@ final class ShaderProgram {
         self.programId = try program(forVertexShader: vertexShader, fragmentShader: fragmentShader)
     }
 
+    init(vertexShaderFilePathUrl: URL, geometryShaderFilePathUrl: URL, fragmentShaderFilePathUrl: URL) throws {
+        let vertexShader = try shader(forType: GL_VERTEX_SHADER, filePathUrl: vertexShaderFilePathUrl)
+        let geometryShader = try shader(forType: GL_GEOMETRY_SHADER, filePathUrl: geometryShaderFilePathUrl)
+        let fragmentShader = try shader(forType: GL_FRAGMENT_SHADER, filePathUrl: fragmentShaderFilePathUrl)
+        self.programId = try program(forVertexShader: vertexShader, geometryShader: geometryShader, fragmentShader: fragmentShader)
+    }
+
     deinit {
         glDeleteProgram(programId)
     }
@@ -39,9 +46,12 @@ final class ShaderProgram {
         return shader
     }
 
-    private func program(forVertexShader vertexShader: GLuint, fragmentShader: GLuint) throws -> GLuint {
+    private func program(forVertexShader vertexShader: GLuint, geometryShader: GLuint? = nil, fragmentShader: GLuint) throws -> GLuint {
         let program = glCreateProgram()
         glAttachShader(program, vertexShader)
+        if let geometryShader {
+            glAttachShader(program, geometryShader )
+        }
         glAttachShader(program, fragmentShader)
         glLinkProgram(program)
 

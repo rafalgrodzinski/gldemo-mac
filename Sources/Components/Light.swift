@@ -30,7 +30,7 @@ final class Light {
         self.color = color
     }
 
-    func initFrame(program: ShaderProgram) {
+    func prepareForDraw(withProgram program: ShaderProgram) {
         let idPrefix = "u_lights[\(lightIndex)]."
 
         let kindId = glGetUniformLocation(program.programId, idPrefix + "kind")

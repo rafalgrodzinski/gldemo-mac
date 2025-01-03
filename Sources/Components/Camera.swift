@@ -111,7 +111,7 @@ final class Camera {
         position = GLKMatrix4MultiplyVector3(positionMatrix, originVector).v
     }
 
-    func initFrame(program: ShaderProgram) {
+    func prepareForDraw(withProgram program: ShaderProgram) {
         let projectionMatrixId = glGetUniformLocation(program.programId, "u_projectionMatrix")
         projectionMatrix.pointer {
             glUniformMatrix4fv(projectionMatrixId, 1, GLboolean(GL_FALSE), $0)

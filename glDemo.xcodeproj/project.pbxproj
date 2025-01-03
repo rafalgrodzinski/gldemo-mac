@@ -33,6 +33,13 @@
 		B5B08FB22D1CD90500E1F6E7 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB12D1CD90500E1F6E7 /* Input.swift */; };
 		B5B08FB42D1CF1ED00E1F6E7 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */; };
 		B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */; };
+		B5C30A0F2D2547F400EA234B /* DebugNormalsShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A0E2D2547EA00EA234B /* DebugNormalsShader.vsh */; };
+		B5C30A112D25485000EA234B /* DebugNormalsShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A102D25484A00EA234B /* DebugNormalsShader.fsh */; };
+		B5C30A132D25488E00EA234B /* DebugNormalsShader.gsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A122D25488300EA234B /* DebugNormalsShader.gsh */; };
+		B5C30A152D2550B700EA234B /* DebugRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C30A142D2550B700EA234B /* DebugRenderPass.swift */; };
+		B5C30A172D25663000EA234B /* DebugPolygonShader.gsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A162D25662B00EA234B /* DebugPolygonShader.gsh */; };
+		B5C30A192D25675A00EA234B /* DebugPolygonShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A182D25675100EA234B /* DebugPolygonShader.vsh */; };
+		B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A1A2D25677E00EA234B /* DebugPolygonShader.fsh */; };
 		B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +72,13 @@
 		B5B08FB12D1CD90500E1F6E7 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B5B08FB32D1CF1ED00E1F6E7 /* NumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		B5C30A0B2D24EB2B00EA234B /* TypeConversionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeConversionExtensions.swift; sourceTree = "<group>"; };
+		B5C30A0E2D2547EA00EA234B /* DebugNormalsShader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugNormalsShader.vsh; sourceTree = "<group>"; };
+		B5C30A102D25484A00EA234B /* DebugNormalsShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugNormalsShader.fsh; sourceTree = "<group>"; };
+		B5C30A122D25488300EA234B /* DebugNormalsShader.gsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugNormalsShader.gsh; sourceTree = "<group>"; };
+		B5C30A142D2550B700EA234B /* DebugRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugRenderPass.swift; sourceTree = "<group>"; };
+		B5C30A162D25662B00EA234B /* DebugPolygonShader.gsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.gsh; sourceTree = "<group>"; };
+		B5C30A182D25675100EA234B /* DebugPolygonShader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.vsh; sourceTree = "<group>"; };
+		B5C30A1A2D25677E00EA234B /* DebugPolygonShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.fsh; sourceTree = "<group>"; };
 		B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +166,12 @@
 			children = (
 				B5B08F8D2D19015800E1F6E7 /* PhongShader.vsh */,
 				B5B08F8F2D19016300E1F6E7 /* PhongShader.fsh */,
+				B5C30A0E2D2547EA00EA234B /* DebugNormalsShader.vsh */,
+				B5C30A122D25488300EA234B /* DebugNormalsShader.gsh */,
+				B5C30A102D25484A00EA234B /* DebugNormalsShader.fsh */,
+				B5C30A182D25675100EA234B /* DebugPolygonShader.vsh */,
+				B5C30A162D25662B00EA234B /* DebugPolygonShader.gsh */,
+				B5C30A1A2D25677E00EA234B /* DebugPolygonShader.fsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -161,6 +181,7 @@
 			children = (
 				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
 				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
+				B5C30A142D2550B700EA234B /* DebugRenderPass.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -239,12 +260,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B08F8E2D19015B00E1F6E7 /* PhongShader.vsh in Resources */,
+				B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */,
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
+				B5C30A112D25485000EA234B /* DebugNormalsShader.fsh in Resources */,
 				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
 				B51623052D20F3C800AACE15 /* Bear.png in Resources */,
+				B5C30A172D25663000EA234B /* DebugPolygonShader.gsh in Resources */,
 				B51E9E2B2D22C8FB00CA7275 /* player.mdl in Resources */,
 				B5B08F902D19016600E1F6E7 /* PhongShader.fsh in Resources */,
+				B5C30A132D25488E00EA234B /* DebugNormalsShader.gsh in Resources */,
+				B5C30A0F2D2547F400EA234B /* DebugNormalsShader.vsh in Resources */,
+				B5C30A192D25675A00EA234B /* DebugPolygonShader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +299,7 @@
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,
+				B5C30A152D2550B700EA234B /* DebugRenderPass.swift in Sources */,
 				B5B08F9F2D191DE700E1F6E7 /* PointerExtensions.swift in Sources */,
 				B51623092D2125D800AACE15 /* Model+Obj.swift in Sources */,
 				B5B08F762D15501100E1F6E7 /* App.swift in Sources */,

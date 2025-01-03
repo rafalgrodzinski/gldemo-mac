@@ -28,7 +28,7 @@ out float v_ambient;
 out float v_diffuse;
 out float v_specular;
 
-void main(void) {
+void main() {
     vec3 position = mix(a_position, a_nextPosition, u_tweenFactor);
     gl_Position = u_projectionMatrix * u_viewMatrix * u_modelMatrix * vec4(position, 1.0);
     v_position = vec3(u_modelMatrix * vec4(position, 1.0));

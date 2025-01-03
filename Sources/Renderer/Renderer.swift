@@ -21,7 +21,8 @@ final class Renderer {
         return format
     }
 
-    private let renderPass: PhongRenderPass
+    private let phongRenderPass: PhongRenderPass
+    private let debugRenderPass: DebugRenderPass
     private let camera: Camera
     private let lights: [Light]
     private let models: [Model]
@@ -29,16 +30,17 @@ final class Renderer {
 
     init(input: Input) throws {
         self.input = input
-        renderPass = try PhongRenderPass()
+        phongRenderPass = try PhongRenderPass()
+        debugRenderPass = try DebugRenderPass()
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
         lights = [
             try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)),
             try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0))
             ]
         models = [
-            try Model(program: renderPass.program, kind: .cube),
-            try Model(program: renderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
-            try Model(program: renderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
+            try Model(program: phongRenderPass.program, kind: .cube),
+            try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
+            try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
         ]
     }
 
@@ -49,19 +51,18 @@ final class Renderer {
 
     func update(deltaTime: TimeInterval) {
         camera.update(deltaTime: deltaTime, inputState: input.state)
+        models.forEach { $0.update(deltaTime: deltaTime) }
         input.update()
-        models.forEach {
-            $0.update(deltaTime: deltaTime)
-        }
     }
 
     func draw(configs: [GLView.Config]) {
-        renderPass.initFrame()
-        camera.initFrame(program: renderPass.program)
-        lights.forEach {
-            $0.initFrame(program: renderPass.program)
-        }
+        glClearColor(0, 0, 0, 1)
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
-        renderPass.draw(models: models, configs: configs)
+        glEnable(GLenum(GL_DEPTH_TEST))
+        glDepthFunc(GLenum(GL_LEQUAL))
+
+        phongRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
+        debugRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
     }
 }
