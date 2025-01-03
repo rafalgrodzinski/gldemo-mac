@@ -14,6 +14,9 @@
 		B516230B2D21620400AACE15 /* Model+Procedural.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516230A2D21620400AACE15 /* Model+Procedural.swift */; };
 		B51E9E272D22C53D00CA7275 /* Model+MDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51623062D21243E00AACE15 /* Model+MDL.swift */; };
 		B51E9E2B2D22C8FB00CA7275 /* player.mdl in Resources */ = {isa = PBXBuildFile; fileRef = B51E9E2A2D22C8FB00CA7275 /* player.mdl */; };
+		B53958242D27FC4C00B610F0 /* GridShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B53958232D27FC4700B610F0 /* GridShader.vsh */; };
+		B53958262D27FD6400B610F0 /* GridShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B53958252D27FD6000B610F0 /* GridShader.fsh */; };
+		B53958282D27FDA300B610F0 /* GridRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53958272D27FDA300B610F0 /* GridRenderPass.swift */; };
 		B5B08F762D15501100E1F6E7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F752D15501100E1F6E7 /* App.swift */; };
 		B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F772D15501100E1F6E7 /* ContentView.swift */; };
 		B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F792D15501300E1F6E7 /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		B51623082D2125D800AACE15 /* Model+Obj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Obj.swift"; sourceTree = "<group>"; };
 		B516230A2D21620400AACE15 /* Model+Procedural.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Procedural.swift"; sourceTree = "<group>"; };
 		B51E9E2A2D22C8FB00CA7275 /* player.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = player.mdl; sourceTree = "<group>"; };
+		B53958232D27FC4700B610F0 /* GridShader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = GridShader.vsh; sourceTree = "<group>"; };
+		B53958252D27FD6000B610F0 /* GridShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = GridShader.fsh; sourceTree = "<group>"; };
+		B53958272D27FDA300B610F0 /* GridRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRenderPass.swift; sourceTree = "<group>"; };
 		B5B08F722D15501100E1F6E7 /* glDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B08F752D15501100E1F6E7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B5B08F772D15501100E1F6E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -164,6 +170,8 @@
 		B5B08FA02D1931BA00E1F6E7 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B53958232D27FC4700B610F0 /* GridShader.vsh */,
+				B53958252D27FD6000B610F0 /* GridShader.fsh */,
 				B5B08F8D2D19015800E1F6E7 /* PhongShader.vsh */,
 				B5B08F8F2D19016300E1F6E7 /* PhongShader.fsh */,
 				B5C30A0E2D2547EA00EA234B /* DebugNormalsShader.vsh */,
@@ -182,6 +190,7 @@
 				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
 				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
 				B5C30A142D2550B700EA234B /* DebugRenderPass.swift */,
+				B53958272D27FDA300B610F0 /* GridRenderPass.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -259,12 +268,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B53958242D27FC4C00B610F0 /* GridShader.vsh in Resources */,
 				B5B08F8E2D19015B00E1F6E7 /* PhongShader.vsh in Resources */,
 				B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */,
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
 				B5C30A112D25485000EA234B /* DebugNormalsShader.fsh in Resources */,
 				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
+				B53958262D27FD6400B610F0 /* GridShader.fsh in Resources */,
 				B51623052D20F3C800AACE15 /* Bear.png in Resources */,
 				B5C30A172D25663000EA234B /* DebugPolygonShader.gsh in Resources */,
 				B51E9E2B2D22C8FB00CA7275 /* player.mdl in Resources */,
@@ -291,6 +302,7 @@
 				B516230B2D21620400AACE15 /* Model+Procedural.swift in Sources */,
 				B51E9E272D22C53D00CA7275 /* Model+MDL.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
+				B53958282D27FDA300B610F0 /* GridRenderPass.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
 				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
 				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,

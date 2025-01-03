@@ -30,7 +30,7 @@ final class DebugRenderPass {
         )
     }
 
-    func draw(models: [Model], camera: Camera, lights: [Light], configs: [GLView.Config]) {
+    func draw(models: [Model], camera: Camera, configs: [GLView.Config]) {
         if shouldShowMesh {
             glUseProgram(debugPolygonProgram.programId)
             camera.prepareForDraw(withProgram: debugPolygonProgram)

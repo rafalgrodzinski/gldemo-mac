@@ -23,6 +23,7 @@ final class Renderer {
 
     private let phongRenderPass: PhongRenderPass
     private let debugRenderPass: DebugRenderPass
+    private let gridRenderPass: GridRenderPass
     private let camera: Camera
     private let lights: [Light]
     private let models: [Model]
@@ -32,6 +33,9 @@ final class Renderer {
         self.input = input
         phongRenderPass = try PhongRenderPass()
         debugRenderPass = try DebugRenderPass()
+        gridRenderPass = try GridRenderPass()
+
+        debugRenderPass.shouldShowMesh = true
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
         lights = [
             try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)),
@@ -63,6 +67,7 @@ final class Renderer {
         glDepthFunc(GLenum(GL_LEQUAL))
 
         phongRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
-        debugRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
+        debugRenderPass.draw(models: models, camera: camera, configs: configs)
+        gridRenderPass.draw(camera: camera)
     }
 }
