@@ -10,12 +10,12 @@ import OpenGL.GL
 
 final class GridRenderPass {
     private static let vertices: [Float] = [
-        -1, -1, 0,
-         1, -1, 0,
-         1, 1, 0,
-         -1, 1, 0
+        -1, 0, -1,
+         1, 0, -1,
+         1, 0, 1,
+         -1, 0, 1
     ]
-    private static let indices: [UInt32] = [0, 1, 2, 2, 3, 0]
+    private static let indices: [UInt32] = [0, 2, 1, 2, 0, 3]
 
     private let program: ShaderProgram
     private var vertexArrayId: GLuint = 0
@@ -47,6 +47,9 @@ final class GridRenderPass {
     }
 
     func draw(camera: Camera) {
+        glEnable(GLenum(GL_BLEND))
+        glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA))
+
         glUseProgram(program.programId)
         camera.prepareForDraw(withProgram: program)
 

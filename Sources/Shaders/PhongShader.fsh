@@ -82,11 +82,15 @@ void main() {
     vec3 baseColor = vec3(texture(u_sampler, v_coords)) * v_color;
     vec3 color = vec3(0);
 
+    vec3 n = v_normal;
+
+    vec3 nor = normalize(cross(dFdx(v_position), dFdy(v_position)));
+
     for(int i=0; i<8; i++) {
         if (u_lights[i].kind == LightKindDirectional) {
-            color += directionalLightColor(v_position, v_normal, baseColor, u_lights[i], u_cameraPosition, v_ambient, v_diffuse, v_specular);
+            color += directionalLightColor(v_position, nor, baseColor, u_lights[i], u_cameraPosition, v_ambient, v_diffuse, v_specular);
         } else if(u_lights[i].kind == LightKindPoint) {
-            color += pointLightColor(v_position, v_normal, baseColor, u_lights[i], u_cameraPosition, v_ambient, v_diffuse, v_specular);
+            color += pointLightColor(v_position, nor, baseColor, u_lights[i], u_cameraPosition, v_ambient, v_diffuse, v_specular);
         }
     }
 

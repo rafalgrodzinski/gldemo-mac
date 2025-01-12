@@ -65,7 +65,7 @@ final class Camera {
 
         self.position = (
             position.x + inputState.movement.x * Self.movementSpeed * cos(rotation.ry) + inputState.movement.z * Self.movementSpeed * sin(rotation.ry),
-            position.y + inputState.movement.y * Self.movementSpeed + inputState.movement.z * Self.movementSpeed * sin(rotation.rx),
+            position.y + inputState.movement.y * Self.movementSpeed,// + inputState.movement.z * Self.movementSpeed * sin(rotation.rx),
             position.z + inputState.movement.z * Self.movementSpeed * cos(rotation.ry) * cos(rotation.rx) - inputState.movement.x * Self.movementSpeed * sin(rotation.ry) * cos(rotation.rx)
         )
     }
