@@ -24,6 +24,24 @@ final class ShaderProgram {
         self.programId = try program(forVertexShader: vertexShader, geometryShader: geometryShader, fragmentShader: fragmentShader)
     }
 
+    init(
+        vertexShaderFilePathUrl: URL,
+        tesselationControlShaderPathUrl: URL,
+        tesselationEvaluationShaderPathUrl: URL,
+        fragmentShaderFilePathUrl: URL
+    ) throws {
+        let vertexShader = try shader(forType: GL_VERTEX_SHADER, filePathUrl: vertexShaderFilePathUrl)
+        let tesselationControlShader = try shader(forType: GL_TESS_CONTROL_SHADER, filePathUrl: tesselationControlShaderPathUrl)
+        let tessselationEvaluationShader = try shader(forType: GL_TESS_EVALUATION_SHADER, filePathUrl: tesselationEvaluationShaderPathUrl)
+        let fragmentShader = try shader(forType: GL_FRAGMENT_SHADER, filePathUrl: fragmentShaderFilePathUrl)
+        self.programId = try program(
+            forVertexShader: vertexShader,
+            tesselationControlShader: tesselationControlShader,
+            tesselactionEvaluationShader: tessselationEvaluationShader,
+            fragmentShader: fragmentShader
+        )
+    }
+
     deinit {
         glDeleteProgram(programId)
     }
@@ -46,9 +64,21 @@ final class ShaderProgram {
         return shader
     }
 
-    private func program(forVertexShader vertexShader: GLuint, geometryShader: GLuint? = nil, fragmentShader: GLuint) throws -> GLuint {
+    private func program(
+        forVertexShader vertexShader: GLuint,
+        tesselationControlShader: GLuint? = nil,
+        tesselactionEvaluationShader: GLuint? = nil,
+        geometryShader: GLuint? = nil,
+        fragmentShader: GLuint
+    ) throws -> GLuint {
         let program = glCreateProgram()
         glAttachShader(program, vertexShader)
+        if let tesselationControlShader {
+            glAttachShader(program, tesselationControlShader)
+        }
+        if let tesselactionEvaluationShader {
+            glAttachShader(program, tesselactionEvaluationShader)
+        }
         if let geometryShader {
             glAttachShader(program, geometryShader )
         }

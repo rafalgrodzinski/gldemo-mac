@@ -189,6 +189,7 @@ final class Model {
         }
 
         glBindVertexArray(vertexArrayId)
+        glActiveTexture(GLenum(GL_TEXTURE0))
         glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
         glDrawArrays(GLenum(GL_TRIANGLES), GLint(currentFrame * verticesCount), GLsizei(verticesCount))
     }
