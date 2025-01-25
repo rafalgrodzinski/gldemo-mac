@@ -18,6 +18,8 @@
 		B5827BD12D4295590080CC83 /* GridShaderFragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5827BCF2D4295590080CC83 /* GridShaderFragment.glsl */; };
 		B5827BD22D4295590080CC83 /* GridShaderVertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5827BD02D4295590080CC83 /* GridShaderVertex.glsl */; };
 		B5827BE52D4482790080CC83 /* Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = B5827BE22D4482790080CC83 /* Grid.png */; };
+		B5827BE72D45306F0080CC83 /* AxisShaderVertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5827BE62D4530670080CC83 /* AxisShaderVertex.glsl */; };
+		B5827BE92D45307B0080CC83 /* AxisShaderFragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5827BE82D4530730080CC83 /* AxisShaderFragment.glsl */; };
 		B5B08F762D15501100E1F6E7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F752D15501100E1F6E7 /* App.swift */; };
 		B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B08F772D15501100E1F6E7 /* ContentView.swift */; };
 		B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B08F792D15501300E1F6E7 /* Assets.xcassets */; };
@@ -59,6 +61,8 @@
 		B5827BCF2D4295590080CC83 /* GridShaderFragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = GridShaderFragment.glsl; sourceTree = "<group>"; };
 		B5827BD02D4295590080CC83 /* GridShaderVertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = GridShaderVertex.glsl; sourceTree = "<group>"; };
 		B5827BE22D4482790080CC83 /* Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grid.png; sourceTree = "<group>"; };
+		B5827BE62D4530670080CC83 /* AxisShaderVertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = AxisShaderVertex.glsl; sourceTree = "<group>"; };
+		B5827BE82D4530730080CC83 /* AxisShaderFragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = AxisShaderFragment.glsl; sourceTree = "<group>"; };
 		B5B08F722D15501100E1F6E7 /* glDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B08F752D15501100E1F6E7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B5B08F772D15501100E1F6E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +114,17 @@
 				B51623062D21243E00AACE15 /* Model+MDL.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B5827BEA2D45328F0080CC83 /* Grid Render Pass */ = {
+			isa = PBXGroup;
+			children = (
+				B5827BD02D4295590080CC83 /* GridShaderVertex.glsl */,
+				B5827BCF2D4295590080CC83 /* GridShaderFragment.glsl */,
+				B5827BE62D4530670080CC83 /* AxisShaderVertex.glsl */,
+				B5827BE82D4530730080CC83 /* AxisShaderFragment.glsl */,
+			);
+			path = "Grid Render Pass";
 			sourceTree = "<group>";
 		};
 		B5B08F692D15501100E1F6E7 = {
@@ -173,8 +188,7 @@
 		B5B08FA02D1931BA00E1F6E7 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				B5827BD02D4295590080CC83 /* GridShaderVertex.glsl */,
-				B5827BCF2D4295590080CC83 /* GridShaderFragment.glsl */,
+				B5827BEA2D45328F0080CC83 /* Grid Render Pass */,
 				B5B08F8D2D19015800E1F6E7 /* PhongShader.vsh */,
 				B5B08F8F2D19016300E1F6E7 /* PhongShader.fsh */,
 				B5C30A0E2D2547EA00EA234B /* DebugNormalsShader.vsh */,
@@ -276,6 +290,7 @@
 				B5827BE52D4482790080CC83 /* Grid.png in Resources */,
 				B5827BD22D4295590080CC83 /* GridShaderVertex.glsl in Resources */,
 				B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */,
+				B5827BE72D45306F0080CC83 /* AxisShaderVertex.glsl in Resources */,
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
 				B5C30A112D25485000EA234B /* DebugNormalsShader.fsh in Resources */,
@@ -287,6 +302,7 @@
 				B5C30A132D25488E00EA234B /* DebugNormalsShader.gsh in Resources */,
 				B5C30A0F2D2547F400EA234B /* DebugNormalsShader.vsh in Resources */,
 				B5C30A192D25675A00EA234B /* DebugPolygonShader.vsh in Resources */,
+				B5827BE92D45307B0080CC83 /* AxisShaderFragment.glsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

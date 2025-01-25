@@ -44,7 +44,7 @@ final class Renderer {
         models = [
             try Model(program: phongRenderPass.program, kind: .cube),
             try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
-            //try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
+            try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
         ]
     }
 
@@ -67,7 +67,7 @@ final class Renderer {
         glDepthFunc(GLenum(GL_LEQUAL))
 
         phongRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
-        debugRenderPass.draw(models: models, camera: camera, configs: configs)
+        //debugRenderPass.draw(models: models, camera: camera, configs: configs)
         gridRenderPass.draw(camera: camera)
     }
 }
