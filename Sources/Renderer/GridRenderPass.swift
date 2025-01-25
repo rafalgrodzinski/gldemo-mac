@@ -23,8 +23,7 @@ final class GridRenderPass {
 
     private let program: ShaderProgram
     private var vertexArrayId: GLuint = 0
-    private var textureCoarseId: GLuint = 0
-    private var textureDetailedId: GLuint = 0
+    private var textureId: GLuint = 0
 
     init() throws {
         program = try ShaderProgram(
@@ -32,8 +31,7 @@ final class GridRenderPass {
             fragmentShaderFilePathUrl: Bundle.main.url(forResource: "GridShaderFragment", withExtension: "glsl")!
         )
 
-        let textureCoarse = try Texture(imageName: "Grid Coarse.png")
-        let textureDetailed = try Texture(imageName: "Grid Detailed.png")
+        let texture = try Texture(imageName: "Grid.png")
 
         glGenVertexArrays(1, &vertexArrayId)
         glBindVertexArray(vertexArrayId)
@@ -52,40 +50,19 @@ final class GridRenderPass {
         glEnableVertexAttribArray(GLuint(positionId))
         glVertexAttribPointer(GLuint(positionId), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<Float>.size * 3), nil)
 
-        // Texture Coarse
-        glGenTextures(1, &textureCoarseId)
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureCoarseId)
+        // Texture
+        glGenTextures(1, &textureId)
+        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
         glTexImage2D(
             GLenum(GL_TEXTURE_2D),
             0,
             GL_RGBA,
-            GLint(textureCoarse.width),
-            GLint(textureCoarse.height),
+            GLint(texture.width),
+            GLint(texture.height),
             0,
-            textureCoarse.pixelFormat,
+            texture.pixelFormat,
             GLenum(GL_UNSIGNED_BYTE),
-            textureCoarse.dataPointer
-        )
-        glGenerateMipmap(GLenum(GL_TEXTURE_2D))
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR_MIPMAP_LINEAR)
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR_MIPMAP_LINEAR)
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAX_ANISOTROPY_EXT), 8)
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_S), GL_REPEAT)
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_T), GL_REPEAT)
-
-        // Detailed Texture
-        glGenTextures(1, &textureDetailedId)
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureDetailedId)
-        glTexImage2D(
-            GLenum(GL_TEXTURE_2D),
-            0,
-            GL_RGBA,
-            GLint(textureDetailed.width),
-            GLint(textureDetailed.height),
-            0,
-            textureDetailed.pixelFormat,
-            GLenum(GL_UNSIGNED_BYTE),
-            textureDetailed.dataPointer
+            texture.dataPointer
         )
         glGenerateMipmap(GLenum(GL_TEXTURE_2D))
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR_MIPMAP_LINEAR)
@@ -108,14 +85,9 @@ final class GridRenderPass {
         glBindVertexArray(vertexArrayId)
 
         glActiveTexture(GLenum(GL_TEXTURE0))
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureCoarseId)
-        let samplerCoarseId = glGetUniformLocation(program.programId, "u_samplerCoarse")
-        glUniform1i(samplerCoarseId, 0)
-
-        glActiveTexture(GLenum(GL_TEXTURE1))
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureDetailedId)
-        let samplerDetailedId = glGetUniformLocation(program.programId, "u_samplerDetailed")
-        glUniform1i(samplerDetailedId, 1)
+        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+        let samplerId = glGetUniformLocation(program.programId, "u_sampler")
+        glUniform1i(samplerId, 0)
 
         glDrawElements(GLenum(GL_TRIANGLES), GLsizei(Self.indices.count), GLenum(GL_UNSIGNED_INT), nil)
 

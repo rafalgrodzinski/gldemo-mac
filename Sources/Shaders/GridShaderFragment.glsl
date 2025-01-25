@@ -9,17 +9,29 @@
 
 out vec4 o_color;
 
-in vec2 v_coords;
+in vec2 v_coordsLevel0;
+in vec2 v_coordsLevel1;
+in vec2 v_coordsLevel2;
 
-uniform sampler2D u_samplerCoarse;
-uniform sampler2D u_samplerDetailed;
+uniform sampler2D u_sampler;
 
 void main() {
-    vec4 coarseColor = texture(u_samplerCoarse, v_coords);
-    coarseColor.rgb *= 4;
-    coarseColor.a *= 2;
+    vec4 color;
 
-    vec4 detailedColor = texture(u_samplerDetailed, v_coords);
+    vec4 level0Color = texture(u_sampler, v_coordsLevel0);
+    level0Color *= 4;
+    level0Color.a = clamp(level0Color.a, 0, 0.75);
+    color = level0Color;
 
-    o_color = mix(coarseColor, detailedColor, 1 - coarseColor.a);
+    vec4 level1Color = texture(u_sampler, v_coordsLevel1);
+    level1Color *= 4;
+    level1Color.a = clamp(level1Color.a, 0, 0.75);
+    color = mix(color, level1Color, 1 - color.a);
+
+    vec4 level2Color = texture(u_sampler, v_coordsLevel2);
+    level2Color *= 4;
+    level2Color.a = clamp(level2Color.a, 0, 0.75);
+    color = mix(color, level2Color, 1 - color.a);
+
+    o_color = color;
 }
