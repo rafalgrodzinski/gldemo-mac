@@ -38,6 +38,11 @@ final class Model {
     private var vertexArrayId: GLuint = 0
     private var textureId: GLuint = 0
     private var currentTime: TimeInterval = 0
+    private var modelMatrix: GLKMatrix4 = GLKMatrix4Identity
+
+    var translation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
+    var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
+    var scale: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
 
     init(program: ShaderProgram, frames: [[Vertex]], frameDuration: TimeInterval, texture: Texture?) throws {
         framesCount = frames.count
@@ -163,17 +168,21 @@ final class Model {
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
 
-        let samplerId = glGetUniformLocation(program.programId, "u_sampler")
-        glUniform1i(samplerId, 0)
-
         glBindVertexArray(0)
+    }
+
+    private func updateModelMatrix() {
+        modelMatrix = GLKMatrix4MakeTranslation(translation.x, translation.y, translation.z)
+        modelMatrix = GLKMatrix4RotateX(modelMatrix, rotation.x)
+        modelMatrix = GLKMatrix4RotateY(modelMatrix, rotation.y)
+        modelMatrix = GLKMatrix4RotateZ(modelMatrix, rotation.z)
     }
 
     func update(deltaTime: TimeInterval) {
         currentTime += deltaTime
     }
 
-    func draw(program: ShaderProgram, modelMatrix: GLKMatrix4) {
+    func draw(program: ShaderProgram) {
         let modelMatrixId = glGetUniformLocation(program.programId, "u_modelMatrix")
         modelMatrix.pointer {
             glUniformMatrix4fv(modelMatrixId, 1, GLboolean(GL_FALSE), $0)
@@ -189,8 +198,12 @@ final class Model {
         }
 
         glBindVertexArray(vertexArrayId)
+
         glActiveTexture(GLenum(GL_TEXTURE0))
         glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+        let samplerId = glGetUniformLocation(program.programId, "u_sampler")
+        glUniform1i(samplerId, 0)
+
         glDrawArrays(GLenum(GL_TRIANGLES), GLint(currentFrame * verticesCount), GLsizei(verticesCount))
     }
 }

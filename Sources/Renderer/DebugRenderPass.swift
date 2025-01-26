@@ -30,31 +30,17 @@ final class DebugRenderPass {
         )
     }
 
-    func draw(models: [Model], camera: Camera, configs: [GLView.Config]) {
+    func draw(models: [Model], camera: Camera) {
         if shouldShowMesh {
             glUseProgram(debugPolygonProgram.programId)
             camera.prepareForDraw(withProgram: debugPolygonProgram)
-            for (i, model) in models.enumerated() {
-                var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
-                modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)
-                modelMatrix = GLKMatrix4RotateY(modelMatrix, (configs[i].ry / 180.0) * Float.pi)
-                modelMatrix = GLKMatrix4RotateZ(modelMatrix, (configs[i].rz / 180.0) * Float.pi)
-
-                model.draw(program: debugPolygonProgram, modelMatrix: modelMatrix)
-            }
+            models.forEach { $0.draw(program: debugPolygonProgram) }
         }
 
         if shouldShowNormals {
             glUseProgram(debugNormalsProgram.programId)
             camera.prepareForDraw(withProgram: debugNormalsProgram)
-            for (i, model) in models.enumerated() {
-                var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
-                modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)
-                modelMatrix = GLKMatrix4RotateY(modelMatrix, (configs[i].ry / 180.0) * Float.pi)
-                modelMatrix = GLKMatrix4RotateZ(modelMatrix, (configs[i].rz / 180.0) * Float.pi)
-
-                model.draw(program: debugNormalsProgram, modelMatrix: modelMatrix)
-            }
+            models.forEach { $0.draw(program: debugNormalsProgram) }
         }
     }
 }

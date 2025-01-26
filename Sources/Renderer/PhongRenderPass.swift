@@ -19,17 +19,10 @@ final class PhongRenderPass {
         )
     }
 
-    func draw(models: [Model], camera: Camera, lights: [Light], configs: [GLView.Config]) {
+    func draw(models: [Model], camera: Camera, lights: [Light]) {
         glUseProgram(program.programId)
         camera.prepareForDraw(withProgram: program)
         lights.forEach { $0.prepareForDraw(withProgram: program) }
-        for (i, model) in models.enumerated() {
-            var modelMatrix = GLKMatrix4MakeTranslation(configs[i].tx, configs[i].ty, configs[i].tz)
-            modelMatrix = GLKMatrix4RotateX(modelMatrix, (configs[i].rx / 180.0) * Float.pi)
-            modelMatrix = GLKMatrix4RotateY(modelMatrix, (configs[i].ry / 180.0) * Float.pi)
-            modelMatrix = GLKMatrix4RotateZ(modelMatrix, (configs[i].rz / 180.0) * Float.pi)
-
-            model.draw(program: program, modelMatrix: modelMatrix)
-        }
+        models.forEach { $0.draw(program: program) }
     }
 }

@@ -77,13 +77,13 @@ class GLView: NSOpenGLView {
         }
         var oldTime: Double?
 
-        let displayLinkCallback: CVDisplayLinkOutputCallback = { (_, inNow, _, _, _, displayLinkContext) -> CVReturn in
+        let displayLinkCallback: CVDisplayLinkOutputCallback = {(_, inNow, _, _, _, displayLinkContext) -> CVReturn in
             let view = unsafeBitCast(displayLinkContext, to: GLView.self)
 
             let time = Double(inNow.pointee.videoTime) / Double(inNow.pointee.videoTimeScale)
             if let previousTime = view.previousTime {
                 let deltaTime = time - previousTime
-                view.renderer?.update(deltaTime: deltaTime)
+                view.renderer?.update(deltaTime: deltaTime, configs: view.configs)
             }
             view.previousTime = time
             view.update()
@@ -107,7 +107,7 @@ class GLView: NSOpenGLView {
         context.makeCurrentContext()
         CGLLockContext(context.cglContextObj!)
 
-        renderer?.draw(configs: configs)
+        renderer?.draw()
 
         CGLFlushDrawable(context.cglContextObj!)
         CGLUnlockContext(context.cglContextObj!)

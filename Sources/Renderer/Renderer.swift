@@ -53,20 +53,24 @@ final class Renderer {
         camera.resize(width: width, height: height)
     }
 
-    func update(deltaTime: TimeInterval) {
+    func update(deltaTime: TimeInterval, configs: [GLView.Config]) {
         camera.update(deltaTime: deltaTime, inputState: input.state)
         models.forEach { $0.update(deltaTime: deltaTime) }
         input.update()
+        for (index, config) in configs.enumerated() {
+            models[safe: index]?.translation = (config.tx, config.ty, config.tz)
+            models[safe: index]?.rotation = (config.rx.radians, config.ry.radians, config.rz.radians)
+        }
     }
 
-    func draw(configs: [GLView.Config]) {
+    func draw() {
         glClearColor(0, 0, 0, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
         glEnable(GLenum(GL_DEPTH_TEST))
         glDepthFunc(GLenum(GL_LEQUAL))
 
-        phongRenderPass.draw(models: models, camera: camera, lights: lights, configs: configs)
+        phongRenderPass.draw(models: models, camera: camera, lights: lights)
         //debugRenderPass.draw(models: models, camera: camera, configs: configs)
         gridRenderPass.draw(camera: camera)
     }

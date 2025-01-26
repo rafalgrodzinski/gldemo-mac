@@ -8,6 +8,10 @@
 import Foundation
 
 extension Float {
+    var radians: Float {
+        (self / 180.0) * Float.pi
+    }
+
     func clamp(_ range: ClosedRange<Float>) -> Float {
         if self < range.lowerBound {
             return range.lowerBound
