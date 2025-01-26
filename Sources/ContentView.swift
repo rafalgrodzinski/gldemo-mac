@@ -8,26 +8,59 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var configs = [GLView.Config](repeating: GLView.Config(), count: 3)
-    
+    @State private var config = Config()
+
     var body: some View {
         HStack(spacing: 0) {
-            GLViewWrapper(configs: configs)
+            GLViewWrapper(config: config)
                 .background(Color.blue)
-            TabView {
-                ControlsView(config: $configs[0])
-                    .tabItem { Label("1", systemImage: "01.circle") }
-                ControlsView(config: $configs[1])
-                    .tabItem { Label("2", systemImage: "02.circle") }
-                ControlsView(config: $configs[2])
-                    .tabItem { Label("3", systemImage: "03.circle") }
+            VStack(spacing: 8) {
+                ZStack(alignment: .topLeading) {
+                    VStack(spacing: 8) {
+                        Toggle("Grid", isOn: Binding(
+                            get: { config.sceneConfig.isGridOn },
+                            set: { config.sceneConfig = config.sceneConfig.updated(isGridOn: $0) }
+                        )).frame(maxWidth: .infinity, alignment: .leading)
+                        Toggle("Axes", isOn: Binding(
+                            get: { config.sceneConfig.isAxesOn },
+                            set: { config.sceneConfig = config.sceneConfig.updated(isAxesOn: $0) }
+                        )).frame(maxWidth: .infinity, alignment: .leading)
+                        Toggle("Normals", isOn: Binding(
+                            get: { config.sceneConfig.isNormalsOn },
+                            set: { config.sceneConfig = config.sceneConfig.updated(isNormalsOn: $0) }
+                        )).frame(maxWidth: .infinity, alignment: .leading)
+                        Toggle("Mesh", isOn: Binding(
+                            get: { config.sceneConfig.isMeshOn },
+                            set: { config.sceneConfig = config.sceneConfig.updated(isMeshOn: $0) }
+                        )).frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.5), lineWidth: 1)
+                    }.padding(.top, 8)
+                    Text("Scene")
+                        .padding(.horizontal, 16)
+                }.padding(8)
+
+                TabView {
+                    ControlsView(modelConfig: $config.modelConfigs[0])
+                        .tabItem { Label("1", systemImage: "01.circle") }
+                    ControlsView(modelConfig: $config.modelConfigs[1])
+                        .tabItem { Label("2", systemImage: "02.circle") }
+                    ControlsView(modelConfig: $config.modelConfigs[2])
+                        .tabItem { Label("3", systemImage: "03.circle") }
+                }
             }.frame(width: 200)
         }
     }
 }
 
 private struct ControlsView: View {
-    @Binding var config: GLView.Config
+    @Binding var modelConfig: Config.ModelConfig
 
     var body: some View {
         VStack(spacing: 8) {
@@ -36,26 +69,26 @@ private struct ControlsView: View {
                 VStack(spacing: 8) {
                     Slider(
                         value: Binding(
-                            get: { config.tx },
-                            set: { config = config.updated(tx: $0) }
+                            get: { modelConfig.tx },
+                            set: { modelConfig = modelConfig.updated(tx: $0) }
                         ),
-                        in: GLView.Config.tRange
+                        in: Config.ModelConfig.translationRange
                     ) { Text("X") }
 
                     Slider(
                         value: Binding(
-                            get: { config.ty },
-                            set: { config = config.updated(ty: $0) }
+                            get: { modelConfig.ty },
+                            set: { modelConfig = modelConfig.updated(ty: $0) }
                         ),
-                        in: GLView.Config.tRange
+                        in: Config.ModelConfig.translationRange
                     ) { Text("Y") }
 
                     Slider(
                         value: Binding(
-                            get: { config.tz },
-                            set: { config = config.updated(tz: $0) }
+                            get: { modelConfig.tz },
+                            set: { modelConfig = modelConfig.updated(tz: $0) }
                         ),
-                        in: GLView.Config.tRange
+                        in: Config.ModelConfig.translationRange
                     ) { Text("Z") }
                 }
                 .padding(.horizontal, 16)
@@ -74,26 +107,26 @@ private struct ControlsView: View {
                 VStack(spacing: 8) {
                     Slider(
                         value: Binding(
-                            get: { config.rx },
-                            set: { config = config.updated(rx: $0) }
+                            get: { modelConfig.rx },
+                            set: { modelConfig = modelConfig.updated(rx: $0) }
                         ),
-                        in: GLView.Config.rRange
+                        in: Config.ModelConfig.rotationRange
                     ) { Text("X") }
 
                     Slider(
                         value: Binding(
-                            get: { config.ry },
-                            set: { config = config.updated(ry: $0) }
+                            get: { modelConfig.ry },
+                            set: { modelConfig = modelConfig.updated(ry: $0) }
                         ),
-                        in: GLView.Config.rRange
+                        in: Config.ModelConfig.rotationRange
                     ) { Text("Y") }
 
                     Slider(
                         value: Binding(
-                            get: { config.rz },
-                            set: { config = config.updated(rz: $0) }
+                            get: { modelConfig.rz },
+                            set: { modelConfig = modelConfig.updated(rz: $0) }
                         ),
-                        in: GLView.Config.rRange
+                        in: Config.ModelConfig.rotationRange
                     ) { Text("Z") }
                 }
                 .padding(.horizontal, 16)
@@ -112,36 +145,36 @@ private struct ControlsView: View {
                 VStack(spacing: 8) {
                     Slider(
                         value: Binding(
-                            get: { config.sx },
-                            set: { config = config.updated(sx: $0) }
+                            get: { modelConfig.sx },
+                            set: { modelConfig = modelConfig.updated(sx: $0) }
                         ),
-                        in: GLView.Config.sRange
+                        in: Config.ModelConfig.scaleRange
                     ) { Text("X") }
 
                     Slider(
                         value: Binding(
-                            get: { config.sy },
-                            set: { config = config.updated(sy: $0) }
+                            get: { modelConfig.sy },
+                            set: { modelConfig = modelConfig.updated(sy: $0) }
                         ),
-                        in: GLView.Config.sRange
+                        in: Config.ModelConfig.scaleRange
                     ) { Text("Y") }
 
                     Slider(
                         value: Binding(
-                            get: { config.sz },
-                            set: { config = config.updated(sz: $0) }
+                            get: { modelConfig.sz },
+                            set: { modelConfig = modelConfig.updated(sz: $0) }
                         ),
-                        in: GLView.Config.sRange
+                        in: Config.ModelConfig.scaleRange
                     ) { Text("Z") }
 
                     Slider(
                         value: Binding(
-                            get: { max(config.sx, config.sy, config.sz) },
+                            get: { max(modelConfig.sx, modelConfig.sy, modelConfig.sz) },
                             set: {
-                                config = config.updated(sx: $0, sy: $0, sz: $0)
+                                modelConfig = modelConfig.updated(sx: $0, sy: $0, sz: $0)
                             }
                         ),
-                        in: GLView.Config.sRange
+                        in: Config.ModelConfig.scaleRange
                     ) { Text("XYZ") }
                 }
                 .padding(.horizontal, 16)

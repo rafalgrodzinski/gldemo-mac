@@ -37,6 +37,9 @@ final class GridRenderPass {
     private let axisProgram: ShaderProgram
     private var axisVertexArrayId: GLuint = 0
 
+    var isGridOn = false
+    var isAxesOn = false
+
     init() throws {
         // Grid
         gridProgram = try ShaderProgram(
@@ -111,34 +114,38 @@ final class GridRenderPass {
         glEnable(GLenum(GL_LINE_SMOOTH))
 
         // Grid
-        glUseProgram(gridProgram.programId)
-        camera.prepareForDraw(withProgram: gridProgram)
+        if isGridOn {
+            glUseProgram(gridProgram.programId)
+            camera.prepareForDraw(withProgram: gridProgram)
 
-        glBindVertexArray(gridVertexArrayId)
+            glBindVertexArray(gridVertexArrayId)
 
-        glActiveTexture(GLenum(GL_TEXTURE0))
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
-        let samplerId = glGetUniformLocation(gridProgram.programId, "u_sampler")
-        glUniform1i(samplerId, 0)
+            glActiveTexture(GLenum(GL_TEXTURE0))
+            glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+            let samplerId = glGetUniformLocation(gridProgram.programId, "u_sampler")
+            glUniform1i(samplerId, 0)
 
-        glDrawElements(GLenum(GL_TRIANGLES), GLsizei(Self.gridIndices.count), GLenum(GL_UNSIGNED_INT), nil)
+            glDrawElements(GLenum(GL_TRIANGLES), GLsizei(Self.gridIndices.count), GLenum(GL_UNSIGNED_INT), nil)
+        }
 
         // Axes
-        glUseProgram(axisProgram.programId)
-        camera.prepareForDraw(withProgram: axisProgram)
-
-        glBindVertexArray(axisVertexArrayId)
-        glLineWidth(2)
-
-        let axisDirectionId = glGetUniformLocation(axisProgram.programId, "u_axisDirection")
-        // X
-        glUniform1i(axisDirectionId, 0)
-        glDrawArrays(GLenum(GL_LINES), 0, 2)
-        // Y
-        glUniform1i(axisDirectionId, 1)
-        glDrawArrays(GLenum(GL_LINES), 2, 2)
-        // Z
-        glUniform1i(axisDirectionId, 2)
-        glDrawArrays(GLenum(GL_LINES), 4, 2)
+        if isAxesOn {
+            glUseProgram(axisProgram.programId)
+            camera.prepareForDraw(withProgram: axisProgram)
+            
+            glBindVertexArray(axisVertexArrayId)
+            glLineWidth(2)
+            
+            let axisDirectionId = glGetUniformLocation(axisProgram.programId, "u_axisDirection")
+            // X
+            glUniform1i(axisDirectionId, 0)
+            glDrawArrays(GLenum(GL_LINES), 0, 2)
+            // Y
+            glUniform1i(axisDirectionId, 1)
+            glDrawArrays(GLenum(GL_LINES), 2, 2)
+            // Z
+            glUniform1i(axisDirectionId, 2)
+            glDrawArrays(GLenum(GL_LINES), 4, 2)
+        }
     }
 }

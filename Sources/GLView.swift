@@ -9,65 +9,15 @@ import SwiftUI
 import Cocoa
 import OpenGL.GL
 
-extension GLView {
-    struct Config {
-        static let tRange: ClosedRange<Float> = -100...100
-        static let rRange: ClosedRange<Float> = -180...180
-        static let sRange: ClosedRange<Float> = 0.1...10
-
-        let tx: Float
-        let ty: Float
-        let tz: Float
-
-        let rx: Float
-        let ry: Float
-        let rz: Float
-
-        let sx: Float
-        let sy: Float
-        let sz: Float
-
-        init(
-            tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
-            rx: Float? = nil, ry: Float? = nil, rz: Float? = nil,
-            sx: Float? = nil, sy: Float? = nil, sz: Float? = nil
-        ) {
-            self.tx = tx ?? 0
-            self.ty = ty ?? 0
-            self.tz = tz ?? 0
-
-            self.rx = rx ?? 0
-            self.ry = ry ?? 0
-            self.rz = rz ?? 0
-
-            self.sx = sx ?? 1
-            self.sy = sy ?? 1
-            self.sz = sz ?? 1
-        }
-
-        func updated(
-            tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
-            rx: Float? = nil, ry: Float? = nil, rz: Float? = nil,
-            sx: Float? = nil, sy: Float? = nil, sz: Float? = nil
-        ) -> Config {
-            Config(
-                tx: tx ?? self.tx, ty: ty ?? self.ty, tz: tz ?? self.tz,
-                rx: rx ?? self.rx, ry: ry ?? self.ry, rz: rz ?? self.rz,
-                sx: sx ?? self.sx, sy: sy ?? self.sy, sz: sz ?? self.sz
-            )
-        }
-    }
-}
-
 struct GLViewWrapper: NSViewRepresentable {
-    let configs: [GLView.Config]
+    let config: Config
 
     func makeNSView(context: Context) -> GLView {
         GLView()
     }
     
     func updateNSView(_ nsView: GLView, context: Context) {
-        nsView.configs = configs
+        nsView.config = config
     }
 }
 
@@ -75,7 +25,7 @@ class GLView: NSOpenGLView {
     private var renderer: Renderer?
     private var displayLink: CVDisplayLink?
     private var previousTime: Double?
-    var configs = [Config]()
+    var config = Config()
     private let input = Input()
 
     init() {
@@ -101,7 +51,7 @@ class GLView: NSOpenGLView {
             let time = Double(inNow.pointee.videoTime) / Double(inNow.pointee.videoTimeScale)
             if let previousTime = view.previousTime {
                 let deltaTime = time - previousTime
-                view.renderer?.update(deltaTime: deltaTime, configs: view.configs)
+                view.renderer?.update(deltaTime: deltaTime, config: view.config)
             }
             view.previousTime = time
             view.update()

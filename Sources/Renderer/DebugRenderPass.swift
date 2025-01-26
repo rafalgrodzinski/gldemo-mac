@@ -13,8 +13,8 @@ final class DebugRenderPass {
     private let debugNormalsProgram: ShaderProgram
     private let debugPolygonProgram: ShaderProgram
 
-    var shouldShowMesh: Bool = false
-    var shouldShowNormals: Bool = false
+    var isNormalsOn: Bool = false
+    var isMeshOn: Bool = false
 
     init() throws {
         debugNormalsProgram = try ShaderProgram(
@@ -31,16 +31,16 @@ final class DebugRenderPass {
     }
 
     func draw(models: [Model], camera: Camera) {
-        if shouldShowMesh {
-            glUseProgram(debugPolygonProgram.programId)
-            camera.prepareForDraw(withProgram: debugPolygonProgram)
-            models.forEach { $0.draw(program: debugPolygonProgram) }
-        }
-
-        if shouldShowNormals {
+        if isNormalsOn {
             glUseProgram(debugNormalsProgram.programId)
             camera.prepareForDraw(withProgram: debugNormalsProgram)
             models.forEach { $0.draw(program: debugNormalsProgram) }
+        }
+
+        if isMeshOn {
+            glUseProgram(debugPolygonProgram.programId)
+            camera.prepareForDraw(withProgram: debugPolygonProgram)
+            models.forEach { $0.draw(program: debugPolygonProgram) }
         }
     }
 }
