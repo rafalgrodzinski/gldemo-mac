@@ -32,54 +32,128 @@ private struct ControlsView: View {
     var body: some View {
         VStack(spacing: 8) {
             //Translate
-            Slider(
-                value: Binding(
-                    get: { config.tx },
-                    set: { config = config.updated(tx: $0) }
-                ),
-                in: GLView.Config.tRange
-            ) { Text("TX") }
+            ZStack(alignment: .topLeading) {
+                VStack(spacing: 8) {
+                    Slider(
+                        value: Binding(
+                            get: { config.tx },
+                            set: { config = config.updated(tx: $0) }
+                        ),
+                        in: GLView.Config.tRange
+                    ) { Text("X") }
 
-            Slider(
-                value: Binding(
-                    get: { config.ty },
-                    set: { config = config.updated(ty: $0) }
-                ),
-                in: GLView.Config.tRange
-            ) { Text("TY") }
+                    Slider(
+                        value: Binding(
+                            get: { config.ty },
+                            set: { config = config.updated(ty: $0) }
+                        ),
+                        in: GLView.Config.tRange
+                    ) { Text("Y") }
 
-            Slider(
-                value: Binding(
-                    get: { config.tz },
-                    set: { config = config.updated(tz: $0) }
-                ),
-                in: GLView.Config.tRange
-            ) { Text("TZ") }
+                    Slider(
+                        value: Binding(
+                            get: { config.tz },
+                            set: { config = config.updated(tz: $0) }
+                        ),
+                        in: GLView.Config.tRange
+                    ) { Text("Z") }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.gray.opacity(0.5), lineWidth: 1)
+                }.padding(.top, 8)
+                Text("Translation")
+                    .padding(.horizontal, 16)
+            }
 
             // Rotate
-            Slider(
-                value: Binding(
-                    get: { config.rx },
-                    set: { config = config.updated(rx: $0) }
-                ),
-                in: GLView.Config.rRange
-            ) { Text("RX") }
+            ZStack(alignment: .topLeading) {
+                VStack(spacing: 8) {
+                    Slider(
+                        value: Binding(
+                            get: { config.rx },
+                            set: { config = config.updated(rx: $0) }
+                        ),
+                        in: GLView.Config.rRange
+                    ) { Text("X") }
 
-            Slider(
-                value: Binding(
-                    get: { config.ry },
-                    set: { config = config.updated(ry: $0) }
-                ),
-                in: GLView.Config.rRange
-            ) { Text("RY") }
+                    Slider(
+                        value: Binding(
+                            get: { config.ry },
+                            set: { config = config.updated(ry: $0) }
+                        ),
+                        in: GLView.Config.rRange
+                    ) { Text("Y") }
 
-            Slider(
-                value: Binding(
-                    get: { config.rz },
-                    set: { config = config.updated(rz: $0) }
-                ),
-                in: GLView.Config.rRange
-            ) { Text("RZ") }
+                    Slider(
+                        value: Binding(
+                            get: { config.rz },
+                            set: { config = config.updated(rz: $0) }
+                        ),
+                        in: GLView.Config.rRange
+                    ) { Text("Z") }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.gray.opacity(0.5), lineWidth: 1)
+                }.padding(.top, 8)
+                Text("Rotation")
+                    .padding(.horizontal, 16)
+            }
+
+            // Scale
+            ZStack(alignment: .topLeading) {
+                VStack(spacing: 8) {
+                    Slider(
+                        value: Binding(
+                            get: { config.sx },
+                            set: { config = config.updated(sx: $0) }
+                        ),
+                        in: GLView.Config.sRange
+                    ) { Text("X") }
+
+                    Slider(
+                        value: Binding(
+                            get: { config.sy },
+                            set: { config = config.updated(sy: $0) }
+                        ),
+                        in: GLView.Config.sRange
+                    ) { Text("Y") }
+
+                    Slider(
+                        value: Binding(
+                            get: { config.sz },
+                            set: { config = config.updated(sz: $0) }
+                        ),
+                        in: GLView.Config.sRange
+                    ) { Text("Z") }
+
+                    Slider(
+                        value: Binding(
+                            get: { max(config.sx, config.sy, config.sz) },
+                            set: {
+                                config = config.updated(sx: $0, sy: $0, sz: $0)
+                            }
+                        ),
+                        in: GLView.Config.sRange
+                    ) { Text("XYZ") }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.gray.opacity(0.5), lineWidth: 1)
+                }.padding(.top, 8)
+                Text("Scale")
+                    .padding(.horizontal, 16)
+            }
         }
         .padding(8)
         .frame(width: 200)

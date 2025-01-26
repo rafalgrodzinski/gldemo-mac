@@ -42,7 +42,7 @@ final class Model {
 
     var translation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
     var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
-    var scale: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
+    var scale: (x: Float, y: Float, z: Float) = (1, 1, 1) { didSet { updateModelMatrix() }}
 
     init(program: ShaderProgram, frames: [[Vertex]], frameDuration: TimeInterval, texture: Texture?) throws {
         framesCount = frames.count
@@ -172,10 +172,13 @@ final class Model {
     }
 
     private func updateModelMatrix() {
+        //modelMatrix = GLKMatrix4MakeScale(scale.x, scale.y, scale.z)
+        //modelMatrix = GLKMatrix4Translate(modelMatrix, translation.x, translation.y, translation.z)
         modelMatrix = GLKMatrix4MakeTranslation(translation.x, translation.y, translation.z)
         modelMatrix = GLKMatrix4RotateX(modelMatrix, rotation.x)
         modelMatrix = GLKMatrix4RotateY(modelMatrix, rotation.y)
         modelMatrix = GLKMatrix4RotateZ(modelMatrix, rotation.z)
+        modelMatrix = GLKMatrix4Scale(modelMatrix, scale.x, scale.y, scale.z)
     }
 
     func update(deltaTime: TimeInterval) {

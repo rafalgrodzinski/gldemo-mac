@@ -60,6 +60,7 @@ final class Renderer {
         for (index, config) in configs.enumerated() {
             models[safe: index]?.translation = (config.tx, config.ty, config.tz)
             models[safe: index]?.rotation = (config.rx.radians, config.ry.radians, config.rz.radians)
+            models[safe: index]?.scale = (config.sx, config.sy, config.sz)
         }
     }
 

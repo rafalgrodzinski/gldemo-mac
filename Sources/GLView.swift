@@ -13,6 +13,7 @@ extension GLView {
     struct Config {
         static let tRange: ClosedRange<Float> = -100...100
         static let rRange: ClosedRange<Float> = -180...180
+        static let sRange: ClosedRange<Float> = 0.1...10
 
         let tx: Float
         let ty: Float
@@ -22,8 +23,15 @@ extension GLView {
         let ry: Float
         let rz: Float
 
-        init(tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
-             rx: Float? = nil, ry: Float? = nil, rz: Float? = nil) {
+        let sx: Float
+        let sy: Float
+        let sz: Float
+
+        init(
+            tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
+            rx: Float? = nil, ry: Float? = nil, rz: Float? = nil,
+            sx: Float? = nil, sy: Float? = nil, sz: Float? = nil
+        ) {
             self.tx = tx ?? 0
             self.ty = ty ?? 0
             self.tz = tz ?? 0
@@ -31,12 +39,22 @@ extension GLView {
             self.rx = rx ?? 0
             self.ry = ry ?? 0
             self.rz = rz ?? 0
+
+            self.sx = sx ?? 1
+            self.sy = sy ?? 1
+            self.sz = sz ?? 1
         }
 
-        func updated(tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
-                    rx: Float? = nil, ry: Float? = nil, rz: Float? = nil) -> Config {
-            Config(tx: tx ?? self.tx, ty: ty ?? self.ty, tz: tz ?? self.tz,
-                   rx: rx ?? self.rx, ry: ry ?? self.ry, rz: rz ?? self.rz)
+        func updated(
+            tx: Float? = nil, ty: Float? = nil, tz: Float? = nil,
+            rx: Float? = nil, ry: Float? = nil, rz: Float? = nil,
+            sx: Float? = nil, sy: Float? = nil, sz: Float? = nil
+        ) -> Config {
+            Config(
+                tx: tx ?? self.tx, ty: ty ?? self.ty, tz: tz ?? self.tz,
+                rx: rx ?? self.rx, ry: ry ?? self.ry, rz: rz ?? self.rz,
+                sx: sx ?? self.sx, sy: sy ?? self.sy, sz: sz ?? self.sz
+            )
         }
     }
 }
