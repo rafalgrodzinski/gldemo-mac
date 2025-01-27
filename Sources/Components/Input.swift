@@ -137,7 +137,9 @@ final class Input {
             }
         }
         
-        NSEvent.addLocalMonitorForEvents(matching: [.keyUp, .keyDown]) { _ in nil }
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            return event.modifierFlags.contains(.command) ? event : nil
+        }
     }
 
     func update(isMouseInView: Bool? = nil) {
