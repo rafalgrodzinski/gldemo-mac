@@ -20,6 +20,10 @@ final class PhongRenderPass {
     }
 
     func draw(models: [Model], camera: Camera, lights: [Light]) {
+        glDepthMask(GLboolean(GL_TRUE))
+        glEnable(GLenum(GL_DEPTH_TEST))
+        glDepthFunc(GLenum(GL_LEQUAL))
+
         glUseProgram(program.programId)
         camera.prepareForDraw(withProgram: program)
         lights.forEach { $0.prepareForDraw(withProgram: program) }

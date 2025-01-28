@@ -587,6 +587,6 @@ extension Model {
             modelFrames.append(modelVertices)
         }
 
-        try self.init(program: program, frames: modelFrames, frameDuration: Self.frameDuration, texture: texture)
+        try self.init(program: program, frames: modelFrames, frameDuration: Self.frameDuration, texture: texture, textureCube: nil)
     }
 }

@@ -33,6 +33,10 @@ struct ContentView: View {
                             get: { config.sceneConfig.isMeshOn },
                             set: { config.sceneConfig = config.sceneConfig.updated(isMeshOn: $0) }
                         )).frame(maxWidth: .infinity, alignment: .leading)
+                        Toggle("Skybox", isOn: Binding(
+                            get: { config.sceneConfig.isSkyboxOn },
+                            set: { config.sceneConfig = config.sceneConfig.updated(isSkyboxOn: $0) }
+                        )).frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 16)

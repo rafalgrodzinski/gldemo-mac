@@ -39,12 +39,18 @@ final class Model {
     private var textureId: GLuint = 0
     private var currentTime: TimeInterval = 0
     private var modelMatrix: GLKMatrix4 = GLKMatrix4Identity
+    private let isTextureCube: Bool
 
     var translation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
     var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
     var scale: (x: Float, y: Float, z: Float) = (1, 1, 1) { didSet { updateModelMatrix() }}
 
-    init(program: ShaderProgram, frames: [[Vertex]], frameDuration: TimeInterval, texture: Texture?) throws {
+    init(
+        program: ShaderProgram,
+        frames: [[Vertex]], frameDuration: TimeInterval,
+        texture: Texture?,
+        textureCube: (left: Texture, right: Texture, front: Texture, back: Texture, bottom: Texture, top: Texture)?
+    ) throws {
         framesCount = frames.count
         verticesCount = frames.first?.count ?? 0
         self.frameDuration = frameDuration
@@ -75,105 +81,202 @@ final class Model {
         glBufferData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<AnimatedVertex>.size * animatedVertices.count, animatedVertices, GLenum(GL_STATIC_DRAW))
 
         let positionId = glGetAttribLocation(program.programId, "a_position")
-        glEnableVertexAttribArray(GLuint(positionId))
-        glVertexAttribPointer(
-            GLuint(positionId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.position)!)
-        )
+        if positionId >= 0 {
+            glEnableVertexAttribArray(GLuint(positionId))
+            glVertexAttribPointer(
+                GLuint(positionId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.position)!)
+            )
+        }
 
         let nextPositionId = glGetAttribLocation(program.programId, "a_nextPosition")
-        glEnableVertexAttribArray(GLuint(nextPositionId))
-        glVertexAttribPointer(
-            GLuint(nextPositionId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.nextPosition)!)
-        )
+        if nextPositionId >= 0 {
+            glEnableVertexAttribArray(GLuint(nextPositionId))
+            glVertexAttribPointer(
+                GLuint(nextPositionId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.nextPosition)!)
+            )
+        }
 
         let normalId = glGetAttribLocation(program.programId, "a_normal")
-        glEnableVertexAttribArray(GLuint(normalId))
-        glVertexAttribPointer(
-            GLuint(normalId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.normal)!)
-        )
+        if normalId >= 0 {
+            glEnableVertexAttribArray(GLuint(normalId))
+            glVertexAttribPointer(
+                GLuint(normalId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.normal)!)
+            )
+        }
 
         let nextNormalId = glGetAttribLocation(program.programId, "a_nextNormal")
-        glEnableVertexAttribArray(GLuint(nextNormalId))
-        glVertexAttribPointer(
-            GLuint(nextNormalId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.nextNormal)!)
-        )
+        if nextNormalId >= 0 {
+            glEnableVertexAttribArray(GLuint(nextNormalId))
+            glVertexAttribPointer(
+                GLuint(nextNormalId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.nextNormal)!)
+            )
+        }
 
         let colorId = glGetAttribLocation(program.programId, "a_color")
-        glEnableVertexAttribArray(GLuint(colorId))
-        glVertexAttribPointer(
-            GLuint(colorId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.color)!)
-        )
+        if colorId >= 0 {
+            glEnableVertexAttribArray(GLuint(colorId))
+            glVertexAttribPointer(
+                GLuint(colorId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.color)!)
+            )
+        }
 
         let coordsId = glGetAttribLocation(program.programId, "a_coords")
-        glEnableVertexAttribArray(GLuint(coordsId))
-        glVertexAttribPointer(
-            GLuint(coordsId),
-            2,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.coords)!)
-        )
+        if coordsId >= 0 {
+            glEnableVertexAttribArray(GLuint(coordsId))
+            glVertexAttribPointer(
+                GLuint(coordsId),
+                2,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.coords)!)
+            )
+        }
 
         let ambientDiffuseSpecularId = glGetAttribLocation(program.programId, "a_ambientDiffuseSpecular")
-        glEnableVertexAttribArray(GLuint(ambientDiffuseSpecularId))
-        glVertexAttribPointer(
-            GLuint(ambientDiffuseSpecularId),
-            3,
-            GLenum(GL_FLOAT),
-            GLboolean(GL_FALSE),
-            GLsizei(MemoryLayout<AnimatedVertex>.stride),
-            UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
-        )
+        if ambientDiffuseSpecularId >= 0 {
+            glEnableVertexAttribArray(GLuint(ambientDiffuseSpecularId))
+            glVertexAttribPointer(
+                GLuint(ambientDiffuseSpecularId),
+                3,
+                GLenum(GL_FLOAT),
+                GLboolean(GL_FALSE),
+                GLsizei(MemoryLayout<AnimatedVertex>.stride),
+                UnsafeRawPointer(bitPattern: MemoryLayout<AnimatedVertex>.offset(of: \.material)! + MemoryLayout<Material>.offset(of: \.ambient)!)
+            )
+        }
 
         glGenTextures(1, &textureId)
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
-        let texture = texture ?? Texture.whitePixel
-        glTexImage2D(
-            GLenum(GL_TEXTURE_2D),
-            0,
-            GL_RGBA,
-            GLint(texture.width),
-            GLint(texture.height),
-            0,
-            texture.pixelFormat,
-            GLenum(GL_UNSIGNED_BYTE),
-            texture.dataPointer
-        )
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
+        if let textureCube { // Texture Cube
+            isTextureCube = true
+            glActiveTexture(GLenum(GL_TEXTURE0))
+            glBindTexture(GLenum(GL_TEXTURE_CUBE_MAP), textureId)
+            // -X
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_NEGATIVE_X),
+                0,
+                GL_RGBA,
+                GLint(textureCube.left.width),
+                GLint(textureCube.left.height),
+                0,
+                textureCube.left.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.left.dataPointer
+            )
+            // +X
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_POSITIVE_X),
+                0,
+                GL_RGBA,
+                GLint(textureCube.right.width),
+                GLint(textureCube.right.height),
+                0,
+                textureCube.right.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.right.dataPointer
+            )
+            // -Z
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z),
+                0,
+                GL_RGBA,
+                GLint(textureCube.front.width),
+                GLint(textureCube.front.height),
+                0,
+                textureCube.front.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.front.dataPointer
+            )
+            // +Z
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_POSITIVE_Z),
+                0,
+                GL_RGBA,
+                GLint(textureCube.back.width),
+                GLint(textureCube.back.height),
+                0,
+                textureCube.back.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.back.dataPointer
+            )
+            // -Y
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y),
+                0,
+                GL_RGBA,
+                GLint(textureCube.bottom.width),
+                GLint(textureCube.bottom.height),
+                0,
+                textureCube.bottom.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.bottom.dataPointer
+            )
+            // +Y
+            glTexImage2D(
+                GLenum(GL_TEXTURE_CUBE_MAP_POSITIVE_Y),
+                0,
+                GL_RGBA,
+                GLint(textureCube.top.width),
+                GLint(textureCube.top.height),
+                0,
+                textureCube.top.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                textureCube.top.dataPointer
+            )
+
+            glTexParameteri(GLenum(GL_TEXTURE_CUBE_MAP), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
+            glTexParameteri(GLenum(GL_TEXTURE_CUBE_MAP), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
+            glTexParameteri(GLenum(GL_TEXTURE_CUBE_MAP), GLenum(GL_TEXTURE_WRAP_T), GL_CLAMP_TO_EDGE);
+            glTexParameteri(GLenum(GL_TEXTURE_CUBE_MAP), GLenum(GL_TEXTURE_WRAP_R), GL_CLAMP_TO_EDGE);
+            glTexParameteri(GLenum(GL_TEXTURE_CUBE_MAP), GLenum(GL_TEXTURE_WRAP_S), GL_CLAMP_TO_EDGE);
+        } else { // Texture 2D
+            isTextureCube = false
+            glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+            let texture = texture ?? Texture.whitePixel
+            glTexImage2D(
+                GLenum(GL_TEXTURE_2D),
+                0,
+                GL_RGBA,
+                GLint(texture.width),
+                GLint(texture.height),
+                0,
+                texture.pixelFormat,
+                GLenum(GL_UNSIGNED_BYTE),
+                texture.dataPointer
+            )
+            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
+            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
+        }
 
         glBindVertexArray(0)
     }
 
     private func updateModelMatrix() {
-        //modelMatrix = GLKMatrix4MakeScale(scale.x, scale.y, scale.z)
-        //modelMatrix = GLKMatrix4Translate(modelMatrix, translation.x, translation.y, translation.z)
         modelMatrix = GLKMatrix4MakeTranslation(translation.x, translation.y, translation.z)
         modelMatrix = GLKMatrix4RotateX(modelMatrix, rotation.x)
         modelMatrix = GLKMatrix4RotateY(modelMatrix, rotation.y)
@@ -203,7 +306,11 @@ final class Model {
         glBindVertexArray(vertexArrayId)
 
         glActiveTexture(GLenum(GL_TEXTURE0))
-        glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+        if isTextureCube {
+            glBindTexture(GLenum(GL_TEXTURE_CUBE_MAP), textureId)
+        } else {
+            glBindTexture(GLenum(GL_TEXTURE_2D), textureId)
+        }
         let samplerId = glGetUniformLocation(program.programId, "u_sampler")
         glUniform1i(samplerId, 0)
 

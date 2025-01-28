@@ -61,6 +61,6 @@ extension Model {
             }
         }
 
-        try self.init(program: program, frames: [vertices], frameDuration: 0, texture: texture)
+        try self.init(program: program, frames: [vertices], frameDuration: 0, texture: texture, textureCube: nil)
     }
 }

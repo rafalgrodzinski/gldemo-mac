@@ -109,6 +109,10 @@ final class GridRenderPass {
     }
 
     func draw(camera: Camera) {
+        glDepthMask(GLboolean(GL_TRUE))
+        glEnable(GLenum(GL_DEPTH_TEST))
+        glDepthFunc(GLenum(GL_LEQUAL))
+
         glEnable(GLenum(GL_BLEND))
         glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA))
         glEnable(GLenum(GL_LINE_SMOOTH))

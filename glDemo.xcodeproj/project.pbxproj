@@ -47,6 +47,15 @@
 		B5C30A172D25663000EA234B /* DebugPolygonShader.gsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A162D25662B00EA234B /* DebugPolygonShader.gsh */; };
 		B5C30A192D25675A00EA234B /* DebugPolygonShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A182D25675100EA234B /* DebugPolygonShader.vsh */; };
 		B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B5C30A1A2D25677E00EA234B /* DebugPolygonShader.fsh */; };
+		B5D0CB152D48918C0059A575 /* SkyboxRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D0CB142D48918C0059A575 /* SkyboxRenderPass.swift */; };
+		B5D0CB172D489F480059A575 /* SkyboxVertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB162D489F440059A575 /* SkyboxVertex.glsl */; };
+		B5D0CB192D489F540059A575 /* SkyboxFragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB182D489F510059A575 /* SkyboxFragment.glsl */; };
+		B5D0CB202D4913370059A575 /* skybox_front.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1C2D4913370059A575 /* skybox_front.png */; };
+		B5D0CB212D4913370059A575 /* skybox_right.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1E2D4913370059A575 /* skybox_right.png */; };
+		B5D0CB222D4913370059A575 /* skybox_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1B2D4913370059A575 /* skybox_bottom.png */; };
+		B5D0CB232D4913370059A575 /* skybox_left.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1D2D4913370059A575 /* skybox_left.png */; };
+		B5D0CB242D4913370059A575 /* skybox_top.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1F2D4913370059A575 /* skybox_top.png */; };
+		B5D0CB252D4913370059A575 /* skybox_back.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1A2D4913370059A575 /* skybox_back.png */; };
 		B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +102,15 @@
 		B5C30A162D25662B00EA234B /* DebugPolygonShader.gsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.gsh; sourceTree = "<group>"; };
 		B5C30A182D25675100EA234B /* DebugPolygonShader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.vsh; sourceTree = "<group>"; };
 		B5C30A1A2D25677E00EA234B /* DebugPolygonShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = DebugPolygonShader.fsh; sourceTree = "<group>"; };
+		B5D0CB142D48918C0059A575 /* SkyboxRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyboxRenderPass.swift; sourceTree = "<group>"; };
+		B5D0CB162D489F440059A575 /* SkyboxVertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SkyboxVertex.glsl; sourceTree = "<group>"; };
+		B5D0CB182D489F510059A575 /* SkyboxFragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SkyboxFragment.glsl; sourceTree = "<group>"; };
+		B5D0CB1A2D4913370059A575 /* skybox_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_back.png; sourceTree = "<group>"; };
+		B5D0CB1B2D4913370059A575 /* skybox_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_bottom.png; sourceTree = "<group>"; };
+		B5D0CB1C2D4913370059A575 /* skybox_front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_front.png; sourceTree = "<group>"; };
+		B5D0CB1D2D4913370059A575 /* skybox_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_left.png; sourceTree = "<group>"; };
+		B5D0CB1E2D4913370059A575 /* skybox_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_right.png; sourceTree = "<group>"; };
+		B5D0CB1F2D4913370059A575 /* skybox_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_top.png; sourceTree = "<group>"; };
 		B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,6 +206,12 @@
 			isa = PBXGroup;
 			children = (
 				B5827BE22D4482790080CC83 /* Grid.png */,
+				B5D0CB1A2D4913370059A575 /* skybox_back.png */,
+				B5D0CB1B2D4913370059A575 /* skybox_bottom.png */,
+				B5D0CB1C2D4913370059A575 /* skybox_front.png */,
+				B5D0CB1D2D4913370059A575 /* skybox_left.png */,
+				B5D0CB1E2D4913370059A575 /* skybox_right.png */,
+				B5D0CB1F2D4913370059A575 /* skybox_top.png */,
 				B51E9E2A2D22C8FB00CA7275 /* player.mdl */,
 				B51623002D20F3B000AACE15 /* Bear.obj */,
 				B51623022D20F3BF00AACE15 /* Bear.mtl */,
@@ -213,6 +237,7 @@
 		B5B08FA02D1931BA00E1F6E7 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B5D0CB132D4889C60059A575 /* Skybox Render Pass */,
 				B553ED182D467E79009DCD51 /* Phong Render Pass */,
 				B553ED172D467E68009DCD51 /* Debug Render Pass */,
 				B5827BEA2D45328F0080CC83 /* Grid Render Pass */,
@@ -227,6 +252,7 @@
 				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
 				B5C30A142D2550B700EA234B /* DebugRenderPass.swift */,
 				B5827BC92D4295280080CC83 /* GridRenderPass.swift */,
+				B5D0CB142D48918C0059A575 /* SkyboxRenderPass.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -242,6 +268,15 @@
 				B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		B5D0CB132D4889C60059A575 /* Skybox Render Pass */ = {
+			isa = PBXGroup;
+			children = (
+				B5D0CB162D489F440059A575 /* SkyboxVertex.glsl */,
+				B5D0CB182D489F510059A575 /* SkyboxFragment.glsl */,
+			);
+			path = "Skybox Render Pass";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,14 +342,22 @@
 				B5B08F8E2D19015B00E1F6E7 /* PhongShader.vsh in Resources */,
 				B5827BD12D4295590080CC83 /* GridShaderFragment.glsl in Resources */,
 				B5827BE52D4482790080CC83 /* Grid.png in Resources */,
+				B5D0CB192D489F540059A575 /* SkyboxFragment.glsl in Resources */,
 				B5827BD22D4295590080CC83 /* GridShaderVertex.glsl in Resources */,
 				B5C30A1B2D25678400EA234B /* DebugPolygonShader.fsh in Resources */,
 				B5827BE72D45306F0080CC83 /* AxisShaderVertex.glsl in Resources */,
 				B51623032D20F3BF00AACE15 /* Bear.mtl in Resources */,
+				B5D0CB172D489F480059A575 /* SkyboxVertex.glsl in Resources */,
 				B5B08F7A2D15501300E1F6E7 /* Assets.xcassets in Resources */,
 				B5C30A112D25485000EA234B /* DebugNormalsShader.fsh in Resources */,
 				B51623012D20F3B000AACE15 /* Bear.obj in Resources */,
 				B51623052D20F3C800AACE15 /* Bear.png in Resources */,
+				B5D0CB202D4913370059A575 /* skybox_front.png in Resources */,
+				B5D0CB212D4913370059A575 /* skybox_right.png in Resources */,
+				B5D0CB222D4913370059A575 /* skybox_bottom.png in Resources */,
+				B5D0CB232D4913370059A575 /* skybox_left.png in Resources */,
+				B5D0CB242D4913370059A575 /* skybox_top.png in Resources */,
+				B5D0CB252D4913370059A575 /* skybox_back.png in Resources */,
 				B5C30A172D25663000EA234B /* DebugPolygonShader.gsh in Resources */,
 				B51E9E2B2D22C8FB00CA7275 /* player.mdl in Resources */,
 				B5B08F902D19016600E1F6E7 /* PhongShader.fsh in Resources */,
@@ -348,6 +391,7 @@
 				B5827BCA2D4295280080CC83 /* GridRenderPass.swift in Sources */,
 				B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */,
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,
+				B5D0CB152D48918C0059A575 /* SkyboxRenderPass.swift in Sources */,
 				B5B08F962D1907CD00E1F6E7 /* ShaderProgram.swift in Sources */,
 				B5B08F942D1906EB00E1F6E7 /* PhongRenderPass.swift in Sources */,
 				B553ED162D466A1E009DCD51 /* Config.swift in Sources */,

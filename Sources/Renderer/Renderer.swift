@@ -24,16 +24,20 @@ final class Renderer {
     private let phongRenderPass: PhongRenderPass
     private let debugRenderPass: DebugRenderPass
     private let gridRenderPass: GridRenderPass
+    private let skyboxRenderPass: SkyboxRenderPass
     private let camera: Camera
     private let lights: [Light]
     private let models: [Model]
     private let input: Input
+
+    var config: Config = Config()
 
     init(input: Input) throws {
         self.input = input
         phongRenderPass = try PhongRenderPass()
         debugRenderPass = try DebugRenderPass()
         gridRenderPass = try GridRenderPass()
+        skyboxRenderPass = try SkyboxRenderPass()
 
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
         lights = [
@@ -73,9 +77,9 @@ final class Renderer {
         glClearColor(0, 0, 0, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
-        glEnable(GLenum(GL_DEPTH_TEST))
-        glDepthFunc(GLenum(GL_LEQUAL))
-
+        if config.sceneConfig.isSkyboxOn {
+            skyboxRenderPass.draw(camera: camera)
+        }
         phongRenderPass.draw(models: models, camera: camera, lights: lights)
         debugRenderPass.draw(models: models, camera: camera)
         gridRenderPass.draw(camera: camera)

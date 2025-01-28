@@ -31,6 +31,10 @@ final class DebugRenderPass {
     }
 
     func draw(models: [Model], camera: Camera) {
+        glDepthMask(GLboolean(GL_TRUE))
+        glEnable(GLenum(GL_DEPTH_TEST))
+        glDepthFunc(GLenum(GL_LEQUAL))
+
         if isNormalsOn {
             glUseProgram(debugNormalsProgram.programId)
             camera.prepareForDraw(withProgram: debugNormalsProgram)

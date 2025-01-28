@@ -25,7 +25,9 @@ class GLView: NSOpenGLView {
     private var renderer: Renderer?
     private var displayLink: CVDisplayLink?
     private var previousTime: Double?
-    var config = Config()
+    var config = Config() { didSet {
+        renderer?.config = config
+    } }
     private let input = Input()
 
     init() {

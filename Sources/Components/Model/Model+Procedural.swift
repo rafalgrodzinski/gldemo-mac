@@ -84,13 +84,13 @@ extension Model {
         Vertex(position: (1, -1, -1), normal: (0, -1, 0), material: Material(color: (0, 1, 1), coords: (1, 0), ambient: 1, diffuse: 1, specular: 1))
     ]
 
-    convenience init(program: ShaderProgram, kind: ProceduralModelKind) throws {
+    convenience init(program: ShaderProgram, kind: ProceduralModelKind, texture: Texture? = nil, textureCube: (left: Texture, right: Texture, front: Texture, back: Texture, bottom: Texture, top: Texture)? = nil) throws {
         let vertices: [Vertex]
         switch kind {
         case .cube: vertices = Self.cubeVertices
         case .pyramid: vertices = Self.pyramidVertices
         }
 
-        try self.init(program: program, frames: [vertices], frameDuration: 0, texture: nil)
+        try self.init(program: program, frames: [vertices], frameDuration: 0, texture: texture, textureCube: textureCube)
     }
 }

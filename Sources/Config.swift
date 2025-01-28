@@ -13,20 +13,23 @@ struct Config {
         let isAxesOn: Bool
         let isNormalsOn: Bool
         let isMeshOn: Bool
+        let isSkyboxOn: Bool
 
-        init(isGridOn: Bool? = nil, isAxesOn: Bool? = nil, isNormalsOn: Bool? = nil, isMeshOn: Bool? = nil) {
+        init(isGridOn: Bool? = nil, isAxesOn: Bool? = nil, isNormalsOn: Bool? = nil, isMeshOn: Bool? = nil, isSkyboxOn: Bool? = nil) {
             self.isGridOn = isGridOn ?? true
             self.isAxesOn = isAxesOn ?? true
             self.isNormalsOn = isNormalsOn ?? false
             self.isMeshOn = isMeshOn ?? false
+            self.isSkyboxOn = isSkyboxOn ?? false
         }
 
-        func updated(isGridOn: Bool? = nil, isAxesOn: Bool? = nil, isNormalsOn: Bool? = nil, isMeshOn: Bool? = nil) -> SceneConfig {
+        func updated(isGridOn: Bool? = nil, isAxesOn: Bool? = nil, isNormalsOn: Bool? = nil, isMeshOn: Bool? = nil, isSkyboxOn: Bool? = nil) -> SceneConfig {
             SceneConfig(
                 isGridOn: isGridOn ?? self.isGridOn,
                 isAxesOn: isAxesOn ?? self.isAxesOn,
                 isNormalsOn: isNormalsOn ?? self.isNormalsOn,
-                isMeshOn: isMeshOn ?? self.isMeshOn
+                isMeshOn: isMeshOn ?? self.isMeshOn,
+                isSkyboxOn: isSkyboxOn ?? self.isSkyboxOn
             )
         }
      }
