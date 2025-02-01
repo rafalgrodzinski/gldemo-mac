@@ -26,8 +26,7 @@ final class Renderer {
     private let gridRenderPass: GridRenderPass
     private let skyboxRenderPass: SkyboxRenderPass
     private let camera: Camera
-    private let lights: [Light]
-    private let models: [Model]
+    private var entities: [Entity] = [Entity]()
     private let input: Input
 
     var config: Config = Config()
@@ -40,15 +39,13 @@ final class Renderer {
         skyboxRenderPass = try SkyboxRenderPass()
 
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
-        lights = [
-            try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)),
-            try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0))
-            ]
-        models = [
-            try Model(program: phongRenderPass.program, kind: .cube),
-            try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")),
-            try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
-        ]
+        let node = EntityNode()
+        node.addChild(try Model(program: phongRenderPass.program, kind: .cube))
+        node.addChild(try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")))
+        entities.append(node)
+        entities.append(try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!))
+        entities.append(try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)))
+        entities.append(try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0)))
     }
 
     func resize(width: Float, height: Float) {
@@ -58,7 +55,7 @@ final class Renderer {
 
     func update(deltaTime: TimeInterval, config: Config) {
         camera.update(deltaTime: deltaTime, inputState: input.state)
-        models.forEach { $0.update(deltaTime: deltaTime) }
+        entities.forEach { $0.update(withDeltaTime: deltaTime) }
         input.update()
 
         debugRenderPass.isNormalsOn = config.sceneConfig.isNormalsOn
@@ -67,9 +64,9 @@ final class Renderer {
         gridRenderPass.isAxesOn = config.sceneConfig.isAxesOn
 
         for (index, config) in config.modelConfigs.enumerated() {
-            models[safe: index]?.translation = (config.tx, config.ty, config.tz)
-            models[safe: index]?.rotation = (config.rx.radians, config.ry.radians, config.rz.radians)
-            models[safe: index]?.scale = (config.sx, config.sy, config.sz)
+            entities[safe: index]?.translation = (config.tx, config.ty, config.tz)
+            entities[safe: index]?.rotation = (config.rx.radians, config.ry.radians, config.rz.radians)
+            entities[safe: index]?.scale = (config.sx, config.sy, config.sz)
         }
     }
 
@@ -80,8 +77,8 @@ final class Renderer {
         if config.sceneConfig.isSkyboxOn {
             skyboxRenderPass.draw(camera: camera)
         }
-        phongRenderPass.draw(models: models, camera: camera, lights: lights)
-        debugRenderPass.draw(models: models, camera: camera)
+        phongRenderPass.draw(entities: entities, camera: camera)
+        debugRenderPass.draw(entities: entities, camera: camera)
         gridRenderPass.draw(camera: camera)
     }
 }

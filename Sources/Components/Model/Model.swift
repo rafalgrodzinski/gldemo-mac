@@ -9,7 +9,7 @@ import Foundation
 import OpenGL.GL
 import GLKit
 
-final class Model {
+final class Model: Entity {
     struct Material {
         let color: (r: Float, g: Float, b: Float)
         let coords: (u: Float, v: Float)
@@ -38,12 +38,12 @@ final class Model {
     private var vertexArrayId: GLuint = 0
     private var textureId: GLuint = 0
     private var currentTime: TimeInterval = 0
-    private var modelMatrix: GLKMatrix4 = GLKMatrix4Identity
     private let isTextureCube: Bool
 
-    var translation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
-    var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0) { didSet { updateModelMatrix() }}
-    var scale: (x: Float, y: Float, z: Float) = (1, 1, 1) { didSet { updateModelMatrix() }}
+    weak var parent: Entity?
+    var translation: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    var scale: (x: Float, y: Float, z: Float) = (1, 1, 1)
 
     init(
         program: ShaderProgram,
@@ -276,19 +276,13 @@ final class Model {
         glBindVertexArray(0)
     }
 
-    private func updateModelMatrix() {
-        modelMatrix = GLKMatrix4MakeTranslation(translation.x, translation.y, translation.z)
-        modelMatrix = GLKMatrix4RotateX(modelMatrix, rotation.x)
-        modelMatrix = GLKMatrix4RotateY(modelMatrix, rotation.y)
-        modelMatrix = GLKMatrix4RotateZ(modelMatrix, rotation.z)
-        modelMatrix = GLKMatrix4Scale(modelMatrix, scale.x, scale.y, scale.z)
-    }
-
-    func update(deltaTime: TimeInterval) {
+    func update(withDeltaTime deltaTime: TimeInterval) {
         currentTime += deltaTime
     }
 
-    func draw(program: ShaderProgram) {
+    func prepareForDraw(withProgram program: ShaderProgram) { }
+
+    func draw(withProgram program: ShaderProgram) {
         let modelMatrixId = glGetUniformLocation(program.programId, "u_modelMatrix")
         modelMatrix.pointer {
             glUniformMatrix4fv(modelMatrixId, 1, GLboolean(GL_FALSE), $0)

@@ -8,7 +8,7 @@
 import Foundation
 import OpenGL.GL
 
-final class Light {
+class Light: Entity {
     enum Kind {
         case directional(direction: (x: Float, y: Float, z: Float), intensity: Float)
         case point(position: (x: Float, y: Float, z: Float), linearAttenuation: Float, quadraticAttenuation: Float)
@@ -21,6 +21,11 @@ final class Light {
     let kind: Kind
     let color: (r: GLfloat, g: GLfloat, b: GLfloat)
 
+    var parent: (any Entity)?
+    var translation: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    var scale: (x: Float, y: Float, z: Float) = (0, 0, 0)
+
     init(kind: Kind, color:(r: GLfloat, g: GLfloat, b: GLfloat)) throws {
         guard Self.lightsCount < Self.lightsMaxCount else { throw AppError(description: "Max lights exceeded") }
         lightIndex = Self.lightsCount
@@ -29,6 +34,8 @@ final class Light {
         self.kind = kind
         self.color = color
     }
+
+    func update(withDeltaTime deltaTime: TimeInterval) { }
 
     func prepareForDraw(withProgram program: ShaderProgram) {
         let idPrefix = "u_lights[\(lightIndex)]."
@@ -59,4 +66,6 @@ final class Light {
         let colorId = glGetUniformLocation(program.programId, idPrefix + "color")
         glUniform3f(colorId, color.r, color.g, color.b)
     }
+
+    func draw(withProgram program: ShaderProgram) { }
 }

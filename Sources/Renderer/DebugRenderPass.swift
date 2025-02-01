@@ -30,7 +30,7 @@ final class DebugRenderPass {
         )
     }
 
-    func draw(models: [Model], camera: Camera) {
+    func draw(entities: [Entity], camera: Camera) {
         glDepthMask(GLboolean(GL_TRUE))
         glEnable(GLenum(GL_DEPTH_TEST))
         glDepthFunc(GLenum(GL_LEQUAL))
@@ -38,13 +38,13 @@ final class DebugRenderPass {
         if isNormalsOn {
             glUseProgram(debugNormalsProgram.programId)
             camera.prepareForDraw(withProgram: debugNormalsProgram)
-            models.forEach { $0.draw(program: debugNormalsProgram) }
+            entities.forEach { $0.draw(withProgram: debugNormalsProgram) }
         }
 
         if isMeshOn {
             glUseProgram(debugPolygonProgram.programId)
             camera.prepareForDraw(withProgram: debugPolygonProgram)
-            models.forEach { $0.draw(program: debugPolygonProgram) }
+            entities.forEach { $0.draw(withProgram: debugPolygonProgram) }
         }
     }
 }

@@ -36,6 +36,6 @@ final class SkyboxRenderPass {
 
         glUseProgram(program.programId)
         camera.prepareForDraw(withProgram: program)
-        model.draw(program: program)
+        model.draw(withProgram: program)
     }
 }

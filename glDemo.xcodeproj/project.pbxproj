@@ -57,6 +57,8 @@
 		B5D0CB242D4913370059A575 /* skybox_top.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1F2D4913370059A575 /* skybox_top.png */; };
 		B5D0CB252D4913370059A575 /* skybox_back.png in Resources */ = {isa = PBXBuildFile; fileRef = B5D0CB1A2D4913370059A575 /* skybox_back.png */; };
 		B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */; };
+		B5F980E42D4E348300FF2FEE /* EntityNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F980E32D4E348300FF2FEE /* EntityNode.swift */; };
+		B5F980E82D4E43D400FF2FEE /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F980E72D4E43D400FF2FEE /* Entity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +114,8 @@
 		B5D0CB1E2D4913370059A575 /* skybox_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_right.png; sourceTree = "<group>"; };
 		B5D0CB1F2D4913370059A575 /* skybox_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox_top.png; sourceTree = "<group>"; };
 		B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
+		B5F980E32D4E348300FF2FEE /* EntityNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityNode.swift; sourceTree = "<group>"; };
+		B5F980E72D4E43D400FF2FEE /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,7 @@
 		B5B08FA22D1931E500E1F6E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B5F980E52D4E360800FF2FEE /* Entities */,
 				B516230C2D21630E00AACE15 /* Model */,
 				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
@@ -277,6 +282,15 @@
 				B5D0CB182D489F510059A575 /* SkyboxFragment.glsl */,
 			);
 			path = "Skybox Render Pass";
+			sourceTree = "<group>";
+		};
+		B5F980E52D4E360800FF2FEE /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				B5F980E72D4E43D400FF2FEE /* Entity.swift */,
+				B5F980E32D4E348300FF2FEE /* EntityNode.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B08FB22D1CD90500E1F6E7 /* Input.swift in Sources */,
+				B5F980E42D4E348300FF2FEE /* EntityNode.swift in Sources */,
 				B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */,
 				B5B08FB02D1A9DEE00E1F6E7 /* StringExtensions.swift in Sources */,
 				B5B08F982D190BB400E1F6E7 /* Model.swift in Sources */,
@@ -384,6 +399,7 @@
 				B516230B2D21620400AACE15 /* Model+Procedural.swift in Sources */,
 				B51E9E272D22C53D00CA7275 /* Model+MDL.swift in Sources */,
 				B5B08F8C2D18FFC300E1F6E7 /* AppError.swift in Sources */,
+				B5F980E82D4E43D400FF2FEE /* Entity.swift in Sources */,
 				B5B08F782D15501100E1F6E7 /* ContentView.swift in Sources */,
 				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
 				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,
