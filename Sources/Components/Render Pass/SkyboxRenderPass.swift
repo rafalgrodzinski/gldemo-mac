@@ -8,9 +8,11 @@
 import Foundation
 import OpenGL.GL
 
-final class SkyboxRenderPass {
+final class SkyboxRenderPass: RenderPass {
     private let program: ShaderProgram
     private let model: Model
+
+    var isEnabled: Bool = true
 
     init() throws {
         program = try ShaderProgram(
@@ -30,7 +32,9 @@ final class SkyboxRenderPass {
         model = try Model.init(program: program, kind: .cube, textureCube: textureCube)
     }
 
-    func draw(camera: Camera) {
+    func draw(entities: [Entity], camera: Camera) {
+        guard isEnabled else { return }
+
         glDisable(GLenum(GL_DEPTH_TEST))
         glDepthMask(GLboolean(GL_FALSE))
 

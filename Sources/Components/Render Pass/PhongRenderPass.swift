@@ -9,7 +9,7 @@ import Foundation
 import OpenGL.GL
 import GLKit
 
-final class PhongRenderPass {
+final class PhongRenderPass: RenderPass {
     let program: ShaderProgram
 
     init() throws {

@@ -9,7 +9,7 @@
 import Foundation
 import OpenGL.GL
 
-final class GridRenderPass {
+final class GridRenderPass: RenderPass {
     private static let gridVertices: [Float] = [
         -1, 0, 1,
          -1, 0, -1,
@@ -108,7 +108,7 @@ final class GridRenderPass {
         glBindVertexArray(0)
     }
 
-    func draw(camera: Camera) {
+    func draw(entities: [Entity], camera: Camera) {
         glDepthMask(GLboolean(GL_TRUE))
         glEnable(GLenum(GL_DEPTH_TEST))
         glDepthFunc(GLenum(GL_LEQUAL))

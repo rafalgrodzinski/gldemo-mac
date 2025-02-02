@@ -9,7 +9,7 @@ import Foundation
 import OpenGL.GL
 import GLKit
 
-final class DebugRenderPass {
+final class DebugRenderPass: RenderPass {
     private let debugNormalsProgram: ShaderProgram
     private let debugPolygonProgram: ShaderProgram
 

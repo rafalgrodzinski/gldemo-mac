@@ -59,6 +59,7 @@
 		B5F3E86B2D22BCFB00F2EF45 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */; };
 		B5F980E42D4E348300FF2FEE /* EntityNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F980E32D4E348300FF2FEE /* EntityNode.swift */; };
 		B5F980E82D4E43D400FF2FEE /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F980E72D4E43D400FF2FEE /* Entity.swift */; };
+		B5F980EB2D4E520200FF2FEE /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F980EA2D4E520200FF2FEE /* RenderPass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 		B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		B5F980E32D4E348300FF2FEE /* EntityNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityNode.swift; sourceTree = "<group>"; };
 		B5F980E72D4E43D400FF2FEE /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		B5F980EA2D4E520200FF2FEE /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,10 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				B5B08F892D15607B00E1F6E7 /* Renderer.swift */,
-				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
-				B5C30A142D2550B700EA234B /* DebugRenderPass.swift */,
-				B5827BC92D4295280080CC83 /* GridRenderPass.swift */,
-				B5D0CB142D48918C0059A575 /* SkyboxRenderPass.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -264,11 +262,10 @@
 		B5B08FA22D1931E500E1F6E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B5F980E92D4E51F800FF2FEE /* Render Pass */,
 				B5F980E52D4E360800FF2FEE /* Entities */,
-				B516230C2D21630E00AACE15 /* Model */,
 				B5B08F952D1907CD00E1F6E7 /* ShaderProgram.swift */,
 				B5B08F992D191AF300E1F6E7 /* Camera.swift */,
-				B5B08FA72D1A5B0200E1F6E7 /* Light.swift */,
 				B5B08FB12D1CD90500E1F6E7 /* Input.swift */,
 				B5F3E86A2D22BCFB00F2EF45 /* Texture.swift */,
 			);
@@ -289,8 +286,22 @@
 			children = (
 				B5F980E72D4E43D400FF2FEE /* Entity.swift */,
 				B5F980E32D4E348300FF2FEE /* EntityNode.swift */,
+				B5B08FA72D1A5B0200E1F6E7 /* Light.swift */,
+				B516230C2D21630E00AACE15 /* Model */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		B5F980E92D4E51F800FF2FEE /* Render Pass */ = {
+			isa = PBXGroup;
+			children = (
+				B5F980EA2D4E520200FF2FEE /* RenderPass.swift */,
+				B5D0CB142D48918C0059A575 /* SkyboxRenderPass.swift */,
+				B5B08F932D1906EB00E1F6E7 /* PhongRenderPass.swift */,
+				B5C30A142D2550B700EA234B /* DebugRenderPass.swift */,
+				B5827BC92D4295280080CC83 /* GridRenderPass.swift */,
+			);
+			path = "Render Pass";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +415,7 @@
 				B5B08FAE2D1A9DAA00E1F6E7 /* CollectionExtensions.swift in Sources */,
 				B5B08FA82D1A5B0200E1F6E7 /* Light.swift in Sources */,
 				B5B08FB42D1CF1ED00E1F6E7 /* NumberExtensions.swift in Sources */,
+				B5F980EB2D4E520200FF2FEE /* RenderPass.swift in Sources */,
 				B5827BCA2D4295280080CC83 /* GridRenderPass.swift in Sources */,
 				B5C30A0C2D24EB2B00EA234B /* TypeConversionExtensions.swift in Sources */,
 				B5B08F9A2D191AF300E1F6E7 /* Camera.swift in Sources */,

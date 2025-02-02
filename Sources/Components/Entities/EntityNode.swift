@@ -10,15 +10,15 @@ import GLKit
 
 class EntityNode: Entity {
     weak var parent: Entity?
-    private var children: [Entity] = [Entity]()
+    private var children: [Entity]
 
     var translation: (x: Float, y: Float, z: Float) = (0, 0, 0)
     var rotation: (x: Float, y: Float, z: Float) = (0, 0, 0)
     var scale: (x: Float, y: Float, z: Float) = (1, 1, 1)
 
-    func addChild(_ entity: Entity) {
-        entity.parent = self
-        children.append(entity)
+    init(children: [Entity] = []) {
+        self.children = children
+        children.forEach { $0.parent = self }
     }
 
     func update(withDeltaTime deltaTime: TimeInterval) {

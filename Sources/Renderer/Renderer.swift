@@ -21,31 +21,36 @@ final class Renderer {
         return format
     }
 
-    private let phongRenderPass: PhongRenderPass
+    private let camera: Camera
+    private let renderPasses: [RenderPass]
     private let debugRenderPass: DebugRenderPass
     private let gridRenderPass: GridRenderPass
     private let skyboxRenderPass: SkyboxRenderPass
-    private let camera: Camera
-    private var entities: [Entity] = [Entity]()
+    private let entities: [Entity]
     private let input: Input
 
     var config: Config = Config()
 
     init(input: Input) throws {
         self.input = input
-        phongRenderPass = try PhongRenderPass()
-        debugRenderPass = try DebugRenderPass()
-        gridRenderPass = try GridRenderPass()
-        skyboxRenderPass = try SkyboxRenderPass()
 
         camera = Camera(kind: .perspective(angle: 90, width: 0, height: 0, near: 0.1, far: 1000))
-        let node = EntityNode()
-        node.addChild(try Model(program: phongRenderPass.program, kind: .cube))
-        node.addChild(try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png")))
-        entities.append(node)
-        entities.append(try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!))
-        entities.append(try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)))
-        entities.append(try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0)))
+
+        skyboxRenderPass = try SkyboxRenderPass()
+        let phongRenderPass = try PhongRenderPass()
+        debugRenderPass = try DebugRenderPass()
+        gridRenderPass = try GridRenderPass()
+        renderPasses = [skyboxRenderPass, phongRenderPass, debugRenderPass, gridRenderPass]
+
+        entities = [
+            EntityNode(children: [
+                try Model(program: phongRenderPass.program, kind: .cube),
+                try Model(program: phongRenderPass.program, objFilePathUrl: Bundle.main.url(forResource: "Bear", withExtension: "obj")!, texture: Texture(imageName: "Bear.png"))
+            ]),
+            try Model(program: phongRenderPass.program, mdlFilePathUrl: Bundle.main.url(forResource: "player", withExtension: "mdl")!),
+            try Light(kind: .directional(direction: (1, -1, -1), intensity: 0.5), color: (1, 1, 1)),
+            try Light(kind: .point(position: (10, 10, 10), linearAttenuation: 0.01, quadraticAttenuation: 0.001), color: (1, 0, 0))
+        ]
     }
 
     func resize(width: Float, height: Float) {
@@ -58,6 +63,7 @@ final class Renderer {
         entities.forEach { $0.update(withDeltaTime: deltaTime) }
         input.update()
 
+        skyboxRenderPass.isEnabled = config.sceneConfig.isSkyboxOn
         debugRenderPass.isNormalsOn = config.sceneConfig.isNormalsOn
         debugRenderPass.isMeshOn = config.sceneConfig.isMeshOn
         gridRenderPass.isGridOn = config.sceneConfig.isGridOn
@@ -74,11 +80,6 @@ final class Renderer {
         glClearColor(0, 0, 0, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
 
-        if config.sceneConfig.isSkyboxOn {
-            skyboxRenderPass.draw(camera: camera)
-        }
-        phongRenderPass.draw(entities: entities, camera: camera)
-        debugRenderPass.draw(entities: entities, camera: camera)
-        gridRenderPass.draw(camera: camera)
+        renderPasses.forEach { $0.draw(entities: entities, camera: camera) }
     }
 }
